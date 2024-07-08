@@ -26,8 +26,9 @@ jobs:
       - name: Build APK
         run: flutter build apk --release
 
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
+
       - name: Upload APK to Server
         run: |
-          scp -P 22 build/app/outputs/flutter-apk/app-release.apk ${{ secrets.SSH_USERNAME }}@server_address:${{ secrets.DEPLOY_PATH }}
-        env:
-          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+          sshpass -p ${{ secrets.SSH_PASSWORD }} scp -o StrictHostKeyChecking=no -P 22 build/app/outputs/flutter-apk/app-release.apk ${{ secrets.SSH_USERNAME }}@server_address:${{ secrets.DEPLOY_PATH }}
