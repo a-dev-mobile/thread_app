@@ -18,6 +18,7 @@ jobs:
         with:
           channel: stable
           flutter-version-file: pubspec.yaml
+
       - run: flutter --version
 
       - name: Install dependencies
@@ -31,3 +32,18 @@ jobs:
         with:
           name: app-release
           path: build/app/outputs/flutter-apk/app-release.apk
+
+      - name: Get artifact download URL
+        id: get-artifact
+        run: |
+          ARTIFACT_URL=$(curl \
+            -H "Authorization: token ${{ secrets.MY_GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts" | jq -r '.artifacts[] | select(.name=="app-release") | .archive_download_url')
+          echo "::set-output name=url::$ARTIFACT_URL"
+        env:
+          MY_GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}
+
+      - name: Print artifact download URL
+        run: |
+          echo "Download URL: ${{ steps.get-artifact.outputs.url }}"
