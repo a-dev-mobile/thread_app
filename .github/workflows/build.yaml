@@ -26,9 +26,15 @@ jobs:
       - name: Build APK
         run: flutter build apk --release
 
-      - name: Install sshpass
-        run: sudo apt-get install -y sshpass
+      - name: Install FTP client
+        run: sudo apt-get install -y ftp
 
-      - name: Upload APK to Server
+      - name: Upload APK to Server via FTP
         run: |
-          sshpass -p ${{ secrets.SSH_PASSWORD }} scp -o StrictHostKeyChecking=no -P 22 build/app/outputs/flutter-apk/app-release.apk ${{ secrets.SSH_USERNAME }}@server_address:${{ secrets.DEPLOY_PATH }}
+          ftp -inv ${{ secrets.SSH_SERVER }} <<EOF
+          user ${{ secrets.SSH_USERNAME }} ${{ secrets.SSH_PASSWORD }}
+          binary
+          cd ${{ secrets.DEPLOY_PATH }}
+          put build/app/outputs/flutter-apk/app-release.apk
+          bye
+          EOF
