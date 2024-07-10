@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:thread/src/common/constant/config.dart';
+import 'package:thread/src/common/constant/pubspec.yaml.g.dart';
 import 'package:thread/src/common/localization/localization.dart';
 
 /// {@template app}
@@ -103,6 +104,12 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+
+            Text(
+              Pubspec.description,
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+
           ],
         ),
       ),
