@@ -30,7 +30,8 @@ jobs:
         run: mkdir -p config
 
       - name: Create production.json file
-        run: echo "${{ secrets.CONFIG_PROD_FILE }}" > config/production.json
+        run: |
+          echo "${{ secrets.CONFIG_PROD_FILE }}" | jq '.' > config/production.json
 
       - name: Build APK
         env:
