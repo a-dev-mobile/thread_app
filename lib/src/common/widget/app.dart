@@ -92,24 +92,20 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-
         child: Column(
-    
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-             Text(
+            Text(
               '${Config.environment.name} have pushed the button this many times:',
             ),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-
             Text(
               Pubspec.description,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-
           ],
         ),
       ),

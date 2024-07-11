@@ -26,13 +26,19 @@ jobs:
       - name: Generate code
         run: dart run build_runner build --delete-conflicting-outputs
 
+      - name: Create config directory
+        run: mkdir -p config
+
+      - name: Create production.json file
+        run: echo "${{ secrets.CONFIG_PROD_FILE }}" > config/production.json
+
       - name: Build APK
         env:
           RELEASE_KEY_ALIAS: ${{ secrets.RELEASE_KEY_ALIAS }}
           RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
           RELEASE_STORE_FILE: ${{ secrets.RELEASE_STORE_FILE }}
           RELEASE_STORE_PASSWORD: ${{ secrets.RELEASE_STORE_PASSWORD }}
-        run: flutter build apk --release
+        run: flutter build apk --release --dart-define-from-file=config/production.json
 
       - name: Install sshpass
         run: sudo apt-get install -y sshpass

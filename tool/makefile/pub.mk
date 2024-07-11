@@ -2,11 +2,11 @@
 
 # Check flutter version
 version:
-	flutter --version
+	$(FLUTTER) --version
 
 # Check flutter doctor
 doctor:
-	flutter doctor
+	$(FLUTTER) doctor
 
 # Clean all generated files
 clean:
@@ -43,25 +43,24 @@ gen: codegen
 
 # Upgrade dependencies
 upgrade:
-	flutter pub upgrade
+	$(FLUTTER) pub upgrade
 
 # Upgrade to major versions
 upgrade-major:
-	flutter pub upgrade --major-versions
+	$(FLUTTER) pub upgrade --major-versions
 
 # Check outdated dependencies
 outdated: get
-	flutter pub outdated
+	$(FLUTTER) pub outdated
 
 # Check outdated dependencies
 dependencies: upgrade
-	flutter pub outdated --dependency-overrides \
+	$(FLUTTER) pub outdated --dependency-overrides \
 		--dev-dependencies --prereleases --show-all --transitive
 
 # Format code
 format:
 	$(DART) format --fix -l 120 .
-	($(DART) format --fix -l 120 .)
 
 
 # Analyze code

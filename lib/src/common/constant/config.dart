@@ -6,7 +6,7 @@ abstract final class Config {
 
   /// Environment flavor.
   /// e.g. development, staging, production
-  static  final EnvironmentFlavor environment =
+  static final EnvironmentFlavor environment =
       EnvironmentFlavor.from(const String.fromEnvironment('ENVIRONMENT', defaultValue: 'development'));
 
   // --- API --- //
