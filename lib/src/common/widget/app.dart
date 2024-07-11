@@ -3,12 +3,14 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:thread/src/common/constant/config.dart';
 import 'package:thread/src/common/constant/pubspec.yaml.g.dart';
 import 'package:thread/src/common/localization/localization.dart';
+import 'package:thread/src/common/log/l.dart';
+import 'package:thread/src/common/widget/profile/app_back_button_dispatcher.dart';
+import 'package:thread/src/common/widget/profile/app_route_information_parser.dart';
+import 'package:thread/src/common/widget/profile/app_router_delegate.dart';
+import 'package:thread/src/common/widget/profile/home_screen.dart';
 
-/// {@template app}
-/// App widget.
-/// {@endtemplate}
+/// Виджет приложения.
 class App extends StatefulWidget {
-  /// {@macro app}
   const App({super.key});
 
   @override
@@ -16,160 +18,29 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  final Key builderKey = GlobalKey(); // Disable recreate widget tree
+  // 1. Инициализация делегата маршрутизатора и парсера информации о маршруте
+  final _routerDelegate = AppRouterDelegate();
+  final _routeInformationParser = AppRouteInformationParser();
 
   @override
-  Widget build(BuildContext context) => MaterialApp.router(
-        title: 'Application',
-        debugShowCheckedModeBanner: !Config.environment.isProduction,
-
-        // Localizations
-        localizationsDelegates: const <LocalizationsDelegate<Object?>>[
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-          Localization.delegate,
-        ],
-        supportedLocales: Localization.supportedLocales,
-        routerDelegate: _routerDelegate,
-        routeInformationParser: _routeInformationParser,
-        theme: ThemeData.dark(),
-      );
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
+  // 2. Построение виджета приложения с использованием MaterialApp.router
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-                Text(
-                '${Config.maxScreenLayoutWidth}',
-              ),
-              Text(
-                '${Config.environment.name} \n have pushed the button this many times:',
-              ),
-              Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-               Text(
-                Pubspec.dependencies.toString(),
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              Text(
-                Pubspec.devDependencies.toString(),
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-            ],
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
-}
+    l.d('-- App build start');
 
-class MyRoutePath {
-  final String location;
-
-  MyRoutePath.home() : location = '/';
-
-  bool get isHomePage => location == '/';
-}
-
-class MyRouterDelegate extends RouterDelegate<MyRoutePath>
-    with ChangeNotifier, PopNavigatorRouterDelegateMixin<MyRoutePath> {
-  @override
-  final GlobalKey<NavigatorState> navigatorKey;
-
-  String _path = '/';
-
-  MyRouterDelegate() : navigatorKey = GlobalKey<NavigatorState>();
-
-  @override
-  MyRoutePath get currentConfiguration => MyRoutePath.home();
-
-  void _handleNavigation(String path) {
-    _path = path;
-    notifyListeners();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Navigator(
-      key: navigatorKey,
-      pages: [
-        if (_path == '/')
-          MaterialPage(
-            key: const ValueKey('MyHomePage'),
-            child: MyHomePage(
-              title: Localization.of(context).title,
-            ),
-          ),
+    return MaterialApp.router(
+      title: 'Application',
+      debugShowCheckedModeBanner: !Config.environment.isProduction,
+      localizationsDelegates: const <LocalizationsDelegate<Object?>>[
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        Localization.delegate,
       ],
-      onPopPage: (route, result) {
-        if (!route.didPop(result)) {
-          return false;
-        }
-        _handleNavigation('/');
-        return true;
-      },
+      supportedLocales: Localization.supportedLocales,
+      routerDelegate: _routerDelegate, // 3. Назначение делегата маршрутизатора
+      routeInformationParser: _routeInformationParser, // 4. Назначение парсера информации о маршруте
+      backButtonDispatcher: AppBackButtonDispatcher(_routerDelegate),
+      theme: ThemeData.dark(),
     );
   }
-
-  @override
-  Future<void> setNewRoutePath(MyRoutePath configuration) async {
-    _handleNavigation(configuration.location);
-  }
 }
-
-class MyRouteInformationParser extends RouteInformationParser<MyRoutePath> {
-  @override
-  Future<MyRoutePath> parseRouteInformation(RouteInformation routeInformation) async {
-    final uri = routeInformation.uri;
-    if (uri.pathSegments.isEmpty) {
-      return MyRoutePath.home();
-    }
-    return MyRoutePath.home(); 
-  }
-
-  @override
-  RouteInformation? restoreRouteInformation(MyRoutePath configuration) {
-    if (configuration.isHomePage) {
-      return RouteInformation(uri: Uri.parse('/'));
-    }
-    return null; 
-  }
-}
-
-final MyRouterDelegate _routerDelegate = MyRouterDelegate();
-final MyRouteInformationParser _routeInformationParser = MyRouteInformationParser();
