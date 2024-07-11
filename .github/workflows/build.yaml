@@ -33,7 +33,11 @@ jobs:
         run: echo '${{ secrets.CONFIG_PROD_FILE }}' > config/production.json
 
       - name: Validate JSON file
-        run: cat config/production.json | jq '.'
+        run: |
+          if ! jq . config/production.json > /dev/null 2>&1; then
+            echo "Invalid JSON format in config/production.json"
+            exit 1
+          fi
 
       - name: Build APK
         env:
