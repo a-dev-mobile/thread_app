@@ -1,6 +1,9 @@
 import 'dart:async';
 
-import 'package:l/l.dart';
+
+import 'package:thread/src/common/log/l.dart';
+import 'package:thread/src/common/log/src/log_message.dart';
+import 'package:thread/src/common/log/src/log_options.dart';
 
 /// Catch all application errors and logs.
 void appZone(FutureOr<void> Function() fn) => l.capture<void>(

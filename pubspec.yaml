@@ -14,9 +14,10 @@ dependencies:
   flutter:
     sdk: flutter
   # Navigation
-  go_router: ^14.2.0
+  # go_router: ^14.2.0
   # Logger
-  l: ^5.0.0-pre.2
+  # l: ^5.0.0-pre.2
+  logging: ^1.2.0
   # Localization
   flutter_localizations:
     sdk: flutter

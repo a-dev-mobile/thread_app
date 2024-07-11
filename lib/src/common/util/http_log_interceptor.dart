@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:l/l.dart';
+
 import 'package:meta/meta.dart';
+import 'package:thread/src/common/log/l.dart';
 
 /// {@template http_log_interceptor}
 /// HttpLogInterceptor class

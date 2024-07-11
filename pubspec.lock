@@ -357,14 +357,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.2"
-  go_router:
-    dependency: "direct main"
-    description:
-      name: go_router
-      sha256: cdae1b9c8bd7efadcef6112e81c903662ef2ce105cbd220a04bbb7c3425b5554
-      url: "https://pub.dev"
-    source: hosted
-    version: "14.2.0"
   graphs:
     dependency: transitive
     description:
@@ -461,14 +453,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.8.0"
-  l:
-    dependency: "direct main"
-    description:
-      name: l
-      sha256: c015d97a7d1552706be9b2367facd2c379ffdabf1e104bc19d284ae775fc9016
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.0.0-pre.2"
   leak_tracker:
     dependency: transitive
     description:
@@ -502,7 +486,7 @@ packages:
     source: hosted
     version: "3.0.0"
   logging:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: logging
       sha256: "623a88c9594aa774443aa3eb2d41807a48486b5613e67599fb4c41c0ad47c340"

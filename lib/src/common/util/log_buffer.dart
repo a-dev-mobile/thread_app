@@ -1,7 +1,8 @@
 import 'dart:collection' show Queue;
 
 import 'package:flutter/foundation.dart' show ChangeNotifier;
-import 'package:l/l.dart';
+
+import 'package:thread/src/common/log/src/log_message.dart';
 
 /// LogBuffer Singleton class
 class LogBuffer with ChangeNotifier {

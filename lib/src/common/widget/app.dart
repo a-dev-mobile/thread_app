@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:go_router/go_router.dart';
 import 'package:thread/src/common/constant/config.dart';
 import 'package:thread/src/common/constant/pubspec.yaml.g.dart';
 import 'package:thread/src/common/localization/localization.dart';
@@ -32,26 +31,14 @@ class _AppState extends State<App> {
           Localization.delegate,
         ],
         supportedLocales: Localization.supportedLocales,
-        routerConfig: _router,
-        /* locale: SettingsScope.localOf(context), */
-
-        // Theme
-        /* theme: SettingsScope.themeOf(context), */
+        routerDelegate: _routerDelegate,
+        routeInformationParser: _routeInformationParser,
         theme: ThemeData.dark(),
       );
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -64,49 +51,42 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _counter++;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              '${Config.environment.name} have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            Text(
-              Pubspec.description,
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+                Text(
+                '${Config.maxScreenLayoutWidth}',
+              ),
+              Text(
+                '${Config.environment.name} \n have pushed the button this many times:',
+              ),
+              Text(
+                '$_counter',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+               Text(
+                Pubspec.dependencies.toString(),
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+              Text(
+                Pubspec.devDependencies.toString(),
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -118,16 +98,78 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-/// The route configuration.
-final GoRouter _router = GoRouter(
-  routes: <RouteBase>[
-    GoRoute(
-      path: '/',
-      builder: (BuildContext context, GoRouterState state) {
-        return MyHomePage(
-          title: Localization.of(context).title,
-        );
+class MyRoutePath {
+  final String location;
+
+  MyRoutePath.home() : location = '/';
+
+  bool get isHomePage => location == '/';
+}
+
+class MyRouterDelegate extends RouterDelegate<MyRoutePath>
+    with ChangeNotifier, PopNavigatorRouterDelegateMixin<MyRoutePath> {
+  @override
+  final GlobalKey<NavigatorState> navigatorKey;
+
+  String _path = '/';
+
+  MyRouterDelegate() : navigatorKey = GlobalKey<NavigatorState>();
+
+  @override
+  MyRoutePath get currentConfiguration => MyRoutePath.home();
+
+  void _handleNavigation(String path) {
+    _path = path;
+    notifyListeners();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Navigator(
+      key: navigatorKey,
+      pages: [
+        if (_path == '/')
+          MaterialPage(
+            key: const ValueKey('MyHomePage'),
+            child: MyHomePage(
+              title: Localization.of(context).title,
+            ),
+          ),
+      ],
+      onPopPage: (route, result) {
+        if (!route.didPop(result)) {
+          return false;
+        }
+        _handleNavigation('/');
+        return true;
       },
-    ),
-  ],
-);
+    );
+  }
+
+  @override
+  Future<void> setNewRoutePath(MyRoutePath configuration) async {
+    _handleNavigation(configuration.location);
+  }
+}
+
+class MyRouteInformationParser extends RouteInformationParser<MyRoutePath> {
+  @override
+  Future<MyRoutePath> parseRouteInformation(RouteInformation routeInformation) async {
+    final uri = routeInformation.uri;
+    if (uri.pathSegments.isEmpty) {
+      return MyRoutePath.home();
+    }
+    return MyRoutePath.home(); 
+  }
+
+  @override
+  RouteInformation? restoreRouteInformation(MyRoutePath configuration) {
+    if (configuration.isHomePage) {
+      return RouteInformation(uri: Uri.parse('/'));
+    }
+    return null; 
+  }
+}
+
+final MyRouterDelegate _routerDelegate = MyRouterDelegate();
+final MyRouteInformationParser _routeInformationParser = MyRouteInformationParser();
