@@ -7,7 +7,7 @@ import 'package:thread/src/common/log/l.dart';
 import 'package:thread/src/common/routing/app_back_button_dispatcher.dart';
 import 'package:thread/src/common/routing/app_route_information_parser.dart';
 import 'package:thread/src/common/routing/app_router_delegate.dart';
-import 'package:thread/src/common/widget/profile/home_screen.dart';
+import 'package:thread/src/feature/home/home_screen.dart';
 
 /// Виджет приложения.
 class App extends StatefulWidget {

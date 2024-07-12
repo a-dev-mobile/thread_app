@@ -10,22 +10,25 @@ class UserProfilePage extends StatelessWidget {
   @override
   // 15. Построение пользовательского интерфейса для страницы профиля пользователя
   Widget build(BuildContext context) {
-           l.d('-- UserProfilePage build start');
+    l.d('-- UserProfilePage build start');
     return Scaffold(
       appBar: AppBar(
         title: const Text("Профиль пользователя"),
       ),
-      body:  Center(
+      body: Center(
         child: Column(
           children: [
             const Text("Здесь будет информация о пользователе"),
             const Text(Config.proxyUrl),
+            ElevatedButton(
+              onPressed: routerDelegate.pushToErrorScreen,
+              child: const Text('добавить страницу ошибки'),
+            ),
             const Text(Config.proxyUrl),
             const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-             ElevatedButton(
-              onPressed: routerDelegate.addHome,
-              child:  const Text('добавить страницу домой'),
+            ElevatedButton(
+              onPressed: routerDelegate.pushHomeRoute,
+              child: const Text('добавить страницу домой'),
             ),
           ],
         ),

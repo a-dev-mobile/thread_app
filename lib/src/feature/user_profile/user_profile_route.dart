@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:thread/src/common/log/l.dart';
 import 'package:thread/src/common/routing/app_router_delegate.dart';
-import 'package:thread/src/common/widget/profile/user_profile_screen.dart';
+import 'package:thread/src/feature/user_profile/user_profile_screen.dart';
 
 class UserProfileRoute extends Page {
   final AppRouterDelegate routerDelegate;

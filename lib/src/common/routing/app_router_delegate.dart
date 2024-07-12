@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:thread/src/common/log/l.dart';
-import 'package:thread/src/common/widget/profile/home_route.dart';
 import 'package:thread/src/common/routing/page_route_config.dart';
-import 'package:thread/src/common/widget/profile/user_profile_route.dart';
+import 'package:thread/src/feature/home/home_route.dart';
+import 'package:thread/src/feature/no_found_screen/not_found_route.dart';
+import 'package:thread/src/feature/user_profile/user_profile_route.dart';
 
 class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<PageRouteConfig> {
@@ -44,22 +45,36 @@ class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
   }
 
   // Метод goToProfile добавляет страницу профиля в стек навигатора
-  void goToProfile() {
+  void pushToProfileRoute() {
     l.d('-- AppRouterDelegate goToProfile start');
     _pages.add(UserProfileRoute(routerDelegate: this));
     notifyListeners();
   }
 
   // Метод goToHome возвращает пользователя на домашнюю страницу, очищая стек страниц
-  void goToHome() {
+  void goToHomeRoute() {
     l.d('-- AppRouterDelegate goToHome start');
     _pages = [HomeRoute(routerDelegate: this)];
     notifyListeners();
   }
 
-  void addHome() {
+  void pushHomeRoute() {
     l.d('-- AppRouterDelegate addHome start');
     _pages.add(HomeRoute(routerDelegate: this));
+    notifyListeners();
+  }
+
+  void goToErrorScreen() {
+    l.d('-- AppRouterDelegate goToErrorScreen start');
+    _pages = [NotFoundRoute(routerDelegate: this)];
+
+    notifyListeners();
+  }
+
+  void pushToErrorScreen() {
+    l.d('-- AppRouterDelegate pushToErrorScreen start');
+
+    _pages.add(NotFoundRoute(routerDelegate: this));
     notifyListeners();
   }
 
