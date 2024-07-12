@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:thread/src/common/constant/config.dart';
 import 'package:thread/src/common/constant/pubspec.yaml.g.dart';
 import 'package:thread/src/common/log/l.dart';
-import 'package:thread/src/common/widget/profile/app_router_delegate.dart';
+import 'package:thread/src/common/routing/app_router_delegate.dart';
 
 class HomeScreen extends StatefulWidget {
   final AppRouterDelegate routerDelegate;

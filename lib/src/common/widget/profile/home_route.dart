@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:thread/src/common/log/l.dart';
 import 'package:thread/src/common/widget/profile/home_screen.dart';
-import 'package:thread/src/common/widget/profile/app_router_delegate.dart'; // Добавьте этот импорт
+import 'package:thread/src/common/routing/app_router_delegate.dart'; // Добавьте этот импорт
 
 class HomeRoute extends Page {
   final AppRouterDelegate routerDelegate;

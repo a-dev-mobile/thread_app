@@ -16,4 +16,4 @@ help:
 	@echo "Let's make something good"
 	@flutter --version
 
--include tool/makefile/pub.mk tool/makefile/test.mk tool/makefile/setup.mk tool/makefile/deploy.mk tool/makefile/init.mk
+-include tool/makefile/tree.mk tool/makefile/pub.mk tool/makefile/test.mk tool/makefile/setup.mk tool/makefile/deploy.mk tool/makefile/init.mk

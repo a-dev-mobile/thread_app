@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:thread/src/common/log/l.dart';
-import 'package:thread/src/common/widget/profile/app_configuration.dart';
 import 'package:thread/src/common/widget/profile/home_route.dart';
+import 'package:thread/src/common/routing/page_route_config.dart';
 import 'package:thread/src/common/widget/profile/user_profile_route.dart';
 
-class AppRouterDelegate extends RouterDelegate<AppConfiguration>
-    with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppConfiguration> {
+class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
+    with ChangeNotifier, PopNavigatorRouterDelegateMixin<PageRouteConfig> {
   late List<Page> _pages;
 
   // Конструктор класса AppRouterDelegate
@@ -69,21 +69,21 @@ class AppRouterDelegate extends RouterDelegate<AppConfiguration>
 
   @override
   // Установка начального пути маршрута
-  Future<void> setInitialRoutePath(AppConfiguration configuration) {
+  Future<void> setInitialRoutePath(PageRouteConfig configuration) {
     l.d('-- AppRouterDelegate setInitialRoutePath start --');
     return setNewRoutePath(configuration);
   }
 
   @override
   // Восстановление пути маршрута после восстановления состояния
-  Future<void> setRestoredRoutePath(AppConfiguration configuration) {
+  Future<void> setRestoredRoutePath(PageRouteConfig configuration) {
     l.d('-- AppRouterDelegate setRestoredRoutePath start --');
     return setNewRoutePath(configuration);
   }
 
   @override
   // Установка нового пути маршрута
-  Future<void> setNewRoutePath(AppConfiguration configuration) async {
+  Future<void> setNewRoutePath(PageRouteConfig configuration) async {
     l.d('-- AppRouterDelegate setNewRoutePath start');
     if (configuration.isProfilePage) {
       _pages.clear();
@@ -109,11 +109,11 @@ class AppRouterDelegate extends RouterDelegate<AppConfiguration>
 
   @override
   // Получение текущей конфигурации маршрута
-  AppConfiguration? get currentConfiguration {
+  PageRouteConfig? get currentConfiguration {
     l.d('-- AppRouterDelegate currentConfiguration get --');
     if (_pages.isNotEmpty && _pages.last is UserProfileRoute) {
-      return AppConfiguration.profile();
+      return PageRouteConfig.profile();
     }
-    return AppConfiguration.home();
+    return PageRouteConfig.home();
   }
 }

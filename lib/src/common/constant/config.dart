@@ -10,6 +10,9 @@ abstract final class Config {
       EnvironmentFlavor.from(const String.fromEnvironment('ENVIRONMENT', defaultValue: 'development'));
 
   // --- API --- //
+  /// Proxy for api.
+  /// e.g. http://10.0.2.2:8080
+  static const String proxyUrl = String.fromEnvironment('HTTP_PROXY', defaultValue: '');
 
   /// Base url for api.
   /// e.g. https://api.domain.tld

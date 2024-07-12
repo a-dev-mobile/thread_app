@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:thread/src/common/constant/config.dart';
 import 'package:thread/src/common/log/l.dart';
-import 'package:thread/src/common/widget/profile/app_router_delegate.dart';
+import 'package:thread/src/common/routing/app_router_delegate.dart';
 
 // Страница профиля пользователя
 class UserProfilePage extends StatelessWidget {
@@ -18,6 +19,10 @@ class UserProfilePage extends StatelessWidget {
         child: Column(
           children: [
             const Text("Здесь будет информация о пользователе"),
+            const Text(Config.proxyUrl),
+            const Text(Config.proxyUrl),
+            const Text(Config.proxyUrl),
+            const Text(Config.proxyUrl),
              ElevatedButton(
               onPressed: routerDelegate.addHome,
               child:  const Text('добавить страницу домой'),
