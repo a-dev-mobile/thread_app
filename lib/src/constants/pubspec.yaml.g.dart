@@ -125,12 +125,12 @@ sealed class Pubspec {
   static final DateTime timestamp = DateTime.utc(
     2024,
     7,
-    10,
+    12,
     20,
-    56,
-    28,
-    701,
-    869,
+    11,
+    38,
+    481,
+    451,
   );
 
   /// Name
@@ -412,8 +412,7 @@ sealed class Pubspec {
     'flutter': <String, Object>{
       'sdk': r'flutter',
     },
-    'go_router': r'^14.2.0',
-    'l': r'^5.0.0-pre.2',
+    'logging': r'^1.2.0',
     'flutter_localizations': <String, Object>{
       'sdk': r'flutter',
     },
@@ -428,7 +427,8 @@ sealed class Pubspec {
     'async': r'any',
     'path': r'any',
     'meta': r'any',
-    'json_annotation': r'^4.8.1',
+    'json_annotation': r'^4.9.0',
+    'freezed_annotation': r'^2.4.3',
   };
 
   /// Developer dependencies
@@ -436,13 +436,14 @@ sealed class Pubspec {
     'flutter_test': <String, Object>{
       'sdk': r'flutter',
     },
-    'flutter_gen_runner': r'^5.3.2',
+    'flutter_gen_runner': r'^5.6.0',
     'pubspec_generator': r'^4.1.0-pre.1',
-    'json_serializable': r'^6.7.1',
+    'json_serializable': r'^6.8.0',
     'flutter_launcher_icons': r'^0.13.1',
-    'flutter_native_splash': r'^2.4.0',
-    'build_runner': r'^2.4.6',
-    'flutter_lints': r'^3.0.0',
+    'flutter_native_splash': r'^2.4.1',
+    'build_runner': r'^2.4.11',
+    'flutter_lints': r'^4.0.0',
+    'freezed': r'^2.5.2',
   };
 
   /// Dependency overrides

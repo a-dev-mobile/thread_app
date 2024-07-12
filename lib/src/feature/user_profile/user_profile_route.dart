@@ -6,6 +6,9 @@ import 'package:thread/src/feature/user_profile/user_profile_screen.dart';
 
 class UserProfileRoute extends Page {
   final AppRouterDelegate routerDelegate;
+
+  final key = const ValueKey("UserProfileRoute");
+
   const UserProfileRoute({required this.routerDelegate}) : super(key: const ValueKey("UserProfileRoute"));
   @override
   // Отсутствие ключа означает, что каждый раз при создании UserProfileRoute
@@ -16,6 +19,7 @@ class UserProfileRoute extends Page {
     return MaterialPageRoute(
       settings: this,
       builder: (BuildContext context) => UserProfilePage(
+
         routerDelegate: routerDelegate,
       ),
     );

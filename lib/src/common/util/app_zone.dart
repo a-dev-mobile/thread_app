@@ -1,6 +1,5 @@
 import 'dart:async';
 
-
 import 'package:thread/src/common/log/l.dart';
 import 'package:thread/src/common/log/src/log_message.dart';
 import 'package:thread/src/common/log/src/log_options.dart';

@@ -1,7 +1,6 @@
 // turnGen
 
-enum EnumBackendStatusRefreshToken
-    implements Comparable<EnumBackendStatusRefreshToken> {
+enum EnumBackendStatusRefreshToken implements Comparable<EnumBackendStatusRefreshToken> {
   invalidRequestBody('INVALID_REQUEST_BODY'),
   invalidParameters('INVALID_PARAMETERS'),
   validationFailed('VALIDATION_FAILED'),
@@ -217,8 +216,7 @@ enum EnumBackendStatusRefreshToken
         emailVerifiedPasswordNotSet: emailVerifiedPasswordNotSet ?? orElse,
         emailAndPasswordVerified: emailAndPasswordVerified ?? orElse,
         invalidCode: invalidCode ?? orElse,
-        updateVerificationStatusFailed:
-            updateVerificationStatusFailed ?? orElse,
+        updateVerificationStatusFailed: updateVerificationStatusFailed ?? orElse,
         accessTokenGenerationFailed: accessTokenGenerationFailed ?? orElse,
         refreshTokenGenerationFailed: refreshTokenGenerationFailed ?? orElse,
         refreshTokenSavingFailed: refreshTokenSavingFailed ?? orElse,
@@ -250,8 +248,7 @@ enum EnumBackendStatusRefreshToken
         emailVerifiedPasswordNotSet: emailVerifiedPasswordNotSet ?? orElse,
         emailAndPasswordVerified: emailAndPasswordVerified ?? orElse,
         invalidCode: invalidCode ?? orElse,
-        updateVerificationStatusFailed:
-            updateVerificationStatusFailed ?? orElse,
+        updateVerificationStatusFailed: updateVerificationStatusFailed ?? orElse,
         accessTokenGenerationFailed: accessTokenGenerationFailed ?? orElse,
         refreshTokenGenerationFailed: refreshTokenGenerationFailed ?? orElse,
         refreshTokenSavingFailed: refreshTokenSavingFailed ?? orElse,
@@ -323,37 +320,24 @@ enum EnumBackendStatusRefreshToken
         verificationSuccessful: verificationSuccessful,
       );
 
-  static List<String> getListName() =>
-      EnumBackendStatusRefreshToken.values.map((e) => e.name).toList();
+  static List<String> getListName() => EnumBackendStatusRefreshToken.values.map((e) => e.name).toList();
 
   @override
-  int compareTo(EnumBackendStatusRefreshToken other) =>
-      index.compareTo(other.index);
+  int compareTo(EnumBackendStatusRefreshToken other) => index.compareTo(other.index);
 }
 
 extension $EnumBackendStatusRefreshToken on EnumBackendStatusRefreshToken {
-  bool get isInvalidRequestBody =>
-      this == EnumBackendStatusRefreshToken.invalidRequestBody;
-  bool get isInvalidParameters =>
-      this == EnumBackendStatusRefreshToken.invalidParameters;
-  bool get isValidationFailed =>
-      this == EnumBackendStatusRefreshToken.validationFailed;
+  bool get isInvalidRequestBody => this == EnumBackendStatusRefreshToken.invalidRequestBody;
+  bool get isInvalidParameters => this == EnumBackendStatusRefreshToken.invalidParameters;
+  bool get isValidationFailed => this == EnumBackendStatusRefreshToken.validationFailed;
   bool get isUserNotFound => this == EnumBackendStatusRefreshToken.userNotFound;
-  bool get isEmailVerifiedPasswordNotSet =>
-      this == EnumBackendStatusRefreshToken.emailVerifiedPasswordNotSet;
-  bool get isEmailAndPasswordVerified =>
-      this == EnumBackendStatusRefreshToken.emailAndPasswordVerified;
+  bool get isEmailVerifiedPasswordNotSet => this == EnumBackendStatusRefreshToken.emailVerifiedPasswordNotSet;
+  bool get isEmailAndPasswordVerified => this == EnumBackendStatusRefreshToken.emailAndPasswordVerified;
   bool get isInvalidCode => this == EnumBackendStatusRefreshToken.invalidCode;
-  bool get isUpdateVerificationStatusFailed =>
-      this == EnumBackendStatusRefreshToken.updateVerificationStatusFailed;
-  bool get isAccessTokenGenerationFailed =>
-      this == EnumBackendStatusRefreshToken.accessTokenGenerationFailed;
-  bool get isRefreshTokenGenerationFailed =>
-      this == EnumBackendStatusRefreshToken.refreshTokenGenerationFailed;
-  bool get isRefreshTokenSavingFailed =>
-      this == EnumBackendStatusRefreshToken.refreshTokenSavingFailed;
-  bool get isTooManyAttempts =>
-      this == EnumBackendStatusRefreshToken.tooManyAttempts;
-  bool get isVerificationSuccessful =>
-      this == EnumBackendStatusRefreshToken.verificationSuccessful;
+  bool get isUpdateVerificationStatusFailed => this == EnumBackendStatusRefreshToken.updateVerificationStatusFailed;
+  bool get isAccessTokenGenerationFailed => this == EnumBackendStatusRefreshToken.accessTokenGenerationFailed;
+  bool get isRefreshTokenGenerationFailed => this == EnumBackendStatusRefreshToken.refreshTokenGenerationFailed;
+  bool get isRefreshTokenSavingFailed => this == EnumBackendStatusRefreshToken.refreshTokenSavingFailed;
+  bool get isTooManyAttempts => this == EnumBackendStatusRefreshToken.tooManyAttempts;
+  bool get isVerificationSuccessful => this == EnumBackendStatusRefreshToken.verificationSuccessful;
 }

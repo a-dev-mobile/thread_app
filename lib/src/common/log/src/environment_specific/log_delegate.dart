@@ -1,6 +1,5 @@
 import 'package:meta/meta.dart';
 
-
 import '../log_message.dart';
 
 @internal

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:thread/src/common/network/dio_log/bean/net_options.dart';
 import 'package:thread/src/common/network/dio_log/dio_log.dart';
 
-
 class LogRequestWidget extends StatefulWidget {
   const LogRequestWidget(this.netOptions, {super.key});
   final NetOptions netOptions;

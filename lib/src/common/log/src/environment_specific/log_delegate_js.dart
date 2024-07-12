@@ -9,8 +9,7 @@ import 'message_log_formatting_mixin.dart';
 
 /// Environment-specific implementation of [LogDelegate]
 @internal
-LogDelegate createEnvironmentLogDelegate() =>
-    LogDelegate$JS(html.window.console);
+LogDelegate createEnvironmentLogDelegate() => LogDelegate$JS(html.window.console);
 
 @internal
 final class LogDelegate$JS implements LogDelegate {
@@ -43,5 +42,4 @@ final class LogDelegate$JS implements LogDelegate {
 
 /// Environment-specific implementation of [MessageFormattingPipeline]
 @internal
-final class MessageFormattingPipelineWeb = MessageFormattingPipeline
-    with MessageLogFormatterMixin;
+final class MessageFormattingPipelineWeb = MessageFormattingPipeline with MessageLogFormatterMixin;

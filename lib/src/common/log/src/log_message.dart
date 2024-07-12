@@ -14,9 +14,7 @@ sealed class LogMessage implements Comparable<LogMessage> {
     required this.level,
     required this.timestamp,
     LogMessageContext? context,
-  }) : context = context != null
-            ? Map<String, Object?>.unmodifiable(context)
-            : const <String, Object?>{};
+  }) : context = context != null ? Map<String, Object?>.unmodifiable(context) : const <String, Object?>{};
 
   /// Normal message
   ///

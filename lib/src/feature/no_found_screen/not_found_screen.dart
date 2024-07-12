@@ -25,32 +25,47 @@ class NotFoundScreen extends StatelessWidget {
             preferredSize: Size.fromHeight(48),
             child: SizedBox(
               height: 48,
-              /* child: Breadcrumbs(
-              breadcrumbs: <Widget, VoidCallback?>{
-                const Text('Shop'): () => AppRouter.of(context).navTab(
-                      (state) => [],
-                      tab: 'shop',
-                      activate: true,
-                    ),
-                for (var i = 0; i < prevRoutes.length; i++)
-                  Text(
-                      ProductScope.getCategoryByID(
-                              context, prevRoutes[i].arguments['id']!)
-                          .title): () => AppRouter.of(context).navTab(
-                        (state) => state.take(i + 1).toList(growable: false),
-                        tab: 'shop',
-                        activate: true,
-                      ),
-                const Text('Not found'): null,
-              },
-            ), */
             ),
           ),
         ),
         body: SafeArea(
           child: Center(
-            child: Text(message ?? 'Content not found'),
+            child: Column(
+              children: [Text(message ?? 'Content not found'), const CounterWidget()],
+            ),
           ),
         ),
       );
+}
+
+class CounterWidget extends StatefulWidget {
+  const CounterWidget({super.key});
+
+  @override
+  State<CounterWidget> createState() => _CounterWidgetState();
+}
+
+class _CounterWidgetState extends State<CounterWidget> {
+  final ValueNotifier<int> _counter = ValueNotifier<int>(0);
+
+  void _incrementCounter() {
+    _counter.value++;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        children: [
+          ValueListenableBuilder(
+            valueListenable: _counter,
+            builder: (context, value, child) {
+              return Text('-- $value --');
+            },
+          ),
+          ElevatedButton(onPressed: _incrementCounter, child: const Text('+'))
+        ],
+      ),
+    );
+  }
 }

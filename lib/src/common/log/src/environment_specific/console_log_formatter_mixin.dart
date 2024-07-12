@@ -112,8 +112,7 @@ base mixin ConsoleLogFormatterMixin on MessageFormattingPipeline {
 
   String _vvvvv(Object message, String prefix) => _formatPlain(message, prefix);
 
-  String _vvvvvv(Object message, String prefix) =>
-      _formatPlain(message, prefix);
+  String _vvvvvv(Object message, String prefix) => _formatPlain(message, prefix);
 }
 
 /// Ansi escape

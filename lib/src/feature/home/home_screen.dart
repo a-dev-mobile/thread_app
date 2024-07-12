@@ -57,12 +57,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: widget.routerDelegate.goToErrorScreen,
                     child: const Text('Перейти на страницу ошибки'),
                   ),
-
-                         ElevatedButton(
+                  ElevatedButton(
                     onPressed: widget.routerDelegate.goToHomeRoute,
                     child: const Text('Перейти на главную страницу '),
                   ),
-                       ElevatedButton(
+                  ElevatedButton(
                     onPressed: widget.routerDelegate.pushHomeRoute,
                     child: const Text('добавить главную страницу '),
                   ),

@@ -3,8 +3,6 @@ import 'package:thread/src/common/log/src/environment_specific/message_formattin
 import 'package:thread/src/common/log/src/inner_zoned_mixin.dart';
 import 'package:thread/src/common/log/src/log_message.dart';
 
-
-
 extension on StringBuffer {
   void writeEsc(String value) {
     this
@@ -113,8 +111,7 @@ base mixin ConsoleLogFormatterMixin on MessageFormattingPipeline {
 
   String _vvvvv(Object message, String prefix) => _formatPlain(message, prefix);
 
-  String _vvvvvv(Object message, String prefix) =>
-      _formatPlain(message, prefix);
+  String _vvvvvv(Object message, String prefix) => _formatPlain(message, prefix);
 }
 
 /// Ansi escape

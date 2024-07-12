@@ -11,8 +11,7 @@ import 'message_log_formatting_mixin.dart';
 
 /// Environment-specific implementation of [LogDelegate]
 @internal
-LogDelegate createEnvironmentLogDelegate() =>
-    io.stdout.hasTerminal ? LogDelegate$VM(io.stdout) : LogDelegate$Stub();
+LogDelegate createEnvironmentLogDelegate() => io.stdout.hasTerminal ? LogDelegate$VM(io.stdout) : LogDelegate$Stub();
 
 @internal
 final class LogDelegate$VM implements LogDelegate {

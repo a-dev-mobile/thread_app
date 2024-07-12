@@ -1,4 +1,4 @@
-.PHONY: version doctor clean get fluttergen l10n build_runner codegen upgrade upgrade-major outdated dependencies format analyze check
+.PHONY: version doctor clean get fluttergen l10n gen-all gen-watch gen-build upgrade upgrade-major outdated dependencies format analyze check
 
 # Check flutter version
 version:
@@ -29,17 +29,18 @@ l10n:
 	(flutter gen-l10n --arb-dir lib/src/common/localization --output-dir lib/src/common/localization/generated --template-arb-file intl_en.arb)
 
 # Build runner
-build_runner:
+gen-build:
 	$(DART) run build_runner build --delete-conflicting-outputs --release
 
-# Generate code
-codegen: get fluttergen l10n build_runner format
+gen-watch:
+	$(DART) run build_runner watch --delete-conflicting-outputs --release
+
 
 fix: format
 	$(DART) fix --apply lib
 
 # Generate all
-gen: codegen
+gen-all: get fluttergen l10n gen-build format
 
 # Upgrade dependencies
 upgrade:

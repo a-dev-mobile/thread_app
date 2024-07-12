@@ -239,8 +239,7 @@ enum EnumAuthError implements Comparable<EnumAuthError> {
         invalidTokenSignature: invalidTokenSignature,
       );
 
-  static List<String> getListValue() =>
-      EnumAuthError.values.map((e) => e.value).toList();
+  static List<String> getListValue() => EnumAuthError.values.map((e) => e.value).toList();
 
   @override
   int compareTo(EnumAuthError other) => index.compareTo(other.index);
@@ -252,9 +251,7 @@ extension $EnumAuthError on EnumAuthError {
   bool get isAuthenticationFailed => this == EnumAuthError.authenticationFailed;
   bool get isUserIdNotFound => this == EnumAuthError.userIdNotFound;
   bool get isInvalidTokenFormat => this == EnumAuthError.invalidTokenFormat;
-  bool get isAuthorizationRequired =>
-      this == EnumAuthError.authorizationRequired;
+  bool get isAuthorizationRequired => this == EnumAuthError.authorizationRequired;
   bool get isInvalidTokenType => this == EnumAuthError.invalidTokenType;
-  bool get isInvalidTokenSignature =>
-      this == EnumAuthError.invalidTokenSignature;
+  bool get isInvalidTokenSignature => this == EnumAuthError.invalidTokenSignature;
 }

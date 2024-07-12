@@ -15,9 +15,9 @@ class HomeRoute extends Page {
   @override
   // 12. Создание маршрута для домашней страницы
   Route createRoute(BuildContext context) {
-        l.d('-- HomeRoute createRoute start');
+    l.d('-- HomeRoute createRoute start');
     return MaterialPageRoute(
-        settings: this,
+      settings: this,
       builder: (BuildContext context) => HomeScreen(
         routerDelegate: routerDelegate,
         title: 'Home',

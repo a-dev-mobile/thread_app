@@ -54,8 +54,7 @@ sealed class LogLevel {
 
   /// Restore log level from [value].
   /// If [value] is not found, then [LogLevel.info] is returned.
-  factory LogLevel.fromValue(Object? value) =>
-      _table[value] ?? const LogLevel.info();
+  factory LogLevel.fromValue(Object? value) => _table[value] ?? const LogLevel.info();
 
   static final Map<Object, LogLevel> _table = <Object, LogLevel>{
     for (final e in values) e.level: e,
@@ -141,8 +140,7 @@ sealed class LogLevel {
   String toString() => prefix;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) || (other is LogLevel && level == other.level);
+  bool operator ==(Object other) => identical(this, other) || (other is LogLevel && level == other.level);
 
   @override
   int get hashCode => level;
