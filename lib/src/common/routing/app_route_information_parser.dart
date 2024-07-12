@@ -24,6 +24,9 @@ class AppRouteInformationParser extends RouteInformationParser<PageRouteConfig> 
     if (configuration.isProfilePage) {
       return RouteInformation(uri: Uri.parse('/profile'));
     }
+    if (configuration.isNoFoundPage) {
+      return RouteInformation(uri: Uri.parse('/nofound'));
+    }
     return RouteInformation(uri: Uri.parse('/'));
   }
 

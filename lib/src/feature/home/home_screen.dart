@@ -31,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     l.d('-- HomeScreen build start');
     return Scaffold(
+      appBar: AppBar(),
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
@@ -50,11 +51,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   ElevatedButton(
                     onPressed: widget.routerDelegate.pushToProfileRoute,
-                    child: const Text('Перейти на страницу профиля'),
+                    child: const Text('добавить страницу профиля'),
                   ),
                   ElevatedButton(
                     onPressed: widget.routerDelegate.goToErrorScreen,
-                    child: const Text('Перейти на страницу профиля'),
+                    child: const Text('Перейти на страницу ошибки'),
+                  ),
+
+                         ElevatedButton(
+                    onPressed: widget.routerDelegate.goToHomeRoute,
+                    child: const Text('Перейти на главную страницу '),
+                  ),
+                       ElevatedButton(
+                    onPressed: widget.routerDelegate.pushHomeRoute,
+                    child: const Text('добавить главную страницу '),
                   ),
                   Text(
                     '${Config.environment.name} \n have pushed the button this many times:',

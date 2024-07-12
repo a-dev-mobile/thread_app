@@ -9,12 +9,6 @@ class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<PageRouteConfig> {
   late List<Page> _pages;
 
-  // Конструктор класса AppRouterDelegate
-  AppRouterDelegate() {
-    l.d('-- AppRouterDelegate init start');
-    _pages = [HomeRoute(routerDelegate: this)]; // Инициализация начальной страницы
-  }
-
   @override
   // Метод build создает виджет Navigator, который управляет стеком страниц
   Widget build(BuildContext context) {
@@ -54,13 +48,16 @@ class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
   // Метод goToHome возвращает пользователя на домашнюю страницу, очищая стек страниц
   void goToHomeRoute() {
     l.d('-- AppRouterDelegate goToHome start');
+    if (_pages.last is HomeRoute) return;
     _pages = [HomeRoute(routerDelegate: this)];
     notifyListeners();
   }
 
   void pushHomeRoute() {
-    l.d('-- AppRouterDelegate addHome start');
+    l.d('-- AppRouterDelegate pushHomeRoute start');
     _pages.add(HomeRoute(routerDelegate: this));
+
+    // if (_pages.last is HomeRoute) return;
     notifyListeners();
   }
 
@@ -86,6 +83,8 @@ class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
   // Установка начального пути маршрута
   Future<void> setInitialRoutePath(PageRouteConfig configuration) {
     l.d('-- AppRouterDelegate setInitialRoutePath start --');
+    // Инициализация начальной страницы
+    _pages = [HomeRoute(routerDelegate: this)];
     return setNewRoutePath(configuration);
   }
 
@@ -100,11 +99,18 @@ class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
   // Установка нового пути маршрута
   Future<void> setNewRoutePath(PageRouteConfig configuration) async {
     l.d('-- AppRouterDelegate setNewRoutePath start');
+    // Очищаем стек и добавляем нужную страницу в зависимости от конфигурации
+    // _pages.clear();
+
+    if (configuration.isHomePage) {
+      return;
+    }
+
     if (configuration.isProfilePage) {
-      _pages.clear();
       _pages.add(UserProfileRoute(routerDelegate: this));
+    } else if (configuration.isNoFoundPage) {
+      _pages.add(NotFoundRoute(routerDelegate: this));
     } else {
-      _pages.clear();
       _pages.add(HomeRoute(routerDelegate: this));
     }
     notifyListeners();
@@ -126,8 +132,13 @@ class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
   // Получение текущей конфигурации маршрута
   PageRouteConfig? get currentConfiguration {
     l.d('-- AppRouterDelegate currentConfiguration get --');
-    if (_pages.isNotEmpty && _pages.last is UserProfileRoute) {
-      return PageRouteConfig.profile();
+    // Определяем текущую конфигурацию, исходя из последней страницы в стеке
+    if (_pages.isNotEmpty) {
+      if (_pages.last is UserProfileRoute) {
+        return PageRouteConfig.profile();
+      } else if (_pages.last is NotFoundRoute) {
+        return PageRouteConfig.noFound();
+      }
     }
     return PageRouteConfig.home();
   }
