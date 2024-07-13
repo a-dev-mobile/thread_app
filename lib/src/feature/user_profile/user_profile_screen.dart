@@ -1,13 +1,16 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:thread/src/common/constant/config.dart';
-import 'package:thread/src/common/log/l.dart';
+import 'package:thread/src/common/log/log_setup%20copy%202.dart';
 import 'package:thread/src/common/routing/app_router_delegate.dart';
 import 'package:thread/src/feature/user_profile/user_profile_model.dart';
 
 part 'user_profile_bloc.dart';
 part 'user_profile_manager.dart';
+
+
 
 class UserProfilePage extends StatefulWidget {
   final AppRouterDelegate routerDelegate;
@@ -17,23 +20,21 @@ class UserProfilePage extends StatefulWidget {
   State<UserProfilePage> createState() => _UserProfilePageState();
 }
 
-class _UserProfilePageState extends State<UserProfilePage>  with AutomaticKeepAliveClientMixin<UserProfilePage> {
+class _UserProfilePageState extends State<UserProfilePage> with AutomaticKeepAliveClientMixin<UserProfilePage> {
   late final _UserProfileBloc bloc;
 
   @override
   bool get wantKeepAlive => true;
-  
+
   @override
   void initState() {
     super.initState();
 
-
-    bloc = _UserProfileBloc(initialProfile:const UserProfileModel(name: "John Doe", age: 30));
+    bloc = _UserProfileBloc(initialProfile: const UserProfileModel(name: "John Doe", age: 30));
   }
 
   @override
   void dispose() {
-   
     bloc.dispose();
     super.dispose();
   }
@@ -41,13 +42,12 @@ class _UserProfilePageState extends State<UserProfilePage>  with AutomaticKeepAl
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    l.d('-- UserProfilePage build start');
+     Log.debug('-- build start');
     return Scaffold(
       appBar: AppBar(
         title: const Text("Профиль пользователя"),
       ),
       body: SingleChildScrollView(
-
         child: Column(
           children: [
             const Text("Здесь будет информация о пользователе"),
@@ -76,7 +76,6 @@ class _UserProfilePageState extends State<UserProfilePage>  with AutomaticKeepAl
             ),
             ElevatedButton(
               onPressed: () {
-          
                 widget.routerDelegate.pushToErrorScreen();
               },
               child: const Text('добавить страницу ошибки и очистить сохраненые данные'),

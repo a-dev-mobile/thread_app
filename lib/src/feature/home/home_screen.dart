@@ -1,11 +1,13 @@
 // lib\src\common\widget\profile\home_screen.dart
 
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:thread/src/common/constant/config.dart';
 import 'package:thread/src/common/constant/pubspec.yaml.g.dart';
-import 'package:thread/src/common/log/l.dart';
+import 'package:thread/src/common/log/log_setup%20copy%202.dart';
 import 'package:thread/src/common/routing/app_router_delegate.dart';
 import 'package:thread/src/common/widget/common_actions.dart';
+
 
 class HomeScreen extends StatefulWidget {
   final AppRouterDelegate routerDelegate;
@@ -29,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   // 13. Построение пользовательского интерфейса для домашней страницы
   Widget build(BuildContext context) {
-    l.d('-- HomeScreen build start');
+     Log.debug('-- build start');
     return Scaffold(
       appBar: AppBar(),
       body: CustomScrollView(

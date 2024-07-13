@@ -9,6 +9,15 @@ abstract final class Config {
   static final EnvironmentFlavor environment =
       EnvironmentFlavor.from(const String.fromEnvironment('ENVIRONMENT', defaultValue: 'development'));
 
+
+  static const String basePath = String.fromEnvironment('BASE_PATH', defaultValue: '');
+  static const String packagePrefix = String.fromEnvironment('PACKAGE_PREFIX', defaultValue: '');
+
+
+
+
+
+
   // --- API --- //
   /// Proxy for api.
   /// e.g. http://10.0.2.2:8080

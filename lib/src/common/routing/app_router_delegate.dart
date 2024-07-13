@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:thread/src/common/log/l.dart';
+import 'package:logging/logging.dart';
+import 'package:thread/src/common/log/log_setup%20copy%202.dart';
+
 import 'package:thread/src/common/routing/page_route_config.dart';
 import 'package:thread/src/feature/home/home_route.dart';
 import 'package:thread/src/feature/no_found_screen/not_found_route.dart';
@@ -12,20 +14,20 @@ class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
   @override
   // Метод build создает виджет Navigator, который управляет стеком страниц
   Widget build(BuildContext context) {
-    l.d('-- AppRouterDelegate build start');
+    Log.debug('-- build start');
     return Navigator(
       key: navigatorKey,
       pages: List.of(_pages), // Список страниц, используемых навигатором
       onPopPage: (route, result) {
-        l.d('-- AppRouterDelegate build Navigator onPopPage start');
+        Log.debug('-- build Navigator onPopPage start');
 
         // Проверка типа маршрута и вывод информации о нём
         if (route is MaterialPageRoute) {
-          l.d('-- AppRouterDelegate build Navigator onPopPageMaterialPageRoute: ${route.settings.toString()}');
+          Log.debug('-- build Navigator onPopPageMaterialPageRoute: ${route.settings.toString()}');
         } else if (route is PageRoute) {
-          l.d('-- AppRouterDelegate build Navigator onPopPagePageRoute: ${route.settings.name}');
+          Log.debug('-- build Navigator onPopPagePageRoute: ${route.settings.name}');
         } else {
-          l.d('-- AppRouterDelegate build Navigator onPopPageOther Route: ${route.settings.name}');
+          Log.debug('-- build Navigator onPopPageOther Route: ${route.settings.name}');
         }
 
         if (!route.didPop(result)) {
@@ -40,21 +42,21 @@ class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
 
   // Метод goToProfile добавляет страницу профиля в стек навигатора
   void pushToProfileRoute() {
-    l.d('-- AppRouterDelegate goToProfile start');
+    Log.debug('-- goToProfile start');
     _pages.add(UserProfileRoute(routerDelegate: this));
     notifyListeners();
   }
 
   // Метод goToHome возвращает пользователя на домашнюю страницу, очищая стек страниц
   void goToHomeRoute() {
-    l.d('-- AppRouterDelegate goToHome start');
+    Log.debug('-- goToHome start');
     if (_pages.last is HomeRoute) return;
     _pages = [HomeRoute(routerDelegate: this)];
     notifyListeners();
   }
 
   void pushHomeRoute() {
-    l.d('-- AppRouterDelegate pushHomeRoute start');
+    Log.debug('-- pushHomeRoute start');
     _pages.add(HomeRoute(routerDelegate: this));
 
     // if (_pages.last is HomeRoute) return;
@@ -62,14 +64,14 @@ class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
   }
 
   void goToErrorScreen() {
-    l.d('-- AppRouterDelegate goToErrorScreen start');
+    Log.debug('-- goToErrorScreen start');
     _pages = [NotFoundRoute(routerDelegate: this)];
 
     notifyListeners();
   }
 
   void pushToErrorScreen() {
-    l.d('-- AppRouterDelegate pushToErrorScreen start');
+    Log.debug('-- pushToErrorScreen start');
 
     _pages.add(NotFoundRoute(routerDelegate: this));
     notifyListeners();
@@ -82,7 +84,7 @@ class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
   @override
   // Установка начального пути маршрута
   Future<void> setInitialRoutePath(PageRouteConfig configuration) {
-    l.d('-- AppRouterDelegate setInitialRoutePath start --');
+    Log.debug('-- setInitialRoutePath start --');
     // Инициализация начальной страницы
     _pages = [HomeRoute(routerDelegate: this)];
     return setNewRoutePath(configuration);
@@ -91,14 +93,14 @@ class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
   @override
   // Восстановление пути маршрута после восстановления состояния
   Future<void> setRestoredRoutePath(PageRouteConfig configuration) {
-    l.d('-- AppRouterDelegate setRestoredRoutePath start --');
+    Log.debug('-- setRestoredRoutePath start --');
     return setNewRoutePath(configuration);
   }
 
   @override
   // Установка нового пути маршрута
   Future<void> setNewRoutePath(PageRouteConfig configuration) async {
-    l.d('-- AppRouterDelegate setNewRoutePath start');
+    Log.debug('-- setNewRoutePath start');
     // Очищаем стек и добавляем нужную страницу в зависимости от конфигурации
     // _pages.clear();
 
@@ -119,7 +121,7 @@ class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
   @override
   // Метод popRoute обрабатывает нажатие кнопки "назад"
   Future<bool> popRoute() {
-    l.d('-- AppRouterDelegate popRoute start --');
+    Log.debug('-- popRoute start --');
     if (_pages.length > 1) {
       _pages.removeLast();
       notifyListeners();
@@ -131,7 +133,7 @@ class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
   @override
   // Получение текущей конфигурации маршрута
   PageRouteConfig? get currentConfiguration {
-    l.d('-- AppRouterDelegate currentConfiguration get --');
+    Log.debug('-- currentConfiguration get --');
     // Определяем текущую конфигурацию, исходя из последней страницы в стеке
     if (_pages.isNotEmpty) {
       if (_pages.last is UserProfileRoute) {

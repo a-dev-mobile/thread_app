@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:thread/src/common/util/app_zone.dart';
 import 'package:thread/src/common/util/error_util.dart';
 import 'package:thread/src/common/widget/app.dart';

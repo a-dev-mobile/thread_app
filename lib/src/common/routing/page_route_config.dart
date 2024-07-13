@@ -1,5 +1,7 @@
-// Конфигурация маршрута приложения
-import 'package:thread/src/common/log/l.dart';
+
+import 'package:thread/src/common/log/log_setup%20copy%202.dart';
+
+
 
 class PageRouteConfig {
   final bool isProfilePage;
@@ -10,18 +12,18 @@ class PageRouteConfig {
 
   // Фабричные методы для различных конфигураций
   static PageRouteConfig profile() {
-    l.d('-- AppConfiguration profile start');
+     Log.debug('-- profile start');
 
     return PageRouteConfig(isProfilePage: true, isHomePage: false, isNoFoundPage: false);
   }
 
   static PageRouteConfig home() {
-    l.d('-- AppConfiguration home start');
+     Log.debug('-- home start');
     return PageRouteConfig(isHomePage: true, isProfilePage: false, isNoFoundPage: false);
   }
 
   static PageRouteConfig noFound() {
-    l.d('-- AppConfiguration noFound start');
+     Log.debug('-- noFound start');
     return PageRouteConfig(isHomePage: false, isProfilePage: false, isNoFoundPage: true);
   }
 }

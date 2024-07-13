@@ -2,22 +2,15 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:dio_smart_retry/dio_smart_retry.dart';
-
-import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thread/src/common/constant/config.dart';
 import 'package:thread/src/common/constant/pubspec.yaml.g.dart';
-import 'package:thread/src/common/log/l.dart';
-
+import 'package:thread/src/common/log/log_setup%20copy%202.dart';
 import 'package:thread/src/common/model/app_metadata.dart';
 import 'package:thread/src/common/model/dependencies.dart';
 import 'package:thread/src/common/util/dio_proxy.dart';
 import 'package:thread/src/common/util/http_log_interceptor.dart';
-import 'package:thread/src/common/util/log_buffer.dart';
 import 'package:thread/src/common/util/screen_util.dart';
-
-import 'package:thread/src/feature/authentication/data/authentication_repository.dart';
-
 import 'package:thread/src/feature/initialization/data/platform/platform_initialization.dart';
 
 /// Initializes the app and returns a [Dependencies] object
@@ -32,10 +25,10 @@ Future<Dependencies> $initializeDependencies({
       currentStep++;
       final percent = (currentStep * 100 ~/ totalSteps).clamp(0, 100);
       onProgress?.call(percent, step.key);
-      l.v6('Initialization | $currentStep/$totalSteps ($percent%) | "${step.key}"');
+      Log.debug('$currentStep/$totalSteps ($percent%) | "${step.key}"');
       await step.value(dependencies);
     } on Object catch (error, stackTrace) {
-      l.e('Initialization failed at step "${step.key}": $error', stackTrace);
+      Log.error('Initialization failed at step "${step.key}": $error', error, stackTrace);
       Error.throwWithStackTrace('Initialization failed at step "${step.key}": $error', stackTrace);
     }
   }
@@ -65,7 +58,11 @@ final Map<String, _InitializationStep> _initializationSteps = <String, _Initiali
   'Initializing analytics': (_) {},
   'Log app open': (_) {},
   'Get remote config': (_) {},
-  'Restore settings': (_) {},
+  'Restore settings': (_) {
+    Log.info('3Application initialized successfully.');
+    Log.debug('2Application initialized successfully.');
+    Log.error('1Application initialized successfully.');
+  },
   'Initialize shared preferences': (dependencies) async =>
       dependencies.sharedPreferences = await SharedPreferences.getInstance(),
   'API Client': (dependencies) => dependencies.dio = Dio(
@@ -83,9 +80,9 @@ final Map<String, _InitializationStep> _initializationSteps = <String, _Initiali
   'Add API interceptors': (dependencies) {
     dependencies.dio.interceptors.addAll(<Interceptor>[
       const HttpLogInterceptor(),
-      // TODO(plugfox): add sentry interceptor
-      // TODO(plugfox): save all requests to database
-      // TODO(plugfox): add cache interceptor
+      // TODO: add sentry interceptor
+      // TODO: save all requests to database
+      // TODO: add cache interceptor
       /* AuthenticationInterceptor(
         token: () => authenticator.user.sessionId ?? (throw StateError('User is not logged in')),
         logout: () => Future<void>.sync(authenticator.logOut),
@@ -94,7 +91,7 @@ final Map<String, _InitializationStep> _initializationSteps = <String, _Initiali
       ), */
       RetryInterceptor(
         dio: dependencies.dio,
-        logPrint: (message) => l.w('RetryInterceptor | API | $message'),
+        logPrint: (message) => Log.warning('RetryInterceptor | API | $message'),
         retries: 3, // retry count (optional)
         retryDelays: const <Duration>[
           Duration(seconds: 1), // wait 1 sec before first retry
