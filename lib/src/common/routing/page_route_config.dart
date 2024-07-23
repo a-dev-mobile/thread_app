@@ -1,7 +1,4 @@
-
-import 'package:thread/src/common/log/log_setup%20copy%202.dart';
-
-
+import 'package:thread/src/common/log/l_setup.dart';
 
 class PageRouteConfig {
   final bool isProfilePage;
@@ -12,18 +9,18 @@ class PageRouteConfig {
 
   // Фабричные методы для различных конфигураций
   static PageRouteConfig profile() {
-     Log.debug('-- profile start');
+    L.d('-- profile start');
 
     return PageRouteConfig(isProfilePage: true, isHomePage: false, isNoFoundPage: false);
   }
 
   static PageRouteConfig home() {
-     Log.debug('-- home start');
+    L.d('-- home start');
     return PageRouteConfig(isHomePage: true, isProfilePage: false, isNoFoundPage: false);
   }
 
   static PageRouteConfig noFound() {
-     Log.debug('-- noFound start');
+    L.d('-- noFound start');
     return PageRouteConfig(isHomePage: false, isProfilePage: false, isNoFoundPage: true);
   }
 }

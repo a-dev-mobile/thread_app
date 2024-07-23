@@ -5,7 +5,7 @@ import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thread/src/common/constant/config.dart';
 import 'package:thread/src/common/constant/pubspec.yaml.g.dart';
-import 'package:thread/src/common/log/log_setup%20copy%202.dart';
+import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/model/app_metadata.dart';
 import 'package:thread/src/common/model/dependencies.dart';
 import 'package:thread/src/common/util/dio_proxy.dart';
@@ -25,10 +25,10 @@ Future<Dependencies> $initializeDependencies({
       currentStep++;
       final percent = (currentStep * 100 ~/ totalSteps).clamp(0, 100);
       onProgress?.call(percent, step.key);
-      Log.debug('$currentStep/$totalSteps ($percent%) | "${step.key}"');
+      L.d('$currentStep/$totalSteps ($percent%) | "${step.key}"');
       await step.value(dependencies);
     } on Object catch (error, stackTrace) {
-      Log.error('Initialization failed at step "${step.key}": $error', error, stackTrace);
+      L.e('Initialization failed at step "${step.key}": $error', error: error, stackTrace: stackTrace);
       Error.throwWithStackTrace('Initialization failed at step "${step.key}": $error', stackTrace);
     }
   }
@@ -59,9 +59,9 @@ final Map<String, _InitializationStep> _initializationSteps = <String, _Initiali
   'Log app open': (_) {},
   'Get remote config': (_) {},
   'Restore settings': (_) {
-    Log.info('3Application initialized successfully.');
-    Log.debug('2Application initialized successfully.');
-    Log.error('1Application initialized successfully.');
+    L.i('3Application initialized successfully.');
+    L.d('2Application initialized successfully.');
+    L.e('1Application initialized successfully.');
   },
   'Initialize shared preferences': (dependencies) async =>
       dependencies.sharedPreferences = await SharedPreferences.getInstance(),
@@ -91,7 +91,7 @@ final Map<String, _InitializationStep> _initializationSteps = <String, _Initiali
       ), */
       RetryInterceptor(
         dio: dependencies.dio,
-        logPrint: (message) => Log.warning('RetryInterceptor | API | $message'),
+        logPrint: (message) => L.t('RetryInterceptor | API | $message'),
         retries: 3, // retry count (optional)
         retryDelays: const <Duration>[
           Duration(seconds: 1), // wait 1 sec before first retry

@@ -1,11 +1,9 @@
 // Маршрут для страницы профиля
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
-import 'package:thread/src/common/log/log_setup%20copy%202.dart';
+import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/routing/app_router_delegate.dart';
 import 'package:thread/src/feature/user_profile/user_profile_screen.dart';
-
-
 
 class UserProfileRoute extends Page {
   final AppRouterDelegate routerDelegate;
@@ -19,7 +17,7 @@ class UserProfileRoute extends Page {
   // будет создаваться новый экземпляр виджета, что гарантирует обновление данных на странице.
   // Это полезно для случаев, когда данные пользователя могут изменяться и должны обновляться.
   Route createRoute(BuildContext context) {
-     Log.debug('-- createRoute start');
+    L.d('-- createRoute start');
     return MaterialPageRoute(
       settings: this,
       builder: (BuildContext context) => UserProfilePage(

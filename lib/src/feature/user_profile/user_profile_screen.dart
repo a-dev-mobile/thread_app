@@ -1,16 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
 import 'package:thread/src/common/constant/config.dart';
-import 'package:thread/src/common/log/log_setup%20copy%202.dart';
+import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/routing/app_router_delegate.dart';
 import 'package:thread/src/feature/user_profile/user_profile_model.dart';
 
 part 'user_profile_bloc.dart';
 part 'user_profile_manager.dart';
-
-
 
 class UserProfilePage extends StatefulWidget {
   final AppRouterDelegate routerDelegate;
@@ -42,7 +39,7 @@ class _UserProfilePageState extends State<UserProfilePage> with AutomaticKeepAli
   @override
   Widget build(BuildContext context) {
     super.build(context);
-     Log.debug('-- build start');
+    L.d('-- build start');
     return Scaffold(
       appBar: AppBar(
         title: const Text("Профиль пользователя"),
@@ -60,19 +57,19 @@ class _UserProfilePageState extends State<UserProfilePage> with AutomaticKeepAli
             ),
             ElevatedButton(
               onPressed: () => bloc.updateUserName("Jane Doe"),
-              child: const Text('Change Name 1'),
+              child: const Text('Change Name to Jane Doe'),
             ),
             ElevatedButton(
-              onPressed: () => bloc.updateUserName("Doe Jane "),
-              child: const Text('Change Name 2'),
+              onPressed: () => bloc.updateUserName("Doe Jane"),
+              child: const Text('Change Name to Doe Jane'),
             ),
             ElevatedButton(
               onPressed: () => bloc.updateUserAge(28),
-              child: const Text('Change Age'),
+              child: const Text('Change Age to 28'),
             ),
             ElevatedButton(
               onPressed: () => bloc.updateUserAge(29),
-              child: const Text('Change Age'),
+              child: const Text('Change Age to 29'),
             ),
             ElevatedButton(
               onPressed: () {
@@ -86,90 +83,7 @@ class _UserProfilePageState extends State<UserProfilePage> with AutomaticKeepAli
               child: const Text('добавить страницу домой'),
             ),
             const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
+           
             const Text(Config.proxyUrl),
           ],
         ),

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:thread/src/common/constant/config.dart';
-import 'package:thread/src/common/log/log_setup%20copy%202.dart';
+import 'package:thread/src/common/log/l_setup.dart';
 /* import 'package:database/database.dart'; */
 import 'package:thread/src/common/model/dependencies.dart';
 import 'package:thread/src/common/util/error_util.dart';
@@ -27,10 +27,7 @@ Future<Dependencies> $initializeApp({
             DeviceOrientation.portraitUp,
             DeviceOrientation.portraitDown,
           ]); */
-        Log.initialize(
-          packagePrefix: Config.packagePrefix,
-          basePath: Config.basePath,
-        );
+
 
         await _catchExceptions();
         final dependencies = await $initializeDependencies(onProgress: onProgress).timeout(const Duration(minutes: 7));

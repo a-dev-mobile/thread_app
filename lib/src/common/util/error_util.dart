@@ -2,9 +2,7 @@
 
 import 'dart:async';
 
-import 'package:logging/logging.dart';
-import 'package:thread/src/common/log/log_setup%20copy%202.dart';
-
+import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/util/platform/error_util_vm.dart'
     // ignore: uri_does_not_exist
     if (dart.library.html) 'package:flutter_template_name/src/common/util/platform/error_util_js.dart';
@@ -29,12 +27,12 @@ abstract final class ErrorUtil {
         );
       }
       $captureException(exception, stackTrace, hint, fatal).ignore();
-      Log.error('Exception: $exception', exception, stackTrace);
+      L.e('Exception: $exception', error: exception, stackTrace: stackTrace);
     } on Object catch (error, stackTrace) {
-      Log.error(
+      L.e(
         'Error while logging error "$error" inside ErrorUtil.logError',
-        error,
-        stackTrace,
+        error: error,
+        stackTrace: stackTrace,
       );
     }
   }
@@ -48,16 +46,16 @@ abstract final class ErrorUtil {
   }) async {
     try {
       if (warning) {
-        Log.warning(message, stackTrace ?? StackTrace.current);
+        L.t(message, stackTrace: stackTrace ?? StackTrace.current);
       } else {
-        Log.info(message, stackTrace ?? StackTrace.current);
+        L.i(message, stackTrace: stackTrace ?? StackTrace.current);
       }
       $captureMessage(message, stackTrace, hint, warning).ignore();
     } on Object catch (error, stackTrace) {
-      Log.error(
+      L.e(
         'Error while logging message "$error" inside ErrorUtil.logMessage',
-        error,
-        stackTrace,
+        error: error,
+        stackTrace: stackTrace,
       );
     }
   }

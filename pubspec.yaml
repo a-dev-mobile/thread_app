@@ -8,7 +8,7 @@ version: 0.0.1+1
 
 environment:
   sdk: '>=3.4.1 <4.0.0'
-  flutter: 3.22.2
+  flutter: 3.22.3
 
 dependencies:
   flutter:
@@ -19,6 +19,7 @@ dependencies:
   # l: ^5.0.0-pre.2
   # logging: ^1.2.0
   # Localization
+  logger: ^2.4.0
   flutter_localizations:
     sdk: flutter
   intl: any
@@ -50,7 +51,6 @@ dev_dependencies:
   # dart run flutter_launcher_icons -f flutter_launcher_icons.yaml
   flutter_launcher_icons: ^0.13.1
   # dart run flutter_native_splash:create --path=flutter_native_splash.yaml
-  flutter_native_splash: ^2.4.1
   build_runner: ^2.4.11
 
 
