@@ -6,13 +6,16 @@ import 'package:thread/src/common/constant/config.dart';
 import 'package:thread/src/common/constant/pubspec.yaml.g.dart';
 import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/routing/app_router_delegate.dart';
+import 'package:thread/src/common/routing/app_router_scope.dart';
+import 'package:thread/src/common/routing/page_route_config.dart';
 import 'package:thread/src/common/widget/common_actions.dart';
 
-class HomeScreen extends StatefulWidget {
-  final AppRouterDelegate routerDelegate;
-  final String title;
+final l = L('HomeScreen');
 
-  const HomeScreen({super.key, required this.routerDelegate, required this.title});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({
+    super.key,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -30,7 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   // 13. Построение пользовательского интерфейса для домашней страницы
   Widget build(BuildContext context) {
-    L.d('-- build start');
+    l.dNoStack('-- build start');
+
+    final appRouterDelegate = AppRouterScope.of(context).routerDelegate;
     return Scaffold(
       appBar: AppBar(),
       body: CustomScrollView(
@@ -51,20 +56,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     '${Config.maxScreenLayoutWidth}',
                   ),
                   ElevatedButton(
-                    onPressed: widget.routerDelegate.pushToProfileRoute,
+                    onPressed: () => appRouterDelegate.push(PageType.profile),
                     child: const Text('добавить страницу профиля'),
                   ),
                   ElevatedButton(
-                    onPressed: widget.routerDelegate.goToErrorScreen,
+                    onPressed: () => appRouterDelegate.push(PageType.notFound),
                     child: const Text('Перейти на страницу ошибки'),
                   ),
                   ElevatedButton(
-                    onPressed: widget.routerDelegate.goToHomeRoute,
-                    child: const Text('Перейти на главную страницу '),
+                    onPressed: () => appRouterDelegate.replace(PageType.home),
+                    child: const Text('Перейти на главную страницу'),
                   ),
                   ElevatedButton(
-                    onPressed: widget.routerDelegate.pushHomeRoute,
-                    child: const Text('добавить главную страницу '),
+                    onPressed: () => appRouterDelegate.push(PageType.home),
+                    child: const Text('добавить главную страницу'),
                   ),
                   Text(
                     '${Config.environment.name} \n have pushed the button this many times:',

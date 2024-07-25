@@ -4,20 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:thread/src/common/constant/config.dart';
 import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/routing/app_router_delegate.dart';
-import 'package:thread/src/feature/user_profile/user_profile_model.dart';
+import 'package:thread/src/common/routing/app_router_scope.dart';
+import 'package:thread/src/common/routing/page_route_config.dart';
+import 'package:thread/src/feature/user/user_profile_model.dart';
 
 part 'user_profile_bloc.dart';
 part 'user_profile_manager.dart';
 
-class UserProfilePage extends StatefulWidget {
-  final AppRouterDelegate routerDelegate;
-  const UserProfilePage({super.key, required this.routerDelegate});
+final l = L('user_profile_screen');
+
+class UserProfileScreen extends StatefulWidget {
+  const UserProfileScreen({super.key});
 
   @override
-  State<UserProfilePage> createState() => _UserProfilePageState();
+  State<UserProfileScreen> createState() => _UserProfileScreenState();
 }
 
-class _UserProfilePageState extends State<UserProfilePage> with AutomaticKeepAliveClientMixin<UserProfilePage> {
+class _UserProfileScreenState extends State<UserProfileScreen> with AutomaticKeepAliveClientMixin<UserProfileScreen> {
   late final _UserProfileBloc bloc;
 
   @override
@@ -27,7 +30,7 @@ class _UserProfilePageState extends State<UserProfilePage> with AutomaticKeepAli
   void initState() {
     super.initState();
 
-    bloc = _UserProfileBloc(initialProfile: const UserProfileModel(name: "John Doe", age: 30));
+    bloc = _UserProfileBloc(initialName: 'test name', initialAge: 30);
   }
 
   @override
@@ -37,9 +40,24 @@ class _UserProfilePageState extends State<UserProfilePage> with AutomaticKeepAli
   }
 
   @override
+  void didChangeDependencies() {
+    l.dNoStack('didChangeDependencies');
+    super.didChangeDependencies();
+  }
+
+  @override
+  void didUpdateWidget(covariant UserProfileScreen oldWidget) {
+    l.dNoStack('didUpdateWidget');
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
     super.build(context);
-    L.d('-- build start');
+    l.dNoStack('-- build start');
+
+    final appRouterScope = AppRouterScope.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Профиль пользователя"),
@@ -49,10 +67,17 @@ class _UserProfilePageState extends State<UserProfilePage> with AutomaticKeepAli
           children: [
             const Text("Здесь будет информация о пользователе"),
             const Text(Config.proxyUrl),
-            ValueListenableBuilder<UserProfileModel>(
-              valueListenable: bloc.userProfileNotifier,
-              builder: (context, profile, child) {
-                return Text('Name: ${profile.name}, Age: ${profile.age}', style: const TextStyle(fontSize: 24));
+            ValueListenableBuilder(
+              valueListenable: bloc.userStringNotifier,
+              builder: (context, name, child) {
+                return Text('Name: $name', style: const TextStyle(fontSize: 24));
+              },
+            ),
+            const Text(Config.proxyUrl),
+            ValueListenableBuilder(
+              valueListenable: bloc.userAgeNotifier,
+              builder: (context, age, child) {
+                return Text('Age: $age', style: const TextStyle(fontSize: 24));
               },
             ),
             ElevatedButton(
@@ -73,17 +98,16 @@ class _UserProfilePageState extends State<UserProfilePage> with AutomaticKeepAli
             ),
             ElevatedButton(
               onPressed: () {
-                widget.routerDelegate.pushToErrorScreen();
+                appRouterScope.routerDelegate.push(PageType.notFound);
               },
               child: const Text('добавить страницу ошибки и очистить сохраненые данные'),
             ),
             const Text(Config.proxyUrl),
             ElevatedButton(
-              onPressed: widget.routerDelegate.pushHomeRoute,
+              onPressed: () => appRouterScope.routerDelegate.push(PageType.home),
               child: const Text('добавить страницу домой'),
             ),
             const Text(Config.proxyUrl),
-           
             const Text(Config.proxyUrl),
           ],
         ),

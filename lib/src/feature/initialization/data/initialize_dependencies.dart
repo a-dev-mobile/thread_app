@@ -13,6 +13,7 @@ import 'package:thread/src/common/util/http_log_interceptor.dart';
 import 'package:thread/src/common/util/screen_util.dart';
 import 'package:thread/src/feature/initialization/data/platform/platform_initialization.dart';
 
+final l = L('initialize_dependencies');
 /// Initializes the app and returns a [Dependencies] object
 Future<Dependencies> $initializeDependencies({
   void Function(int progress, String message)? onProgress,
@@ -25,10 +26,10 @@ Future<Dependencies> $initializeDependencies({
       currentStep++;
       final percent = (currentStep * 100 ~/ totalSteps).clamp(0, 100);
       onProgress?.call(percent, step.key);
-      L.d('$currentStep/$totalSteps ($percent%) | "${step.key}"');
+      l.dNoStack('$currentStep/$totalSteps ($percent%) | "${step.key}"');
       await step.value(dependencies);
     } on Object catch (error, stackTrace) {
-      L.e('Initialization failed at step "${step.key}": $error', error: error, stackTrace: stackTrace);
+      l.e('Initialization failed at step "${step.key}": $error', error: error, stackTrace: stackTrace);
       Error.throwWithStackTrace('Initialization failed at step "${step.key}": $error', stackTrace);
     }
   }
@@ -59,9 +60,9 @@ final Map<String, _InitializationStep> _initializationSteps = <String, _Initiali
   'Log app open': (_) {},
   'Get remote config': (_) {},
   'Restore settings': (_) {
-    L.i('3Application initialized successfully.');
-    L.d('2Application initialized successfully.');
-    L.e('1Application initialized successfully.');
+    l.iNoStack('3Application initialized info.');
+    l.dNoStack('2Application initialized debug.');
+    l.e('1Application initialized error.');
   },
   'Initialize shared preferences': (dependencies) async =>
       dependencies.sharedPreferences = await SharedPreferences.getInstance(),
@@ -91,7 +92,7 @@ final Map<String, _InitializationStep> _initializationSteps = <String, _Initiali
       ), */
       RetryInterceptor(
         dio: dependencies.dio,
-        logPrint: (message) => L.t('RetryInterceptor | API | $message'),
+        logPrint: (message) => l.tNoStack('RetryInterceptor | API | $message'),
         retries: 3, // retry count (optional)
         retryDelays: const <Duration>[
           Duration(seconds: 1), // wait 1 sec before first retry

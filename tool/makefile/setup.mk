@@ -2,11 +2,11 @@
 
 # https://pub.dev/packages/flutter_launcher_icons
 icon:
-	dart run flutter_launcher_icons -f flutter_launcher_icons.yaml
+	$(DART) run flutter_launcher_icons -f flutter_launcher_icons.yaml
 
 # https://pub.dev/packages/flutter_native_splash
 splash:
-	dart run flutter_native_splash:create --path=flutter_native_splash.yaml
+	$(DART) run flutter_native_splash:create
 
 init-firebase:
 	npm install -g firebase-tools

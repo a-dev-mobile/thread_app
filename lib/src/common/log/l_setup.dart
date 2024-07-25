@@ -1,70 +1,70 @@
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 
+class CustomPrinter extends LogPrinter {
+  final String className;
+  final LogPrinter original;
+
+  CustomPrinter(this.className, this.original);
+
+  @override
+  List<String> log(LogEvent event) {
+    var output = original.log(event);
+    return output.map((line) => '[$className] $line').toList();
+  }
+}
+
 class L {
-  static late Logger _logger;
+  final Logger _logger;
+  final Logger _loggerNoStack;
 
-  // Метод для инициализации логгера с дополнительными параметрами
-  static void init({bool includeStackTrace = false, Level logLevel = Level.debug}) {
-    _logger = Logger(
-      printer: PrettyPrinter(
-        methodCount: 2,
-        errorMethodCount: 8,
-        lineLength: 120,
-        colors: true,
-        printEmojis: true,
-        dateTimeFormat: DateTimeFormat.onlyTimeAndSinceStart,
-      ),
-      filter: CustomLogFilter(logLevel: logLevel),
-      output: includeStackTrace ? ConsoleOutputWithStackTrace() : ConsoleOutput(),
-    );
+  L(String className)
+      : _logger = Logger(
+          printer: CustomPrinter(className, PrettyPrinter()),
+        ),
+        _loggerNoStack = Logger(
+          printer: CustomPrinter(className, PrettyPrinter(methodCount: 0)),
+        );
+
+  // Методы для логирования с стеком
+  void d(dynamic message, {dynamic error, StackTrace? stackTrace}) {
+    _logger.d(message, error: error, stackTrace: stackTrace ?? StackTrace.current);
   }
 
-  // Методы для логирования
-  static void d(dynamic message, {dynamic error, StackTrace? stackTrace}) {
-    _logger.d(message, error: error, stackTrace: stackTrace);
+  void i(dynamic message, {dynamic error, StackTrace? stackTrace}) {
+    _logger.i(message, error: error, stackTrace: stackTrace ?? StackTrace.current);
   }
 
-  static void i(dynamic message, {dynamic error, StackTrace? stackTrace}) {
-    _logger.i(message, error: error, stackTrace: stackTrace);
+  void w(dynamic message, {dynamic error, StackTrace? stackTrace}) {
+    _logger.w(message, error: error, stackTrace: stackTrace ?? StackTrace.current);
   }
 
-  static void w(dynamic message, {dynamic error, StackTrace? stackTrace}) {
-    _logger.w(message, error: error, stackTrace: stackTrace);
+  void e(dynamic message, {dynamic error, StackTrace? stackTrace}) {
+    _logger.e(message, error: error, stackTrace: stackTrace ?? StackTrace.current);
   }
 
-  static void e(dynamic message, {dynamic error, StackTrace? stackTrace}) {
-    _logger.e(message, error: error, stackTrace: stackTrace);
+  void t(dynamic message, {dynamic error, StackTrace? stackTrace}) {
+    _logger.v(message, error: error, stackTrace: stackTrace ?? StackTrace.current);
   }
 
-  static void t(dynamic message, {dynamic error, StackTrace? stackTrace}) {
-    _logger.t(message, error: error, stackTrace: stackTrace);
+  // Методы для логирования без стека
+  void dNoStack(dynamic message, {dynamic error}) {
+    _loggerNoStack.d(message, error: error);
   }
-}
 
-class CustomLogFilter extends LogFilter {
-  final Level logLevel;
-
-  CustomLogFilter({required this.logLevel});
-
-  @override
-  bool shouldLog(LogEvent event) {
-    return event.level.index >= logLevel.index;
+  void iNoStack(dynamic message, {dynamic error}) {
+    _loggerNoStack.i(message, error: error);
   }
-}
 
-class ConsoleOutputWithStackTrace extends LogOutput {
-  @override
-  void output(OutputEvent event) {
-    for (var line in event.lines) {
-      if (kDebugMode) {
-        print(line);
-      }
-    }
-    if (event.lines.isNotEmpty && event.lines.first.contains('ERROR')) {
-      if (kDebugMode) {
-        print(StackTrace.current);
-      }
-    }
+  void wNoStack(dynamic message, {dynamic error}) {
+    _loggerNoStack.w(message, error: error);
+  }
+
+  void eNoStack(dynamic message, {dynamic error}) {
+    _loggerNoStack.e(message, error: error);
+  }
+
+  void tNoStack(dynamic message, {dynamic error}) {
+    _loggerNoStack.v(message, error: error);
   }
 }

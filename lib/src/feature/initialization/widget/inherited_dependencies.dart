@@ -21,6 +21,11 @@ class InheritedDependencies extends InheritedWidget {
       (context.getElementForInheritedWidgetOfExactType<InheritedDependencies>()?.widget as InheritedDependencies?)
           ?.dependencies;
 
+  static void debug(BuildContext context) {
+    final dependencies = of(context);
+    debugPrint('InheritedDependencies holds: $dependencies');
+  }
+
   static Never _notFoundInheritedWidgetOfExactType() => throw ArgumentError(
         'Out of scope, not found inherited widget '
             'a InheritedDependencies of the exact type',

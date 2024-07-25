@@ -6,7 +6,8 @@ import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/routing/app_back_button_dispatcher.dart';
 import 'package:thread/src/common/routing/app_route_information_parser.dart';
 import 'package:thread/src/common/routing/app_router_delegate.dart';
-
+import 'package:thread/src/common/routing/app_router_scope.dart';
+final l = L('App');
 /// Виджет приложения.
 class App extends StatefulWidget {
   const App({super.key});
@@ -23,22 +24,27 @@ class _AppState extends State<App> {
   @override
   // 2. Построение виджета приложения с использованием MaterialApp.router
   Widget build(BuildContext context) {
-    L.d('-- build start');
+    l.dNoStack('-- build start');
 
-    return MaterialApp.router(
-      title: 'Application',
-      debugShowCheckedModeBanner: !Config.environment.isProduction,
-      localizationsDelegates: const <LocalizationsDelegate<Object?>>[
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        Localization.delegate,
-      ],
-      supportedLocales: Localization.supportedLocales,
-      routerDelegate: _routerDelegate, // 3. Назначение делегата маршрутизатора
-      routeInformationParser: _routeInformationParser, // 4. Назначение парсера информации о маршруте
-      backButtonDispatcher: AppBackButtonDispatcher(_routerDelegate),
-      theme: ThemeData.dark(),
+    return AppRouterScope(
+      routerDelegate: _routerDelegate, // 3. Назначение делегата маршрутизатор,
+      routeInformationParser: _routeInformationParser,
+      
+      child: MaterialApp.router(
+        title: 'Application',
+        debugShowCheckedModeBanner: !Config.environment.isProduction,
+        localizationsDelegates: const <LocalizationsDelegate<Object?>>[
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          Localization.delegate,
+        ],
+        supportedLocales: Localization.supportedLocales,
+        routerDelegate: _routerDelegate, // 3. Назначение делегата маршрутизатора
+        routeInformationParser: _routeInformationParser, // 4. Назначение парсера информации о маршруте
+        backButtonDispatcher: AppBackButtonDispatcher(_routerDelegate),
+        theme: ThemeData.dark(),
+      ),
     );
   }
 }

@@ -6,14 +6,13 @@ SCRIPT_PATH := ".vscode/generate-directory-tree.sh"
 tree: tree-all
 
 tree-all:
-	@sh $(SCRIPT_PATH) all
+	@bash $(SCRIPT_PATH) all
 
 tree-count:
-	@sh $(SCRIPT_PATH) count
+	@bash $(SCRIPT_PATH) count
 
 tree-content:
-	@sh $(SCRIPT_PATH) content
+	@bash $(SCRIPT_PATH) content
 
 tree-structure:
-	@sh $(SCRIPT_PATH) structure
-
+	@bash $(SCRIPT_PATH) structure

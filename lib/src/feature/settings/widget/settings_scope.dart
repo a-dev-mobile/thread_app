@@ -18,6 +18,12 @@ class SettingsScope extends StatefulWidget {
 
   @override
   State<SettingsScope> createState() => _SettingsScopeState();
+
+
+  static void debug(BuildContext context) {
+    final theme = themeOf(context, listen: false);
+    debugPrint('SettingsScope holds theme: ${theme.brightness}');
+  }
 }
 
 /// State for widget SettingsScope.

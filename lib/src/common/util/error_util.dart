@@ -8,7 +8,7 @@ import 'package:thread/src/common/util/platform/error_util_vm.dart'
     if (dart.library.html) 'package:flutter_template_name/src/common/util/platform/error_util_js.dart';
 
 /// Error util.
-
+final l = L('error_util');
 abstract final class ErrorUtil {
   /// Log the error to the console and to Crashlytics.
   static Future<void> logError(
@@ -27,9 +27,9 @@ abstract final class ErrorUtil {
         );
       }
       $captureException(exception, stackTrace, hint, fatal).ignore();
-      L.e('Exception: $exception', error: exception, stackTrace: stackTrace);
+      l.e('Exception: $exception', error: exception, stackTrace: stackTrace);
     } on Object catch (error, stackTrace) {
-      L.e(
+      l.e(
         'Error while logging error "$error" inside ErrorUtil.logError',
         error: error,
         stackTrace: stackTrace,
@@ -46,13 +46,13 @@ abstract final class ErrorUtil {
   }) async {
     try {
       if (warning) {
-        L.t(message, stackTrace: stackTrace ?? StackTrace.current);
+        l.t(message, stackTrace: stackTrace ?? StackTrace.current);
       } else {
-        L.i(message, stackTrace: stackTrace ?? StackTrace.current);
+        l.i(message, stackTrace: stackTrace ?? StackTrace.current);
       }
       $captureMessage(message, stackTrace, hint, warning).ignore();
     } on Object catch (error, stackTrace) {
-      L.e(
+      l.e(
         'Error while logging message "$error" inside ErrorUtil.logMessage',
         error: error,
         stackTrace: stackTrace,
