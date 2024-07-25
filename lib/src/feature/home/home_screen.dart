@@ -5,12 +5,14 @@ import 'package:logging/logging.dart';
 import 'package:thread/src/common/constant/config.dart';
 import 'package:thread/src/common/constant/pubspec.yaml.g.dart';
 import 'package:thread/src/common/log/l_setup.dart';
+import 'package:thread/src/common/model/dependencies.dart';
 import 'package:thread/src/common/routing/app_router_delegate.dart';
 import 'package:thread/src/common/routing/app_router_scope.dart';
 import 'package:thread/src/common/routing/page_route_config.dart';
 import 'package:thread/src/common/widget/common_actions.dart';
+import 'package:thread/src/feature/settings/widget/settings_scope.dart';
 
-final l = L('HomeScreen');
+final l = L('home_screen');
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -33,9 +35,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   // 13. Построение пользовательского интерфейса для домашней страницы
   Widget build(BuildContext context) {
-    l.dNoStack('-- build start');
+    l.dNoStack('-- qbuild start');
 
-    final appRouterDelegate = AppRouterScope.of(context).routerDelegate;
+    final appRouterDelegate = Dependencies.of(context).routerDelegate;
     return Scaffold(
       appBar: AppBar(),
       body: CustomScrollView(
@@ -54,6 +56,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: <Widget>[
                   const Text(
                     '${Config.maxScreenLayoutWidth}',
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      SettingsScope.of(context).toggleTheme();
+                    },
+                    child: const Text("Change Theme"),
                   ),
                   ElevatedButton(
                     onPressed: () => appRouterDelegate.push(PageType.profile),

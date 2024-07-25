@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:thread/src/common/constant/config.dart';
 import 'package:thread/src/common/log/l_setup.dart';
+import 'package:thread/src/common/model/dependencies.dart';
 import 'package:thread/src/common/routing/app_router_delegate.dart';
 import 'package:thread/src/common/routing/app_router_scope.dart';
 import 'package:thread/src/common/routing/page_route_config.dart';
@@ -56,8 +57,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> with AutomaticKee
     super.build(context);
     l.dNoStack('-- build start');
 
-    final appRouterScope = AppRouterScope.of(context);
 
+   final routerDelegate = Dependencies.of(context).routerDelegate;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Профиль пользователя"),
@@ -98,13 +99,13 @@ class _UserProfileScreenState extends State<UserProfileScreen> with AutomaticKee
             ),
             ElevatedButton(
               onPressed: () {
-                appRouterScope.routerDelegate.push(PageType.notFound);
+                routerDelegate.push(PageType.notFound);
               },
               child: const Text('добавить страницу ошибки и очистить сохраненые данные'),
             ),
             const Text(Config.proxyUrl),
             ElevatedButton(
-              onPressed: () => appRouterScope.routerDelegate.push(PageType.home),
+              onPressed: () => routerDelegate.push(PageType.home),
               child: const Text('добавить страницу домой'),
             ),
             const Text(Config.proxyUrl),

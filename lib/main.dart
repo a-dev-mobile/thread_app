@@ -2,15 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/model/dependencies.dart';
-
 import 'package:thread/src/common/util/error_util.dart';
 import 'package:thread/src/common/widget/app.dart';
 import 'package:thread/src/common/widget/app_error.dart';
 import 'package:thread/src/feature/initialization/data/initialization.dart';
 import 'package:thread/src/feature/initialization/widget/inherited_dependencies.dart';
 import 'package:thread/src/feature/settings/widget/settings_scope.dart';
-import 'package:thread/src/common/log/l_setup.dart';
 
 final l = L('main');
 
@@ -32,9 +31,7 @@ void main() {
           runApp(
             InheritedDependencies(
               dependencies: dependencies,
-              child: const SettingsScope(
-                child: App(),
-              ),
+              child: const App(),
             ),
           );
         },
@@ -42,11 +39,11 @@ void main() {
         FlutterNativeSplash.remove(); // Убираем сплэш-экран в случае ошибки
         ErrorUtil.logError(error, stackTrace).ignore();
         runApp(AppError(error: error));
-        
+
         // Return a placeholder Dependencies object
         return Dependencies(
-          // Provide appropriate default values for Dependencies
-        );
+            // Provide appropriate default values for Dependencies
+            );
       });
     },
     (error, stackTrace) {

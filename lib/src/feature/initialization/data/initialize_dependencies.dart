@@ -1,19 +1,16 @@
 import 'dart:async';
 
-import 'package:dio/dio.dart';
-import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:thread/src/common/constant/config.dart';
-import 'package:thread/src/common/constant/pubspec.yaml.g.dart';
 import 'package:thread/src/common/log/l_setup.dart';
-import 'package:thread/src/common/model/app_metadata.dart';
+import 'package:thread/src/common/model/app_metadata_initialization.dart';
 import 'package:thread/src/common/model/dependencies.dart';
-import 'package:thread/src/common/util/dio_proxy.dart';
-import 'package:thread/src/common/util/http_log_interceptor.dart';
-import 'package:thread/src/common/util/screen_util.dart';
+import 'package:thread/src/common/network/network_initialization.dart';
+import 'package:thread/src/common/routing/app_route_information_parser.dart';
+import 'package:thread/src/common/routing/app_router_delegate.dart';
 import 'package:thread/src/feature/initialization/data/platform/platform_initialization.dart';
 
 final l = L('initialize_dependencies');
+
 /// Initializes the app and returns a [Dependencies] object
 Future<Dependencies> $initializeDependencies({
   void Function(int progress, String message)? onProgress,
@@ -21,6 +18,7 @@ Future<Dependencies> $initializeDependencies({
   final dependencies = Dependencies();
   final totalSteps = _initializationSteps.length;
   var currentStep = 0;
+
   for (final step in _initializationSteps.entries) {
     try {
       currentStep++;
@@ -38,70 +36,22 @@ Future<Dependencies> $initializeDependencies({
 
 typedef _InitializationStep = FutureOr<void> Function(Dependencies dependencies);
 final Map<String, _InitializationStep> _initializationSteps = <String, _InitializationStep>{
-  'Platform pre-initialization': (_) => $platformInitialization(),
-  'Creating app metadata': (dependencies) => dependencies.metadata = AppMetadata(
-        isWeb: false,
-        isRelease: false,
-        appName: Pubspec.name,
-        appVersion: Pubspec.version.representation,
-        appVersionMajor: Pubspec.version.major,
-        appVersionMinor: Pubspec.version.minor,
-        appVersionPatch: Pubspec.version.patch,
-        appBuildTimestamp:
-            Pubspec.version.build.isNotEmpty ? (int.tryParse(Pubspec.version.build.firstOrNull ?? '-1') ?? -1) : -1,
-        operatingSystem: ' platform.operatingSystem.name',
-        processorsCount: 7777,
-        appLaunchedTimestamp: DateTime.now(),
-        locale: 'platform.locale',
-        deviceVersion: 'platform.version',
-        deviceScreenSize: ScreenUtil.screenSize().representation,
-      ),
+  'Platform pre-initialization': (_) => platformInitialization(),
+  'Creating app metadata': initializeAppMetadata, // используем новую функцию
+  'Initializing router delegate': (dependencies) => dependencies.routerDelegate = AppRouterDelegate(),
+  'Initializing route information parser': (dependencies) =>
+      dependencies.routeInformationParser = AppRouteInformationParser(),
   'Initializing analytics': (_) {},
   'Log app open': (_) {},
   'Get remote config': (_) {},
   'Restore settings': (_) {
-    l.iNoStack('3Application initialized info.');
-    l.dNoStack('2Application initialized debug.');
-    l.e('1Application initialized error.');
+    l.iNoStack('Application initialized info.');
+    l.dNoStack('Application initialized debug.');
+    l.e('Application initialized error.');
   },
   'Initialize shared preferences': (dependencies) async =>
       dependencies.sharedPreferences = await SharedPreferences.getInstance(),
-  'API Client': (dependencies) => dependencies.dio = Dio(
-        BaseOptions(
-          baseUrl: Config.apiBaseUrl,
-          connectTimeout: Config.apiConnectTimeout,
-          receiveTimeout: Config.apiReceiveTimeout,
-          headers: <String, String>{
-            /* 'Connection': 'Close', */
-            Headers.acceptHeader: Headers.jsonContentType,
-          },
-          receiveDataWhenStatusError: false, // Don't convert 4XX & 5XX to JSON
-        ),
-      )..useProxy(),
-  'Add API interceptors': (dependencies) {
-    dependencies.dio.interceptors.addAll(<Interceptor>[
-      const HttpLogInterceptor(),
-      // TODO: add sentry interceptor
-      // TODO: save all requests to database
-      // TODO: add cache interceptor
-      /* AuthenticationInterceptor(
-        token: () => authenticator.user.sessionId ?? (throw StateError('User is not logged in')),
-        logout: () => Future<void>.sync(authenticator.logOut),
-        refresh: () => Future<void>.sync(authenticator.refresh),
-        retry: (options) => apiClient.fetch(options),
-      ), */
-      RetryInterceptor(
-        dio: dependencies.dio,
-        logPrint: (message) => l.tNoStack('RetryInterceptor | API | $message'),
-        retries: 3, // retry count (optional)
-        retryDelays: const <Duration>[
-          Duration(seconds: 1), // wait 1 sec before first retry
-          Duration(seconds: 2), // wait 2 sec before second retry
-          Duration(seconds: 10), // wait 3 sec before third retry
-        ],
-      ),
-    ]);
-  },
+  'API Client and Interceptors': initializeNetworkDependencies, // используем новую функцию
   'Initialize localization': (_) {},
   'Log app initialized': (_) {},
 };

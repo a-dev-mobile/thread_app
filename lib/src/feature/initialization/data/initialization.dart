@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:thread/src/common/constant/config.dart';
-import 'package:thread/src/common/log/l_setup.dart';
 /* import 'package:database/database.dart'; */
 import 'package:thread/src/common/model/dependencies.dart';
 import 'package:thread/src/common/util/error_util.dart';
@@ -28,14 +26,13 @@ Future<Dependencies> $initializeApp({
             DeviceOrientation.portraitDown,
           ]); */
 
-
         await _catchExceptions();
         final dependencies = await $initializeDependencies(onProgress: onProgress).timeout(const Duration(minutes: 7));
         await onSuccess?.call(dependencies);
         return dependencies;
       } on Object catch (error, stackTrace) {
         onError?.call(error, stackTrace);
-        // ErrorUtil.logError(error, stackTrace, hint: 'Failed to initialize app').ignore();
+        ErrorUtil.logError(error, stackTrace, hint: 'Failed to initialize app').ignore();
         rethrow;
       } finally {
         stopwatch.stop();

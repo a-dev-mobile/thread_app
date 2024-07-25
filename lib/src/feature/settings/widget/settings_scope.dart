@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:thread/src/common/log/l_setup.dart';
+
+final l = L('settings_scope');
 
 /// {@template settings_scope}
 /// SettingsScope widget.
@@ -13,12 +16,14 @@ class SettingsScope extends StatefulWidget {
   static ThemeData themeOf(BuildContext context, {bool listen = true}) =>
       _InheritedSettingsScope.of(context, listen: listen).scope._theme;
 
+  static SettingsScopeState of(BuildContext context, {bool listen = true}) =>
+      _InheritedSettingsScope.of(context, listen: listen).scope;
+
   /// The widget below this widget in the tree.
   final Widget child;
 
   @override
-  State<SettingsScope> createState() => _SettingsScopeState();
-
+  State<SettingsScope> createState() => SettingsScopeState();
 
   static void debug(BuildContext context) {
     final theme = themeOf(context, listen: false);
@@ -27,7 +32,7 @@ class SettingsScope extends StatefulWidget {
 }
 
 /// State for widget SettingsScope.
-class _SettingsScopeState extends State<SettingsScope> {
+class SettingsScopeState extends State<SettingsScope> {
   ThemeData _theme = _$buildTheme(ThemeData.light());
 
   /* #region Lifecycle */
@@ -52,12 +57,22 @@ class _SettingsScopeState extends State<SettingsScope> {
   }
   /* #endregion */
 
+  void toggleTheme() {
+    l.dNoStack('SettingsScopeState: toggleTheme called');
+    setState(() {
+      _theme = _theme.brightness == Brightness.dark ? _$buildTheme(ThemeData.light()) : _$buildTheme(ThemeData.dark());
+    });
+  }
+
   @override
-  Widget build(BuildContext context) => _InheritedSettingsScope(
-        scope: this,
-        theme: _theme,
-        child: widget.child,
-      );
+  Widget build(BuildContext context) {
+    l.dNoStack('SettingsScope build called');
+    return _InheritedSettingsScope(
+      scope: this,
+      theme: _theme,
+      child: widget.child,
+    );
+  }
 }
 
 /// Inherited widget for quick access in the element tree.
@@ -68,7 +83,7 @@ class _InheritedSettingsScope extends InheritedWidget {
     required super.child,
   });
 
-  final _SettingsScopeState scope;
+  final SettingsScopeState scope;
   final ThemeData theme;
 
   /// The state from the closest instance of this class

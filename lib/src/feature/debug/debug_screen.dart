@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thread/src/common/model/dependencies.dart';
 import 'package:thread/src/common/routing/app_router_scope.dart';
 
 import 'package:thread/src/feature/initialization/widget/inherited_dependencies.dart';
@@ -16,10 +17,7 @@ class DebugScreen extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            ElevatedButton(
-              onPressed: () => AppRouterScope.debug(context),
-              child: const Text('Debug AppRouterScope'),
-            ),
+          
             ElevatedButton(
               onPressed: () => InheritedDependencies.debug(context),
               child: const Text('Debug InheritedDependencies'),
