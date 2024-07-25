@@ -35,7 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   // 13. Построение пользовательского интерфейса для домашней страницы
   Widget build(BuildContext context) {
-    l.dNoStack('-- qbuild start');
+    l.dNoStack('-- build start');
+
 
     final appRouterDelegate = Dependencies.of(context).routerDelegate;
     return Scaffold(

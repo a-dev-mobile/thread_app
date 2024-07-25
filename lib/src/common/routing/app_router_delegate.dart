@@ -8,7 +8,7 @@ import 'package:thread/src/feature/no_found_screen/not_found_screen.dart';
 import 'package:thread/src/feature/user/user_profile_route.dart';
 import 'package:thread/src/feature/user/user_profile_screen.dart';
 
-final l = L('AppRouterDelegate');
+final l = L('app_router_delegate');
 
 class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<PageRouteConfig> {
@@ -65,6 +65,7 @@ class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
   }
 
   Widget _getPageWidget(PageRouteConfig config) {
+     l.dNoStack('-- _getPageWidget --');
     switch (config.pageType) {
       case PageType.home:
         return const HomeScreen();

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thread/src/common/log/l_setup.dart';
 
-final l = L('AppBackButtonDispatcher');
+final l = L('app_back_button_dispatcher');
 
 /// AppBackButtonDispatcher обрабатывает нажатие кнопки "назад".
 class AppBackButtonDispatcher extends RootBackButtonDispatcher {
