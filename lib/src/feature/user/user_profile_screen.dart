@@ -5,7 +5,7 @@ import 'package:thread/src/common/constant/config.dart';
 import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/model/dependencies.dart';
 import 'package:thread/src/common/routing/app_router_delegate.dart';
-import 'package:thread/src/common/routing/app_router_scope.dart';
+
 import 'package:thread/src/common/routing/page_route_config.dart';
 import 'package:thread/src/feature/user/user_profile_model.dart';
 

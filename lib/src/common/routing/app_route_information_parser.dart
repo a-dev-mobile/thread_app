@@ -2,15 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/routing/page_route_config.dart';
+import 'package:thread/src/common/routing/route_paths.dart';
 
-final l = L('AppRouteInformationParser');
-
-class RoutePaths {
-  static const String metricThread = 'metric-thread';
-  static const String profile = 'profile';
-  static const String home = '';
-  static const String notFound = 'notfound';
-}
+final l = L('app_route_information_parser');
 
 class AppRouteInformationParser extends RouteInformationParser<PageRouteConfig> {
   @override
@@ -18,10 +12,15 @@ class AppRouteInformationParser extends RouteInformationParser<PageRouteConfig> 
   Future<PageRouteConfig> parseRouteInformation(RouteInformation routeInformation) {
     final uri = routeInformation.uri;
     final uri2 = uri.pathSegments;
-    final firstSegment = uri.pathSegments.isNotEmpty ? uri.pathSegments.first : RoutePaths.metricThread;
+    var firstSegment = uri.pathSegments.isNotEmpty ? uri.pathSegments.first : RoutePaths.home;
+
+    if (!firstSegment.startsWith('/')) {
+      firstSegment = '/$firstSegment';
+    }
+
     l.dNoStack('-- parseRouteInformation start firstSegment = $firstSegment');
 
-    return SynchronousFuture(getPageConfig(firstSegment));
+    return SynchronousFuture(_getPageConfig(firstSegment));
   }
 
   @override
@@ -31,24 +30,25 @@ class AppRouteInformationParser extends RouteInformationParser<PageRouteConfig> 
 
     switch (configuration.pageType) {
       case PageType.metricThreadType:
-        return RouteInformation(uri: Uri.parse(RoutePaths.metricThread));
+        return RouteInformation(uri: Uri.parse(RoutePaths.metricThreadType));
       case PageType.profile:
         return RouteInformation(uri: Uri.parse(RoutePaths.profile));
-      case PageType.notFound:
-        return RouteInformation(uri: Uri.parse(RoutePaths.notFound));
       case PageType.home:
+        return RouteInformation(uri: Uri.parse(RoutePaths.home));
       default:
-        return RouteInformation(uri: Uri.parse('/'));
+        return RouteInformation(uri: Uri.parse(RoutePaths.notFound));
     }
   }
 
-  PageRouteConfig getPageConfig(String firstSegment) {
+  PageRouteConfig _getPageConfig(String firstSegment) {
     switch (firstSegment) {
-      case RoutePaths.metricThread:
+      case RoutePaths.metricThreadType:
         return PageRouteConfig.metricThreadType();
       case RoutePaths.profile:
         return PageRouteConfig.profile();
-      // Добавьте другие страницы здесь
+      case RoutePaths.home:
+        return PageRouteConfig.home();
+
       default:
         return PageRouteConfig.notFound();
     }
@@ -57,6 +57,7 @@ class AppRouteInformationParser extends RouteInformationParser<PageRouteConfig> 
   @override
   Future<PageRouteConfig> parseRouteInformationWithDependencies(
       RouteInformation routeInformation, BuildContext context) {
+    // при загрузке один из первых
     l.dNoStack('-- parseRouteInformationWithDependencies start --');
     return parseRouteInformation(routeInformation); // Переиспользуем базовый парсер
   }

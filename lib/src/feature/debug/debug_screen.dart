@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thread/src/common/model/dependencies.dart';
-import 'package:thread/src/common/routing/app_router_scope.dart';
+
 
 import 'package:thread/src/feature/initialization/widget/inherited_dependencies.dart';
 import 'package:thread/src/feature/settings/widget/settings_scope.dart';

@@ -7,8 +7,7 @@ import 'package:thread/src/common/model/dependencies.dart';
 import 'package:thread/src/common/routing/app_back_button_dispatcher.dart';
 import 'package:thread/src/common/routing/app_route_information_parser.dart';
 import 'package:thread/src/common/routing/app_router_delegate.dart';
-import 'package:thread/src/common/routing/app_router_scope.dart';
-import 'package:thread/src/common/routing/page_route_config.dart';
+
 import 'package:thread/src/feature/settings/widget/settings_scope.dart';
 
 final l = L('App');
@@ -37,7 +36,7 @@ class _AppState extends State<App> {
   }
 
   @override
-  // 2. Построение виджета приложения с использованием MaterialApp.router
+  // 2. Построение виджета приложения с использованием Router
   Widget build(BuildContext context) {
     l.dNoStack('-- build start');
 

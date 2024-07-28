@@ -9,7 +9,7 @@ import 'package:thread/src/common/constant/pubspec.yaml.g.dart';
 import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/model/dependencies.dart';
 import 'package:thread/src/common/routing/app_router_delegate.dart';
-import 'package:thread/src/common/routing/app_router_scope.dart';
+
 import 'package:thread/src/common/routing/page_route_config.dart';
 import 'package:thread/src/common/widget/common_actions.dart';
 import 'package:thread/src/feature/settings/widget/settings_scope.dart';
@@ -52,6 +52,14 @@ class _HomeScreenState extends State<HomeScreen> {
               '${Config.maxScreenLayoutWidth}',
             ),
             ElevatedButton(
+              onPressed: () => appRouterDelegate.push(PageType.metricThreadType),
+              child: const Text('добавить страницу резьбы'),
+            ),
+                        ElevatedButton(
+              onPressed: () => appRouterDelegate.replace(PageType.metricThreadType),
+              child: const Text('Перейти страницу резьбы'),
+            ),
+            ElevatedButton(
               onPressed: () {
                 SettingsScope.of(context).toggleTheme();
               },
@@ -62,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: const Text('добавить страницу профиля'),
             ),
             ElevatedButton(
-              onPressed: () => appRouterDelegate.push(PageType.notFound),
+              onPressed: () => appRouterDelegate.replace(PageType.notFound),
               child: const Text('Перейти на страницу ошибки'),
             ),
             ElevatedButton(

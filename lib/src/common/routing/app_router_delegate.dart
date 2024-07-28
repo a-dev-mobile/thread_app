@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thread/src/common/log/l_setup.dart';
+import 'package:thread/src/common/routing/page_provider.dart';
 import 'package:thread/src/common/routing/page_route_config.dart';
 import 'package:thread/src/feature/home/home_route.dart';
 import 'package:thread/src/feature/home/home_screen.dart';
@@ -14,6 +15,7 @@ final l = L('app_router_delegate');
 class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<PageRouteConfig> {
   List<Page> _pages = [];
+  PageRouteConfig? _currentConfiguration;
 
   @override
   // Метод build создает виджет Navigator, который управляет стеком страниц
@@ -38,6 +40,12 @@ class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
           return false;
         }
         _pages.removeLast(); // Удаление последней страницы при возврате
+        if (_pages.isNotEmpty) {
+          final lastPage = _pages.last;
+          if (lastPage is MaterialPage && lastPage.arguments is PageRouteConfig) {
+            _updateCurrentConfiguration(lastPage.arguments as PageRouteConfig);
+          }
+        }
         notifyListeners();
         return true;
       },
@@ -47,11 +55,14 @@ class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
   // Метод goToProfile добавляет страницу профиля в стек навигатора
   void push<T>(PageType pageType, {T? arguments}) {
     final config = PageRouteConfig<T>(pageType: pageType, arguments: arguments);
-    _pages.add(MaterialPage(
-      key: ValueKey(config.pageType),
-      child: _getPageWidget(config),
-    ));
-    notifyListeners();
+    _pages.add(
+      MaterialPage(
+        key: ValueKey(config.pageType),
+        child: PageProvider.getPage(config),
+        arguments: config,
+      ),
+    );
+    _updateCurrentConfiguration(config);
   }
 
   void replace<T>(PageType pageType, {T? arguments}) {
@@ -59,29 +70,16 @@ class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
     _pages = [
       MaterialPage(
         key: ValueKey(config.pageType),
-        child: _getPageWidget(config),
+        child: PageProvider.getPage(config),
+        arguments: config,
       )
     ];
-    notifyListeners();
+    _updateCurrentConfiguration(config);
   }
 
-  Widget _getPageWidget(PageRouteConfig config) {
-    l.dNoStack('-- _getPageWidget -- ${config.toString()}');
-    switch (config.pageType) {
-      case PageType.metricThreadType:
-        return const MetricThreadTypeScreen();
-      case PageType.home:
-        return const HomeScreen();
-
-      case PageType.notFound:
-        return const NotFoundScreen();
-
-      case PageType.profile:
-        return const UserProfileScreen();
-      // Добавьте другие страницы здесь
-      default:
-        return const NotFoundScreen();
-    }
+  void _updateCurrentConfiguration(PageRouteConfig config) {
+    _currentConfiguration = config;
+    notifyListeners();
   }
 
   @override
@@ -96,9 +94,11 @@ class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
     _pages = [
       MaterialPage(
         key: ValueKey(configuration.pageType),
-        child: _getPageWidget(configuration),
+        child: PageProvider.getPage(configuration),
+        arguments: configuration,
       ),
     ];
+    _updateCurrentConfiguration(configuration);
     await setNewRoutePath(configuration);
   }
 
@@ -114,12 +114,14 @@ class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
   Future<void> setNewRoutePath(PageRouteConfig configuration) async {
     l.dNoStack('-- setNewRoutePath start');
 
-    _pages.clear();
-    _pages.add(MaterialPage(
-      key: ValueKey(configuration.pageType),
-      child: _getPageWidget(configuration),
-    ));
-    notifyListeners();
+    _pages = [
+      MaterialPage(
+        key: ValueKey(configuration.pageType),
+        child: PageProvider.getPage(configuration),
+        arguments: configuration,
+      ),
+    ];
+    _updateCurrentConfiguration(configuration);
   }
 
   @override
@@ -128,6 +130,12 @@ class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
     l.dNoStack('-- popRoute start --');
     if (_pages.length > 1) {
       _pages.removeLast();
+      if (_pages.isNotEmpty) {
+        final lastPage = _pages.last;
+        if (lastPage is MaterialPage && lastPage.arguments is PageRouteConfig) {
+          _updateCurrentConfiguration(lastPage.arguments as PageRouteConfig);
+        }
+      }
       notifyListeners();
       return Future.value(true);
     }
@@ -137,11 +145,11 @@ class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
   @override
   // Получение текущей конфигурации маршрута
   PageRouteConfig? get currentConfiguration {
-    l.dNoStack('-- currentConfiguration get --');
-    // Определяем текущую конфигурацию, исходя из последней страницы в стеке
-    if (_pages.isNotEmpty) {
-      return _pages.last.arguments as PageRouteConfig?;
-    }
-    return PageRouteConfig.notFound();
+    l.dNoStack('-- currentConfiguration start --${_currentConfiguration?.pageType.name}');
+
+    // return PageRouteConfig(pageType: PageType.profile);
+    return _currentConfiguration;
+
+    // _currentConfiguration;
   }
 }
