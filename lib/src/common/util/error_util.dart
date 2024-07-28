@@ -5,10 +5,11 @@ import 'dart:async';
 import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/util/platform/error_util_vm.dart'
     // ignore: uri_does_not_exist
-    if (dart.library.html) 'package:flutter_template_name/src/common/util/platform/error_util_js.dart';
+    if (dart.library.html) 'package:thread/src/common/util/platform/error_util_js.dart';
 
 /// Error util.
 final l = L('error_util');
+
 abstract final class ErrorUtil {
   /// Log the error to the console and to Crashlytics.
   static Future<void> logError(

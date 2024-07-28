@@ -57,8 +57,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with AutomaticKee
     super.build(context);
     l.dNoStack('-- build start');
 
-
-   final routerDelegate = Dependencies.of(context).routerDelegate;
+    final routerDelegate = Dependencies.of(context).routerDelegate;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Профиль пользователя"),

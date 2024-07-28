@@ -17,7 +17,6 @@ class DebugScreen extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-          
             ElevatedButton(
               onPressed: () => InheritedDependencies.debug(context),
               child: const Text('Debug InheritedDependencies'),

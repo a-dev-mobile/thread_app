@@ -8,8 +8,6 @@ import 'package:thread/src/feature/home/home_screen.dart';
 final l = L('HomeRoute');
 
 class HomeRoute extends Page {
-
-
   // Использование ValueKey позволяет Flutter идентифицировать и переиспользовать
   // виджет HomeRoute при перестроении UI, что эффективно сохраняет состояние страницы.
   const HomeRoute() : super(key: const ValueKey('HomeRoute'));
@@ -20,10 +18,7 @@ class HomeRoute extends Page {
     l.dNoStack('-- createRoute start');
     return MaterialPageRoute(
       settings: this,
-      builder: (BuildContext context) => const HomeScreen(
-      
-    
-      ),
+      builder: (BuildContext context) => const HomeScreen(),
     );
   }
 }

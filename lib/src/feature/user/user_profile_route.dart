@@ -7,8 +7,6 @@ import 'package:thread/src/feature/user/user_profile_screen.dart';
 final l = L('UserProfileRoute');
 
 class UserProfileRoute extends Page {
-
-
   @override
   final key = const ValueKey("user_profile_route");
 
@@ -21,9 +19,7 @@ class UserProfileRoute extends Page {
     l.dNoStack('-- createRoute start');
     return MaterialPageRoute(
       settings: this,
-      builder: (BuildContext context) => const UserProfileScreen(
-   
-      ),
+      builder: (BuildContext context) => const UserProfileScreen(),
     );
   }
 }

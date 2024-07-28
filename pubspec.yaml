@@ -31,7 +31,7 @@ dependencies:
   url_launcher: ^6.3.0
   cupertino_icons: ^1.0.6
   # Utility
-  collection: any
+  collection: ^1.18.0
   async: any
   path: any
   flutter_native_splash: ^2.4.1
@@ -39,7 +39,7 @@ dependencies:
   meta: any
   json_annotation: ^4.9.0
   freezed_annotation: ^2.4.3
-
+  web: ^1.0.0
 
   
 dev_dependencies:

@@ -38,11 +38,10 @@ class _AppLifecycleManagerState extends State<AppLifecycleManager> with WidgetsB
 
     switch (state) {
       case AppLifecycleState.resumed:
-      
+
       // unawaited(client.sendStartApp());
       case AppLifecycleState.paused:
       // unawaited(client.sendStopApp());
-
 
       case AppLifecycleState.inactive:
       case AppLifecycleState.detached:

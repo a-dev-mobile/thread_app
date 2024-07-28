@@ -36,14 +36,20 @@ Future<Dependencies> $initializeDependencies({
 
 typedef _InitializationStep = FutureOr<void> Function(Dependencies dependencies);
 final Map<String, _InitializationStep> _initializationSteps = <String, _InitializationStep>{
-  'Platform pre-initialization': (_) => platformInitialization(),
+  'Platform pre-initialization': (_) => $platformInitialization(),
   'Creating app metadata': initializeAppMetadata, // используем новую функцию
   'Initializing router delegate': (dependencies) => dependencies.routerDelegate = AppRouterDelegate(),
   'Initializing route information parser': (dependencies) =>
       dependencies.routeInformationParser = AppRouteInformationParser(),
-  'Initializing analytics': (_) {},
-  'Log app open': (_) {},
-  'Get remote config': (_) {},
+  'Initializing analytics': (_) async {
+    await Future.delayed(const Duration(seconds: 1));
+  },
+  'Log app open': (_) async {
+    await Future.delayed(const Duration(seconds: 1));
+  },
+  'Get remote config': (_) async {
+    await Future.delayed(const Duration(seconds: 1));
+  },
   'Restore settings': (_) {
     l.iNoStack('Application initialized info.');
     l.dNoStack('Application initialized debug.');

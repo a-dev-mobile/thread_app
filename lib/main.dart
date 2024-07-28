@@ -4,12 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/model/dependencies.dart';
+import 'package:thread/src/common/routing/app_route_information_parser.dart';
 import 'package:thread/src/common/util/error_util.dart';
 import 'package:thread/src/common/widget/app.dart';
 import 'package:thread/src/common/widget/app_error.dart';
+import 'package:thread/src/common/widget/no_animation_scope.dart';
 import 'package:thread/src/feature/initialization/data/initialization.dart';
 import 'package:thread/src/feature/initialization/widget/inherited_dependencies.dart';
 import 'package:thread/src/feature/settings/widget/settings_scope.dart';
+import 'package:thread/src/feature/initialization/widget/initialization_splash_screen.dart';
+
 
 final l = L('main');
 
@@ -22,29 +26,33 @@ void main() {
       l.iNoStack('starting application');
 
       final initializationProgress = ValueNotifier<({int progress, String message})>((progress: 0, message: ''));
-      // runApp(SplashScreen(progress: initializationProgress)); // Включить SplashScreen
+      FlutterNativeSplash.remove(); // Убираем сплэш-экран после завершения инициализации
+      runApp(
+        InitializationSplashScreen(progress: initializationProgress),
+      );
 
       $initializeApp(
         onProgress: (progress, message) => initializationProgress.value = (progress: progress, message: message),
         onSuccess: (dependencies) {
-          FlutterNativeSplash.remove(); // Убираем сплэш-экран после завершения инициализации
           runApp(
             InheritedDependencies(
               dependencies: dependencies,
-              child: const App(),
+              child: const SettingsScope(
+                child: NoAnimationScope(
+                  child: App(),
+                ),
+              ),
             ),
           );
         },
+      // ignore: body_might_complete_normally_catch_error
       ).catchError((error, stackTrace) {
-        FlutterNativeSplash.remove(); // Убираем сплэш-экран в случае ошибки
-        ErrorUtil.logError(error, stackTrace).ignore();
+
         runApp(AppError(error: error));
+        ErrorUtil.logError(error, stackTrace).ignore();
 
         // Return a placeholder Dependencies object
-        return Dependencies(
-            // Provide appropriate default values for Dependencies
-            );
-      });
+      }).ignore();
     },
     (error, stackTrace) {
       ErrorUtil.logError(error, stackTrace).ignore();

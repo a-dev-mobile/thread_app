@@ -1,4 +1,3 @@
-
 import 'package:thread/src/common/constant/pubspec.yaml.g.dart';
 import 'package:thread/src/common/model/app_metadata.dart';
 import 'package:thread/src/common/model/dependencies.dart';

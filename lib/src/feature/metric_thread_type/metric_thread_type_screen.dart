@@ -8,36 +8,43 @@ import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/routing/app_router_delegate.dart';
 import 'package:thread/src/common/widget/common_actions.dart';
 
-final l = L('ThreadScreen');
-class ThreadScreen extends StatefulWidget {
-  final AppRouterDelegate routerDelegate;
-  
+final l = L('metric_thread_type_screen');
 
-  const ThreadScreen({super.key, required this.routerDelegate});
+class MetricThreadTypeScreen extends StatefulWidget {
+  const MetricThreadTypeScreen({
+    super.key,
+  });
 
   @override
-  State<ThreadScreen> createState() => _ThreadScreenState();
+  State<MetricThreadTypeScreen> createState() => _MetricThreadTypeScreenState();
 }
 
-class _ThreadScreenState extends State<ThreadScreen> {
-
-
+class _MetricThreadTypeScreenState extends State<MetricThreadTypeScreen> {
   @override
   // 13. Построение пользовательского интерфейса для домашней страницы
   Widget build(BuildContext context) {
     l.dNoStack('-- build start');
     return Scaffold(
-      appBar: AppBar(title: const Text('thread'),),
-      body: const Column(
+      appBar: AppBar(
+        title: const Text('Выберите тип резьбы'),
+      ),
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
-            '${Config.maxScreenLayoutWidth}',
+          ElevatedButton(
+            onPressed: () {},
+            child: Text(
+              'Наружняя',
+            ),
           ),
-        
+          ElevatedButton(
+            onPressed: () {},
+            child: Text(
+              'Внутреняя',
+            ),
+          ),
         ],
       ),
-     
     );
   }
 }

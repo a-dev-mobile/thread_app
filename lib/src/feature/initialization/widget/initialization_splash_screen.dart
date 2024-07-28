@@ -1,6 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/widget/radial_progress_indicator.dart';
+
+final l = L('initialization_splash_screen');
 
 class InitializationSplashScreen extends StatelessWidget {
   const InitializationSplashScreen({required this.progress, super.key});
@@ -9,6 +12,7 @@ class InitializationSplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    l.dNoStack('-- build start');
     final theme = View.of(context).platformDispatcher.platformBrightness == Brightness.dark
         ? ThemeData.dark()
         : ThemeData.light();

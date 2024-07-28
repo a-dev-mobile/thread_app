@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// [ChangeNotifierProvider] - это виджет, который предоставляет экземпляр [ChangeNotifier]
-/// своим потомкам. Это позволяет потомкам слушать изменения в предоставленном notifier 
+/// своим потомкам. Это позволяет потомкам слушать изменения в предоставленном notifier
 /// и перестраиваться соответственно.
 ///
 /// Этот класс принимает функцию `create`, которая создает notifier, и виджет `child`,
@@ -28,12 +28,12 @@ class _ChangeNotifierProviderState<T extends ChangeNotifier> extends State<Chang
   @override
   void initState() {
     super.initState();
-    notifier = widget.create(context);  // Создаем экземпляр notifier с использованием предоставленной функции.
+    notifier = widget.create(context); // Создаем экземпляр notifier с использованием предоставленной функции.
   }
 
   @override
   void dispose() {
-    notifier.dispose();  // Освобождаем ресурсы notifier при удалении провайдера из дерева виджетов.
+    notifier.dispose(); // Освобождаем ресурсы notifier при удалении провайдера из дерева виджетов.
     super.dispose();
   }
 

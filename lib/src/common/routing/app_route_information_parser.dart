@@ -5,23 +5,23 @@ import 'package:thread/src/common/routing/page_route_config.dart';
 
 final l = L('AppRouteInformationParser');
 
+class RoutePaths {
+  static const String metricThread = 'metric-thread';
+  static const String profile = 'profile';
+  static const String home = '';
+  static const String notFound = 'notfound';
+}
+
 class AppRouteInformationParser extends RouteInformationParser<PageRouteConfig> {
   @override
   // 10. Парсинг информации о маршруте в конфигурацию маршрута
   Future<PageRouteConfig> parseRouteInformation(RouteInformation routeInformation) {
-    l.dNoStack('-- parseRouteInformation start');
     final uri = routeInformation.uri;
-    // Если URI содержит сегмент 'profile', создаётся конфигурация профиля
-    if (uri.pathSegments.isEmpty) {
-      return SynchronousFuture(PageRouteConfig.home());
-    }
-    switch (uri.pathSegments.first) {
-      case 'profile':
-        return SynchronousFuture(PageRouteConfig.profile());
-      // Добавьте другие страницы здесь
-      default:
-        return SynchronousFuture(PageRouteConfig.notFound());
-    }
+    final uri2 = uri.pathSegments;
+    final firstSegment = uri.pathSegments.isNotEmpty ? uri.pathSegments.first : RoutePaths.metricThread;
+    l.dNoStack('-- parseRouteInformation start firstSegment = $firstSegment');
+
+    return SynchronousFuture(getPageConfig(firstSegment));
   }
 
   @override
@@ -30,19 +30,30 @@ class AppRouteInformationParser extends RouteInformationParser<PageRouteConfig> 
     l.dNoStack('-- restoreRouteInformation start');
 
     switch (configuration.pageType) {
+      case PageType.metricThreadType:
+        return RouteInformation(uri: Uri.parse(RoutePaths.metricThread));
       case PageType.profile:
-        return RouteInformation(uri: Uri.parse('/profile'));
-
-      // Добавьте другие страницы здесь
+        return RouteInformation(uri: Uri.parse(RoutePaths.profile));
       case PageType.notFound:
-        return RouteInformation(uri: Uri.parse('/notfound'));
+        return RouteInformation(uri: Uri.parse(RoutePaths.notFound));
       case PageType.home:
       default:
         return RouteInformation(uri: Uri.parse('/'));
     }
   }
 
-  // Тут можно использовать контекст для получения дополнительной информации или зависимостей
+  PageRouteConfig getPageConfig(String firstSegment) {
+    switch (firstSegment) {
+      case RoutePaths.metricThread:
+        return PageRouteConfig.metricThreadType();
+      case RoutePaths.profile:
+        return PageRouteConfig.profile();
+      // Добавьте другие страницы здесь
+      default:
+        return PageRouteConfig.notFound();
+    }
+  }
+
   @override
   Future<PageRouteConfig> parseRouteInformationWithDependencies(
       RouteInformation routeInformation, BuildContext context) {

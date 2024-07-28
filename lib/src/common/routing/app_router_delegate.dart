@@ -3,6 +3,7 @@ import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/routing/page_route_config.dart';
 import 'package:thread/src/feature/home/home_route.dart';
 import 'package:thread/src/feature/home/home_screen.dart';
+import 'package:thread/src/feature/metric_thread_type/metric_thread_type_screen.dart';
 import 'package:thread/src/feature/no_found_screen/not_found_route.dart';
 import 'package:thread/src/feature/no_found_screen/not_found_screen.dart';
 import 'package:thread/src/feature/user/user_profile_route.dart';
@@ -65,8 +66,10 @@ class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
   }
 
   Widget _getPageWidget(PageRouteConfig config) {
-     l.dNoStack('-- _getPageWidget --');
+    l.dNoStack('-- _getPageWidget -- ${config.toString()}');
     switch (config.pageType) {
+      case PageType.metricThreadType:
+        return const MetricThreadTypeScreen();
       case PageType.home:
         return const HomeScreen();
 
@@ -77,7 +80,7 @@ class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
         return const UserProfileScreen();
       // Добавьте другие страницы здесь
       default:
-        return NotFoundScreen();
+        return const NotFoundScreen();
     }
   }
 
@@ -87,7 +90,7 @@ class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
 
   @override
   // Установка начального пути маршрута
-  Future<void> setInitialRoutePath(PageRouteConfig configuration) {
+  Future<void> setInitialRoutePath(PageRouteConfig configuration) async {
     l.dNoStack('-- setInitialRoutePath start --');
     // Инициализация начальной страницы
     _pages = [
@@ -96,7 +99,7 @@ class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
         child: _getPageWidget(configuration),
       ),
     ];
-    return setNewRoutePath(configuration);
+    await setNewRoutePath(configuration);
   }
 
   @override
@@ -137,9 +140,8 @@ class AppRouterDelegate extends RouterDelegate<PageRouteConfig>
     l.dNoStack('-- currentConfiguration get --');
     // Определяем текущую конфигурацию, исходя из последней страницы в стеке
     if (_pages.isNotEmpty) {
-      final config = _pages.last.arguments as PageRouteConfig?;
-      return config;
+      return _pages.last.arguments as PageRouteConfig?;
     }
-    return PageRouteConfig.home();
+    return PageRouteConfig.notFound();
   }
 }
