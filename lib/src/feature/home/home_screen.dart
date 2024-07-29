@@ -1,17 +1,11 @@
 // lib\src\common\widget\profile\home_screen.dart
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
 import 'package:thread/src/common/constant/config.dart';
 import 'package:thread/src/common/constant/pubspec.yaml.g.dart';
 import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/model/dependencies.dart';
-import 'package:thread/src/common/routing/app_router_delegate.dart';
-
 import 'package:thread/src/common/routing/page_route_config.dart';
-import 'package:thread/src/common/widget/common_actions.dart';
 import 'package:thread/src/feature/settings/widget/settings_scope.dart';
 
 final l = L('home_screen');
@@ -52,11 +46,11 @@ class _HomeScreenState extends State<HomeScreen> {
               '${Config.maxScreenLayoutWidth}',
             ),
             ElevatedButton(
-              onPressed: () => appRouterDelegate.push(PageType.metricThreadType),
+              onPressed: () => appRouterDelegate.push(PageType.metricType),
               child: const Text('добавить страницу резьбы'),
             ),
-                        ElevatedButton(
-              onPressed: () => appRouterDelegate.replace(PageType.metricThreadType),
+            ElevatedButton(
+              onPressed: () => appRouterDelegate.replace(PageType.metricType),
               child: const Text('Перейти страницу резьбы'),
             ),
             ElevatedButton(

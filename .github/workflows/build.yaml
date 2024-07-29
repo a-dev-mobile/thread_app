@@ -47,6 +47,9 @@ jobs:
           RELEASE_STORE_PASSWORD: ${{ secrets.RELEASE_STORE_PASSWORD }}
         run: flutter build apk --release --dart-define-from-file=config/production.json
 
+      - name: Build Flutter web
+        run: flutter build web --release --dart-define-from-file=config/production.json
+
       - name: Install sshpass
         run: sudo apt-get install -y sshpass
 
@@ -55,5 +58,13 @@ jobs:
           sshpass -p ${{ secrets.SSH_PASSWORD }} sftp -o StrictHostKeyChecking=no -P 22 ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_SERVER }} <<EOF
           cd ${{ secrets.DEPLOY_PATH }}
           put build/app/outputs/flutter-apk/app-release.apk
+          bye
+          EOF
+
+      - name: Upload web build to Server via SFTP
+        run: |
+          sshpass -p ${{ secrets.SSH_PASSWORD }} sftp -o StrictHostKeyChecking=no -P 22 ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_SERVER }} <<EOF
+          cd ${{ secrets.WEB_DEPLOY_PATH }}
+          put -r build/web/*
           bye
           EOF
