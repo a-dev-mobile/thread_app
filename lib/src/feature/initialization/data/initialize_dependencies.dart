@@ -42,13 +42,13 @@ final Map<String, _InitializationStep> _initializationSteps = <String, _Initiali
   'Initializing route information parser': (dependencies) =>
       dependencies.routeInformationParser = AppRouteInformationParser(),
   'Initializing analytics': (_) async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 0));
   },
   'Log app open': (_) async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 0));
   },
   'Get remote config': (_) async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 0));
   },
   'Restore settings': (_) {
     l.iNoStack('Application initialized info.');

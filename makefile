@@ -58,6 +58,8 @@ gen-all: clean get gen-build
 get-all: clean get 
 
 
+build-web:
+	$(FLUTTER) build web --release --dart-define-from-file=config/production.json
 
 
 SCRIPT_PATH := ".vscode/generate-directory-tree.sh"
