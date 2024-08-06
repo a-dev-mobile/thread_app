@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:thread/src/common/log/l_setup.dart';
+import 'package:thread/src/common/model/dependencies.dart';
+import 'package:thread/src/feature/metric_thread_diameter/controller/diameter_controller.dart';
+import 'package:thread/src/feature/metric_thread_diameter/data/diameter_repository_impl.dart';
 
 final l = L('metric_thread_diameter_screen');
 
@@ -15,17 +18,55 @@ class MetricDiameterScreen extends StatefulWidget {
 }
 
 class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
+  late final DiameterController _controller;
+
   @override
-  // 13. Построение пользовательского интерфейса для домашней страницы
+  void initState() {
+    super.initState();
+    final repository = DiameterRepositoryImpl(dio: Dependencies.of(context).dio);
+    _controller = DiameterController(repository);
+    _controller.addListener(_updateState);
+    _controller.loadDiameters();
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_updateState);
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _updateState() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     l.dNoStack('-- build start');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Выберите Диаметер резьбы'),
       ),
-      body: const Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[],
+      body: Builder(
+        builder: (context) {
+          if (_controller.state.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (_controller.state.error != null) {
+            return Center(child: Text('Error: ${_controller.state.error}'));
+          }
+          return ListView.builder(
+            itemCount: _controller.state.diameters.length,
+            itemBuilder: (context, index) {
+              final diameter = _controller.state.diameters[index];
+              return ListTile(
+                title: Text('Diameter: ${diameter.diameter}'),
+              );
+            },
+          );
+        },
       ),
     );
   }

@@ -62,7 +62,7 @@ build-web:
 	$(FLUTTER) build web --release --dart-define-from-file=config/production.json
 
 
-SCRIPT_PATH := ".vscode/generate-directory-tree.sh"
+SCRIPT_PATH := ".vscode/scripts/generate-directory-tree.sh"
 
 tree: tree-all
 
