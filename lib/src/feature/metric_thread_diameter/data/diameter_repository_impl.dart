@@ -20,8 +20,8 @@ class DiameterRepositoryImpl implements IDiameterRepository {
 
   @override
   Future<List<Diameter>> fetchDiameters() async {
-    final response = await _dio.get('http://localhost:5068/api/metric/diameters/');
-    // final response = await _dio.get('http://91.223.70.72:3003/api/metric/diameters/');
+    // final response = await _dio.get('http://localhost:5068/api/metric/diameters/');
+    final response = await _dio.get('http://91.223.70.72:3003/api/metric/diameters/');
     final List<dynamic> data = response.data;
     final diameters = data.map((json) => Diameter.fromJson(json)).toList();
     _diameters = diameters;
