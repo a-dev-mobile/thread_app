@@ -8,37 +8,32 @@ version: 0.0.1+1
 
 environment:
   sdk: '>=3.4.1 <4.0.0'
-  flutter: 3.22.3
+  flutter: 3.24.0
 
 dependencies:
   flutter:
     sdk: flutter
-  # Navigation
-  # go_router: ^14.2.0
-  # Logger
-  # l: ^5.0.0-pre.2
-  # logging: ^1.2.0
-  # Localization
   logger: ^2.4.0
   flutter_localizations:
     sdk: flutter
   intl: any
-  # Networking
-  dio: ^5.5.0
-  dio_smart_retry: ^6.0.0
-  shared_preferences: ^2.2.3
-  rxdart: ^0.28.0
-  url_launcher: ^6.3.0
-  cupertino_icons: ^1.0.6
-  # Utility
-  collection: ^1.18.0
   async: any
   path: any
-  flutter_native_splash: ^2.4.1
-  # Annotation
+  collection: any
   meta: any
+
+
+  dio: ^5.5.0
+  dio_smart_retry: ^6.0.0
+  shared_preferences: ^2.3.1
+  rxdart: ^0.28.0
+  url_launcher: ^6.3.0
+  cupertino_icons: ^1.0.8
+
+  flutter_native_splash: ^2.4.1
+
   json_annotation: ^4.9.0
-  freezed_annotation: ^2.4.3
+  freezed_annotation: ^2.4.4
   web: ^1.0.0
 
   
@@ -51,7 +46,7 @@ dev_dependencies:
   # dart run flutter_launcher_icons -f flutter_launcher_icons.yaml
   flutter_launcher_icons: ^0.13.1
   # dart run flutter_native_splash:create --path=flutter_native_splash.yaml
-  build_runner: ^2.4.11
+  build_runner: ^2.4.12
 
 
   flutter_lints: ^4.0.0

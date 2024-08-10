@@ -23,21 +23,28 @@ mixin _$UserProfileModel {
   String get name => throw _privateConstructorUsedError;
   int get age => throw _privateConstructorUsedError;
 
+  /// Serializes this UserProfileModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $UserProfileModelCopyWith<UserProfileModel> get copyWith => throw _privateConstructorUsedError;
+
+  /// Create a copy of UserProfileModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $UserProfileModelCopyWith<UserProfileModel> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $UserProfileModelCopyWith<$Res> {
-  factory $UserProfileModelCopyWith(UserProfileModel value, $Res Function(UserProfileModel) then) =
+  factory $UserProfileModelCopyWith(
+          UserProfileModel value, $Res Function(UserProfileModel) then) =
       _$UserProfileModelCopyWithImpl<$Res, UserProfileModel>;
   @useResult
   $Res call({String name, int age});
 }
 
 /// @nodoc
-class _$UserProfileModelCopyWithImpl<$Res, $Val extends UserProfileModel> implements $UserProfileModelCopyWith<$Res> {
+class _$UserProfileModelCopyWithImpl<$Res, $Val extends UserProfileModel>
+    implements $UserProfileModelCopyWith<$Res> {
   _$UserProfileModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
@@ -45,6 +52,8 @@ class _$UserProfileModelCopyWithImpl<$Res, $Val extends UserProfileModel> implem
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of UserProfileModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -65,8 +74,10 @@ class _$UserProfileModelCopyWithImpl<$Res, $Val extends UserProfileModel> implem
 }
 
 /// @nodoc
-abstract class _$$UserProfileModelImplCopyWith<$Res> implements $UserProfileModelCopyWith<$Res> {
-  factory _$$UserProfileModelImplCopyWith(_$UserProfileModelImpl value, $Res Function(_$UserProfileModelImpl) then) =
+abstract class _$$UserProfileModelImplCopyWith<$Res>
+    implements $UserProfileModelCopyWith<$Res> {
+  factory _$$UserProfileModelImplCopyWith(_$UserProfileModelImpl value,
+          $Res Function(_$UserProfileModelImpl) then) =
       __$$UserProfileModelImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -74,11 +85,15 @@ abstract class _$$UserProfileModelImplCopyWith<$Res> implements $UserProfileMode
 }
 
 /// @nodoc
-class __$$UserProfileModelImplCopyWithImpl<$Res> extends _$UserProfileModelCopyWithImpl<$Res, _$UserProfileModelImpl>
+class __$$UserProfileModelImplCopyWithImpl<$Res>
+    extends _$UserProfileModelCopyWithImpl<$Res, _$UserProfileModelImpl>
     implements _$$UserProfileModelImplCopyWith<$Res> {
-  __$$UserProfileModelImplCopyWithImpl(_$UserProfileModelImpl _value, $Res Function(_$UserProfileModelImpl) _then)
+  __$$UserProfileModelImplCopyWithImpl(_$UserProfileModelImpl _value,
+      $Res Function(_$UserProfileModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of UserProfileModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -103,7 +118,8 @@ class __$$UserProfileModelImplCopyWithImpl<$Res> extends _$UserProfileModelCopyW
 class _$UserProfileModelImpl implements _UserProfileModel {
   const _$UserProfileModelImpl({required this.name, required this.age});
 
-  factory _$UserProfileModelImpl.fromJson(Map<String, dynamic> json) => _$$UserProfileModelImplFromJson(json);
+  factory _$UserProfileModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserProfileModelImplFromJson(json);
 
   @override
   final String name;
@@ -124,15 +140,18 @@ class _$UserProfileModelImpl implements _UserProfileModel {
             (identical(other.age, age) || other.age == age));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, name, age);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of UserProfileModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$UserProfileModelImplCopyWith<_$UserProfileModelImpl> get copyWith =>
-      __$$UserProfileModelImplCopyWithImpl<_$UserProfileModelImpl>(this, _$identity);
+      __$$UserProfileModelImplCopyWithImpl<_$UserProfileModelImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -143,15 +162,22 @@ class _$UserProfileModelImpl implements _UserProfileModel {
 }
 
 abstract class _UserProfileModel implements UserProfileModel {
-  const factory _UserProfileModel({required final String name, required final int age}) = _$UserProfileModelImpl;
+  const factory _UserProfileModel(
+      {required final String name,
+      required final int age}) = _$UserProfileModelImpl;
 
-  factory _UserProfileModel.fromJson(Map<String, dynamic> json) = _$UserProfileModelImpl.fromJson;
+  factory _UserProfileModel.fromJson(Map<String, dynamic> json) =
+      _$UserProfileModelImpl.fromJson;
 
   @override
   String get name;
   @override
   int get age;
+
+  /// Create a copy of UserProfileModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
-  _$$UserProfileModelImplCopyWith<_$UserProfileModelImpl> get copyWith => throw _privateConstructorUsedError;
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$UserProfileModelImplCopyWith<_$UserProfileModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

@@ -5,13 +5,14 @@ import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/model/dependencies.dart';
 import 'package:thread/src/common/util/dio_proxy.dart';
 import 'package:thread/src/common/util/http_log_interceptor.dart';
+import 'package:thread/src/feature/app/controller/app_controller.dart';
 
 final l = L('network_initialization');
 
 Future<void> initializeNetworkDependencies(Dependencies dependencies) async {
   dependencies.dio = Dio(
     BaseOptions(
-      baseUrl: Config.apiBaseUrl,
+      baseUrl: dependencies.appController.state.appEnv.apiBaseUrl,
       connectTimeout: Config.apiConnectTimeout,
       receiveTimeout: Config.apiReceiveTimeout,
       headers: <String, String>{

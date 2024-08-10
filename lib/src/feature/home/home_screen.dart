@@ -6,6 +6,8 @@ import 'package:thread/src/common/constant/pubspec.yaml.g.dart';
 import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/model/dependencies.dart';
 import 'package:thread/src/common/routing/page_route_config.dart';
+import 'package:thread/src/feature/app/controller/app_controller.dart';
+import 'package:thread/src/feature/app/model/app_env.dart';
 import 'package:thread/src/feature/settings/widget/settings_scope.dart';
 
 final l = L('home_screen');
@@ -33,7 +35,21 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     l.dNoStack('-- build start');
 
+    final appController = Dependencies.of(context).appController;
     final appRouterDelegate = Dependencies.of(context).routerDelegate;
+    final project = const AppState().appEnv;
+    switch (project) {
+      case AppEnvDev():
+        l.d('dev');
+        l.d(project.apiBaseUrl);
+      case AppEnvProd():
+        l.d('prod');
+        l.d(project.apiBaseUrl);
+
+      // ProjectDev(:final name) => print('Person $name'),
+      // ProjectProd(:final name) => print('City ($name)'),
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
@@ -75,8 +91,41 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () => appRouterDelegate.push(PageType.home),
               child: const Text('добавить главную страницу'),
             ),
+            //
+            ElevatedButton(
+              onPressed: () {
+                appController.toggleDebugButton();
+              },
+              child: const Text("Toggle toggleDebugButton"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                appController.toggleShowPerformanceOverlay();
+              },
+              child: const Text("Toggle toggleShowPerformanceOverlay"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                appController.toggleRepaintRainbow();
+              },
+              child: const Text("Toggle Repaint Rainbow"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                appController.togglePaintSize();
+              },
+              child: Column(
+                children: [
+                  const Text("Toggle Paint Size"),
+                   Text(appController.state.toString()),
+                ],
+              ),
+            ),
             Text(
-              '${Config.environment.name} \n have pushed the button this many times:',
+              appController.state.appEnv.apiBaseUrl,
+            ),
+            Text(
+              appController.state.appEnv.name,
             ),
             Text(
               '$_counter',

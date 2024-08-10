@@ -66,7 +66,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with AutomaticKee
         child: Column(
           children: [
             const Text("Здесь будет информация о пользователе"),
-            const Text(Config.proxyUrl),
+            const Text(Config.apiBaseUrlDev),
             ValueListenableBuilder(
               valueListenable: bloc.userStringNotifier,
               builder: (context, name, child) {
@@ -102,7 +102,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> with AutomaticKee
               },
               child: const Text('добавить страницу ошибки и очистить сохраненые данные'),
             ),
-            const Text(Config.proxyUrl),
+            const Text(Config.apiBaseUrlProd),
             ElevatedButton(
               onPressed: () => routerDelegate.push(PageType.home),
               child: const Text('добавить страницу домой'),

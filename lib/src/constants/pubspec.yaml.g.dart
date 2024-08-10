@@ -124,13 +124,13 @@ sealed class Pubspec {
   /// Build date and time (UTC)
   static final DateTime timestamp = DateTime.utc(
     2024,
-    7,
-    12,
-    20,
-    11,
-    38,
-    481,
-    451,
+    8,
+    10,
+    5,
+    15,
+    51,
+    86,
+    473,
   );
 
   /// Name
@@ -412,23 +412,25 @@ sealed class Pubspec {
     'flutter': <String, Object>{
       'sdk': r'flutter',
     },
-    'logging': r'^1.2.0',
+    'logger': r'^2.4.0',
     'flutter_localizations': <String, Object>{
       'sdk': r'flutter',
     },
     'intl': r'any',
-    'dio': r'^5.4.2+1',
-    'dio_smart_retry': r'^6.0.0',
-    'shared_preferences': r'^2.2.2',
-    'rxdart': r'^0.28.0-dev.0',
-    'url_launcher': r'^6.2.2',
-    'cupertino_icons': r'^1.0.6',
-    'collection': r'any',
     'async': r'any',
     'path': r'any',
+    'collection': r'any',
     'meta': r'any',
+    'dio': r'^5.5.0',
+    'dio_smart_retry': r'^6.0.0',
+    'shared_preferences': r'^2.3.1',
+    'rxdart': r'^0.28.0',
+    'url_launcher': r'^6.3.0',
+    'cupertino_icons': r'^1.0.8',
+    'flutter_native_splash': r'^2.4.1',
     'json_annotation': r'^4.9.0',
-    'freezed_annotation': r'^2.4.3',
+    'freezed_annotation': r'^2.4.4',
+    'web': r'^1.0.0',
   };
 
   /// Developer dependencies
@@ -440,8 +442,7 @@ sealed class Pubspec {
     'pubspec_generator': r'^4.1.0-pre.1',
     'json_serializable': r'^6.8.0',
     'flutter_launcher_icons': r'^0.13.1',
-    'flutter_native_splash': r'^2.4.1',
-    'build_runner': r'^2.4.11',
+    'build_runner': r'^2.4.12',
     'flutter_lints': r'^4.0.0',
     'freezed': r'^2.5.2',
   };
@@ -517,5 +518,12 @@ sealed class Pubspec {
       'output': r'lib/src/common/constant/',
       'line_length': 120,
     },
+    'flutter_native_splash': <String, Object>{
+      'color': r'#42a5f5',
+      'android_12': <String, Object>{
+        'color': r'#8655f5',
+      },
+    },
   };
+
 }

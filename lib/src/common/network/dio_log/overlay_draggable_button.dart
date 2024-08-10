@@ -20,7 +20,9 @@ Future<void> showHttpLogBtn(
     // ignore: use_build_context_synchronously
     Overlay.of(context).insert(itemEntry!);
     // ignore: empty_catches
-  } catch (e) {}
+  } catch (e) {
+    print('Error showHttpLogBtn: $e');
+  }
 }
 
 ///Закрываем плавающую кнопку
