@@ -60,9 +60,9 @@ class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
           return ListView.builder(
             itemCount: _controller.state.diameters.length,
             itemBuilder: (context, index) {
-              final diameter = _controller.state.diameters[index];
+              final data = _controller.state.diameters[index];
               return ListTile(
-                title: Text('Diameter: ${diameter.diameter}'),
+                title: Text(data.diam),
               );
             },
           );

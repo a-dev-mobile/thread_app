@@ -27,6 +27,7 @@ Future<Dependencies> $initializeApp({
           ]); */
 
         await _catchExceptions();
+        
         final dependencies = await $initializeDependencies(onProgress: onProgress).timeout(const Duration(minutes: 7));
         await onSuccess?.call(dependencies);
         return dependencies;

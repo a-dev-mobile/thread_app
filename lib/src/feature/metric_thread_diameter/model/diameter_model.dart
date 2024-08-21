@@ -7,7 +7,7 @@ part 'diameter_model.g.dart';
 class DiameterModel with _$DiameterModel {
   const factory DiameterModel({
     required int id,
-    required String diameter,
+    required String diam,
   }) = _DiameterModel;
 
   factory DiameterModel.fromJson(Map<String, dynamic> json) => _$DiameterModelFromJson(json);
