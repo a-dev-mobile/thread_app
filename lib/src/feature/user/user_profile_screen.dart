@@ -4,15 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:thread/src/common/constant/config.dart';
 import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/model/dependencies.dart';
-import 'package:thread/src/common/routing/app_router_delegate.dart';
-
 import 'package:thread/src/common/routing/page_route_config.dart';
 import 'package:thread/src/feature/user/user_profile_model.dart';
 
 part 'user_profile_bloc.dart';
 part 'user_profile_manager.dart';
 
-final l = L('user_profile_screen');
+final _l = L('user_profile_screen');
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});
@@ -42,20 +40,20 @@ class _UserProfileScreenState extends State<UserProfileScreen> with AutomaticKee
 
   @override
   void didChangeDependencies() {
-    l.dNoStack('didChangeDependencies');
+    _l.dNoStack('didChangeDependencies');
     super.didChangeDependencies();
   }
 
   @override
   void didUpdateWidget(covariant UserProfileScreen oldWidget) {
-    l.dNoStack('didUpdateWidget');
+    _l.dNoStack('didUpdateWidget');
     super.didUpdateWidget(oldWidget);
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    l.dNoStack('-- build start');
+    _l.dNoStack('-- build start');
 
     final routerDelegate = Dependencies.of(context).routerDelegate;
     return Scaffold(
@@ -73,7 +71,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> with AutomaticKee
                 return Text('Name: $name', style: const TextStyle(fontSize: 24));
               },
             ),
-            const Text(Config.proxyUrl),
             ValueListenableBuilder(
               valueListenable: bloc.userAgeNotifier,
               builder: (context, age, child) {
@@ -107,8 +104,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> with AutomaticKee
               onPressed: () => routerDelegate.push(PageType.home),
               child: const Text('добавить страницу домой'),
             ),
-            const Text(Config.proxyUrl),
-            const Text(Config.proxyUrl),
           ],
         ),
       ),

@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thread/src/common/log/l_setup.dart';
-import 'package:thread/src/feature/app/controller/app_controller.dart';
+import 'package:thread/src/feature/app/model/app_env.dart';
+import 'package:thread/src/feature/visual_debug/visual_debug_controller.dart';
 
 final _l = L('local_storage');
 
@@ -28,7 +29,8 @@ class LocalStorage {
         cacheOptions: const SharedPreferencesWithCacheOptions(
           allowList: <String>{
             _appId,
-            // _appState,
+            _appEnv,
+            _visualDebugState,
             _userAgent,
           },
         ),
@@ -53,17 +55,34 @@ class LocalStorage {
     await _setString(key: _appId, value: value ?? '');
   }
 
-  // ******************************
-  static const _appState = '_appState';
 
-  Future<AppState> getAppState({bool forceRefresh = false}) async {
-    final jsonString = await _getString(key: _appState, forceRefresh: forceRefresh);
-    return jsonString != null ? AppState.fromJson(json.decode(jsonString)) : const AppState();
+  // ******************************
+  static const _appEnv = '_appEnv';
+
+  Future<AppEnv> getAppEnv({bool forceRefresh = false}) async {
+    final jsonString = await _getString(key: _appEnv, forceRefresh: forceRefresh);
+    return jsonString != null ? AppEnv.fromJson(json.decode(jsonString)) : const AppEnv.prod();
   }
 
-  Future<void> setAppState(AppState value) async {
+  Future<void> setAppEnv(AppEnv value) async {
     final jsonString = json.encode(value.toJson());
-    await _setString(key: _appState, value: jsonString);
+    await _setString(key: _appEnv, value: jsonString);
+  }
+
+
+
+
+  // ******************************
+  static const _visualDebugState = '_visualDebugState';
+
+  Future<VisualDebugState> getVisualDebugState({bool forceRefresh = false}) async {
+    final jsonString = await _getString(key: _visualDebugState, forceRefresh: forceRefresh);
+    return jsonString != null ? VisualDebugState.fromJson(json.decode(jsonString)) : const VisualDebugState();
+  }
+
+  Future<void> setVisualDebugState(VisualDebugState value) async {
+    final jsonString = json.encode(value.toJson());
+    await _setString(key: _visualDebugState, value: jsonString);
   }
 
   // ******************************

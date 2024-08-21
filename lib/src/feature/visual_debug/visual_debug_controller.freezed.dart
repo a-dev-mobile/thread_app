@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'app_controller.dart';
+part of 'visual_debug_controller.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,72 +14,64 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-AppState _$AppStateFromJson(Map<String, dynamic> json) {
-  return _AppState.fromJson(json);
+VisualDebugState _$VisualDebugStateFromJson(Map<String, dynamic> json) {
+  return _VisualDebugState.fromJson(json);
 }
 
 /// @nodoc
-mixin _$AppState {
-  AppEnv get appEnv => throw _privateConstructorUsedError;
-  bool get isShowBtnDebug => throw _privateConstructorUsedError;
+mixin _$VisualDebugState {
+  bool get isDebugShowChecked => throw _privateConstructorUsedError;
   bool get isShowRepaintRainbow => throw _privateConstructorUsedError;
   bool get isShowPaintSizeEnabled => throw _privateConstructorUsedError;
   bool get isShowPerformanceOverlay => throw _privateConstructorUsedError;
 
-  /// Serializes this AppState to a JSON map.
+  /// Serializes this VisualDebugState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of AppState
+  /// Create a copy of VisualDebugState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $AppStateCopyWith<AppState> get copyWith =>
+  $VisualDebugStateCopyWith<VisualDebugState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AppStateCopyWith<$Res> {
-  factory $AppStateCopyWith(AppState value, $Res Function(AppState) then) =
-      _$AppStateCopyWithImpl<$Res, AppState>;
+abstract class $VisualDebugStateCopyWith<$Res> {
+  factory $VisualDebugStateCopyWith(
+          VisualDebugState value, $Res Function(VisualDebugState) then) =
+      _$VisualDebugStateCopyWithImpl<$Res, VisualDebugState>;
   @useResult
   $Res call(
-      {AppEnv appEnv,
-      bool isShowBtnDebug,
+      {bool isDebugShowChecked,
       bool isShowRepaintRainbow,
       bool isShowPaintSizeEnabled,
       bool isShowPerformanceOverlay});
-
-  $AppEnvCopyWith<$Res> get appEnv;
 }
 
 /// @nodoc
-class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
-    implements $AppStateCopyWith<$Res> {
-  _$AppStateCopyWithImpl(this._value, this._then);
+class _$VisualDebugStateCopyWithImpl<$Res, $Val extends VisualDebugState>
+    implements $VisualDebugStateCopyWith<$Res> {
+  _$VisualDebugStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of AppState
+  /// Create a copy of VisualDebugState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? appEnv = null,
-    Object? isShowBtnDebug = null,
+    Object? isDebugShowChecked = null,
     Object? isShowRepaintRainbow = null,
     Object? isShowPaintSizeEnabled = null,
     Object? isShowPerformanceOverlay = null,
   }) {
     return _then(_value.copyWith(
-      appEnv: null == appEnv
-          ? _value.appEnv
-          : appEnv // ignore: cast_nullable_to_non_nullable
-              as AppEnv,
-      isShowBtnDebug: null == isShowBtnDebug
-          ? _value.isShowBtnDebug
-          : isShowBtnDebug // ignore: cast_nullable_to_non_nullable
+      isDebugShowChecked: null == isDebugShowChecked
+          ? _value.isDebugShowChecked
+          : isDebugShowChecked // ignore: cast_nullable_to_non_nullable
               as bool,
       isShowRepaintRainbow: null == isShowRepaintRainbow
           ? _value.isShowRepaintRainbow
@@ -95,64 +87,45 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
               as bool,
     ) as $Val);
   }
-
-  /// Create a copy of AppState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $AppEnvCopyWith<$Res> get appEnv {
-    return $AppEnvCopyWith<$Res>(_value.appEnv, (value) {
-      return _then(_value.copyWith(appEnv: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
-abstract class _$$AppStateImplCopyWith<$Res>
-    implements $AppStateCopyWith<$Res> {
-  factory _$$AppStateImplCopyWith(
-          _$AppStateImpl value, $Res Function(_$AppStateImpl) then) =
-      __$$AppStateImplCopyWithImpl<$Res>;
+abstract class _$$VisualDebugStateImplCopyWith<$Res>
+    implements $VisualDebugStateCopyWith<$Res> {
+  factory _$$VisualDebugStateImplCopyWith(_$VisualDebugStateImpl value,
+          $Res Function(_$VisualDebugStateImpl) then) =
+      __$$VisualDebugStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {AppEnv appEnv,
-      bool isShowBtnDebug,
+      {bool isDebugShowChecked,
       bool isShowRepaintRainbow,
       bool isShowPaintSizeEnabled,
       bool isShowPerformanceOverlay});
-
-  @override
-  $AppEnvCopyWith<$Res> get appEnv;
 }
 
 /// @nodoc
-class __$$AppStateImplCopyWithImpl<$Res>
-    extends _$AppStateCopyWithImpl<$Res, _$AppStateImpl>
-    implements _$$AppStateImplCopyWith<$Res> {
-  __$$AppStateImplCopyWithImpl(
-      _$AppStateImpl _value, $Res Function(_$AppStateImpl) _then)
+class __$$VisualDebugStateImplCopyWithImpl<$Res>
+    extends _$VisualDebugStateCopyWithImpl<$Res, _$VisualDebugStateImpl>
+    implements _$$VisualDebugStateImplCopyWith<$Res> {
+  __$$VisualDebugStateImplCopyWithImpl(_$VisualDebugStateImpl _value,
+      $Res Function(_$VisualDebugStateImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of AppState
+  /// Create a copy of VisualDebugState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? appEnv = null,
-    Object? isShowBtnDebug = null,
+    Object? isDebugShowChecked = null,
     Object? isShowRepaintRainbow = null,
     Object? isShowPaintSizeEnabled = null,
     Object? isShowPerformanceOverlay = null,
   }) {
-    return _then(_$AppStateImpl(
-      appEnv: null == appEnv
-          ? _value.appEnv
-          : appEnv // ignore: cast_nullable_to_non_nullable
-              as AppEnv,
-      isShowBtnDebug: null == isShowBtnDebug
-          ? _value.isShowBtnDebug
-          : isShowBtnDebug // ignore: cast_nullable_to_non_nullable
+    return _then(_$VisualDebugStateImpl(
+      isDebugShowChecked: null == isDebugShowChecked
+          ? _value.isDebugShowChecked
+          : isDebugShowChecked // ignore: cast_nullable_to_non_nullable
               as bool,
       isShowRepaintRainbow: null == isShowRepaintRainbow
           ? _value.isShowRepaintRainbow
@@ -172,23 +145,19 @@ class __$$AppStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$AppStateImpl implements _AppState {
-  const _$AppStateImpl(
-      {this.appEnv = const AppEnv.prod(),
-      this.isShowBtnDebug = false,
+class _$VisualDebugStateImpl implements _VisualDebugState {
+  const _$VisualDebugStateImpl(
+      {this.isDebugShowChecked = false,
       this.isShowRepaintRainbow = false,
       this.isShowPaintSizeEnabled = false,
       this.isShowPerformanceOverlay = false});
 
-  factory _$AppStateImpl.fromJson(Map<String, dynamic> json) =>
-      _$$AppStateImplFromJson(json);
+  factory _$VisualDebugStateImpl.fromJson(Map<String, dynamic> json) =>
+      _$$VisualDebugStateImplFromJson(json);
 
   @override
   @JsonKey()
-  final AppEnv appEnv;
-  @override
-  @JsonKey()
-  final bool isShowBtnDebug;
+  final bool isDebugShowChecked;
   @override
   @JsonKey()
   final bool isShowRepaintRainbow;
@@ -201,17 +170,16 @@ class _$AppStateImpl implements _AppState {
 
   @override
   String toString() {
-    return 'AppState(appEnv: $appEnv, isShowBtnDebug: $isShowBtnDebug, isShowRepaintRainbow: $isShowRepaintRainbow, isShowPaintSizeEnabled: $isShowPaintSizeEnabled, isShowPerformanceOverlay: $isShowPerformanceOverlay)';
+    return 'VisualDebugState(isDebugShowChecked: $isDebugShowChecked, isShowRepaintRainbow: $isShowRepaintRainbow, isShowPaintSizeEnabled: $isShowPaintSizeEnabled, isShowPerformanceOverlay: $isShowPerformanceOverlay)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AppStateImpl &&
-            (identical(other.appEnv, appEnv) || other.appEnv == appEnv) &&
-            (identical(other.isShowBtnDebug, isShowBtnDebug) ||
-                other.isShowBtnDebug == isShowBtnDebug) &&
+            other is _$VisualDebugStateImpl &&
+            (identical(other.isDebugShowChecked, isDebugShowChecked) ||
+                other.isDebugShowChecked == isDebugShowChecked) &&
             (identical(other.isShowRepaintRainbow, isShowRepaintRainbow) ||
                 other.isShowRepaintRainbow == isShowRepaintRainbow) &&
             (identical(other.isShowPaintSizeEnabled, isShowPaintSizeEnabled) ||
@@ -223,40 +191,38 @@ class _$AppStateImpl implements _AppState {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, appEnv, isShowBtnDebug,
+  int get hashCode => Object.hash(runtimeType, isDebugShowChecked,
       isShowRepaintRainbow, isShowPaintSizeEnabled, isShowPerformanceOverlay);
 
-  /// Create a copy of AppState
+  /// Create a copy of VisualDebugState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$AppStateImplCopyWith<_$AppStateImpl> get copyWith =>
-      __$$AppStateImplCopyWithImpl<_$AppStateImpl>(this, _$identity);
+  _$$VisualDebugStateImplCopyWith<_$VisualDebugStateImpl> get copyWith =>
+      __$$VisualDebugStateImplCopyWithImpl<_$VisualDebugStateImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$AppStateImplToJson(
+    return _$$VisualDebugStateImplToJson(
       this,
     );
   }
 }
 
-abstract class _AppState implements AppState {
-  const factory _AppState(
-      {final AppEnv appEnv,
-      final bool isShowBtnDebug,
+abstract class _VisualDebugState implements VisualDebugState {
+  const factory _VisualDebugState(
+      {final bool isDebugShowChecked,
       final bool isShowRepaintRainbow,
       final bool isShowPaintSizeEnabled,
-      final bool isShowPerformanceOverlay}) = _$AppStateImpl;
+      final bool isShowPerformanceOverlay}) = _$VisualDebugStateImpl;
 
-  factory _AppState.fromJson(Map<String, dynamic> json) =
-      _$AppStateImpl.fromJson;
+  factory _VisualDebugState.fromJson(Map<String, dynamic> json) =
+      _$VisualDebugStateImpl.fromJson;
 
   @override
-  AppEnv get appEnv;
-  @override
-  bool get isShowBtnDebug;
+  bool get isDebugShowChecked;
   @override
   bool get isShowRepaintRainbow;
   @override
@@ -264,10 +230,10 @@ abstract class _AppState implements AppState {
   @override
   bool get isShowPerformanceOverlay;
 
-  /// Create a copy of AppState
+  /// Create a copy of VisualDebugState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$AppStateImplCopyWith<_$AppStateImpl> get copyWith =>
+  _$$VisualDebugStateImplCopyWith<_$VisualDebugStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

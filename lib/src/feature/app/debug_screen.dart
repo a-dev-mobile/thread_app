@@ -21,10 +21,10 @@ class DebugScreen extends StatelessWidget {
               onPressed: () => InheritedDependencies.debug(context),
               child: const Text('Debug InheritedDependencies'),
             ),
-            ElevatedButton(
-              onPressed: () => SettingsScope.debug(context),
-              child: const Text('Debug SettingsScope'),
-            ),
+            // ElevatedButton(
+              // onPressed: () => SettingsScope.debug(context),
+              // child: const Text('Debug SettingsScope'),
+            // ),
           ],
         ),
       ),

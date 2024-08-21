@@ -3,14 +3,14 @@ import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/routing/app_router_delegate.dart';
 import 'package:thread/src/feature/no_found_screen/not_found_screen.dart';
 
-final l = L('NotFoundRoute');
+final _l = L('NotFoundRoute');
 
 class NotFoundRoute extends Page {
   final AppRouterDelegate routerDelegate;
   const NotFoundRoute({required this.routerDelegate}) : super(key: const ValueKey('NotFoundRoute'));
   @override
   Route createRoute(BuildContext context) {
-    l.dNoStack('-- createRoute start');
+    _l.dNoStack('-- createRoute start');
     return MaterialPageRoute(
       settings: this,
       builder: (BuildContext context) => const NotFoundScreen(

@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 import 'package:thread/src/common/log/l_setup.dart';
 
-final l = L('HttpLogInterceptor');
+final _l = L('HttpLogInterceptor');
 
 /// {@template http_log_interceptor}
 /// HttpLogInterceptor class
@@ -39,7 +39,7 @@ class HttpLogInterceptor extends Interceptor {
   @override
   void onResponse(Response<Object?> response, ResponseInterceptorHandler handler) {
     if (responses) {
-      l.dNoStack('${response.requestOptions.method} > '
+      _l.dNoStack('${response.requestOptions.method} > '
           '${response.requestOptions.uri} > '
           '${response.statusCode}: ${response.statusMessage} | '
           '${_extractElapsedTime(response.requestOptions)}');
@@ -54,7 +54,7 @@ class HttpLogInterceptor extends Interceptor {
       _ => err.message ?? err.error?.toString() ?? err.type.name,
     };
     if (errors) {
-      l.t('${err.requestOptions.method} > '
+      _l.t('${err.requestOptions.method} > '
           '${err.requestOptions.uri} > '
           '$status | '
           '${_extractElapsedTime(err.requestOptions)}');

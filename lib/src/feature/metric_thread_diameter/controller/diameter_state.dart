@@ -1,27 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:thread/src/feature/metric_thread_diameter/model/diameter.dart';
+part of 'diameter_controller.dart';
 
-@immutable
-class DiameterState {
-  final List<Diameter> diameters;
-  final bool isLoading;
-  final String? error;
-
-  const DiameterState({
-    this.diameters = const [],
-    this.isLoading = false,
-    this.error,
-  });
-
-  DiameterState copyWith({
-    List<Diameter>? diameters,
-    bool? isLoading,
+@freezed
+class DiameterState with _$DiameterState {
+  const factory DiameterState({
+    @Default([])  List<DiameterModel> diameters,
+    @Default(false)  bool isLoading,
     String? error,
-  }) {
-    return DiameterState(
-      diameters: diameters ?? this.diameters,
-      isLoading: isLoading ?? this.isLoading,
-      error: error ?? this.error,
-    );
-  }
+  }) = _DiameterState;
+
+  factory DiameterState.fromJson(Map<String, dynamic> json) => _$DiameterStateFromJson(json);
 }

@@ -5,12 +5,11 @@ import 'package:thread/src/common/constant/config.dart';
 import 'package:thread/src/common/constant/pubspec.yaml.g.dart';
 import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/model/dependencies.dart';
+import 'package:thread/src/common/network/dio_log/dio_log.dart';
 import 'package:thread/src/common/routing/page_route_config.dart';
-import 'package:thread/src/feature/app/controller/app_controller.dart';
 import 'package:thread/src/feature/app/model/app_env.dart';
-import 'package:thread/src/feature/settings/widget/settings_scope.dart';
 
-final l = L('home_screen');
+final _l = L('home_screen');
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -31,24 +30,48 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Подписка на изменения состояния
+    // Dependencies.of(context).visualDebugController.addListener(_onAppStateChange);
+  }
+
+  @override
+  void dispose() {
+    // Отписываемся от слушателя при удалении виджета
+    // Dependencies.of(context).visualDebugController.removeListener(_onAppStateChange);
+    super.dispose();
+  }
+
+  void _onAppStateChange() {
+    // final isShowBtnDebug = Dependencies.of(context).visualDebugController.state.isShowBtnDebug;
+
+    // if (isShowBtnDebug) {
+    //   showHttpLogBtn(context);
+    // } else {
+    //   dismissDebugBtn();
+    // }
+  }
+
+  @override
   // 13. Построение пользовательского интерфейса для домашней страницы
   Widget build(BuildContext context) {
-    l.dNoStack('-- build start');
+    _l.dNoStack('-- build start');
 
-    final appController = Dependencies.of(context).appController;
-    final appRouterDelegate = Dependencies.of(context).routerDelegate;
-    final project = const AppState().appEnv;
-    switch (project) {
-      case AppEnvDev():
-        l.d('dev');
-        l.d(project.apiBaseUrl);
-      case AppEnvProd():
-        l.d('prod');
-        l.d(project.apiBaseUrl);
+    final dependencies = Dependencies.of(context);
+    final appEnv = dependencies.appEnv;
+    final appRouterDelegate = dependencies.routerDelegate;
+    final visualDebugController = dependencies.visualDebugController;
+    // final project = dependencies.visualDebugController.state.appEnv;
 
-      // ProjectDev(:final name) => print('Person $name'),
-      // ProjectProd(:final name) => print('City ($name)'),
-    }
+    // switch (project) {
+    //   case AppEnvDev():
+    //     l.d('dev');
+    //     l.d(project.apiBaseUrl);
+    //   case AppEnvProd():
+    //     l.d('prod');
+    //     l.d(project.apiBaseUrl);
+    // }
 
     return Scaffold(
       appBar: AppBar(
@@ -58,9 +81,6 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              '${Config.maxScreenLayoutWidth}',
-            ),
             ElevatedButton(
               onPressed: () => appRouterDelegate.push(PageType.metricType),
               child: const Text('добавить страницу резьбы'),
@@ -71,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             ElevatedButton(
               onPressed: () {
-                SettingsScope.of(context).toggleTheme();
+                // SettingsScope.of(context).toggleTheme();
               },
               child: const Text("Change Theme"),
             ),
@@ -94,38 +114,40 @@ class _HomeScreenState extends State<HomeScreen> {
             //
             ElevatedButton(
               onPressed: () {
-                appController.toggleDebugButton();
+                showHttpLogBtn(context);
               },
-              child: const Text("Toggle toggleDebugButton"),
+              child: const Text("Toggle showHttpLogBtn"),
             ),
             ElevatedButton(
               onPressed: () {
-                appController.toggleShowPerformanceOverlay();
+                visualDebugController.toggleDebugShowChecked();
+              },
+              child: const Text("Toggle toggleDebugShowChecked"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                visualDebugController.toggleShowPerformanceOverlay();
               },
               child: const Text("Toggle toggleShowPerformanceOverlay"),
             ),
             ElevatedButton(
               onPressed: () {
-                appController.toggleRepaintRainbow();
+                visualDebugController.toggleRepaintRainbow();
               },
               child: const Text("Toggle Repaint Rainbow"),
             ),
             ElevatedButton(
               onPressed: () {
-                appController.togglePaintSize();
+                visualDebugController.togglePaintSize();
               },
-              child: Column(
-                children: [
-                  const Text("Toggle Paint Size"),
-                   Text(appController.state.toString()),
-                ],
-              ),
+              child: const Text("Toggle Paint Size"),
+            ),
+            Text(visualDebugController.state.toString()),
+            Text(
+              appEnv.apiBaseUrl,
             ),
             Text(
-              appController.state.appEnv.apiBaseUrl,
-            ),
-            Text(
-              appController.state.appEnv.name,
+              appEnv.name,
             ),
             Text(
               '$_counter',

@@ -6,11 +6,11 @@ import 'package:thread/src/common/model/dependencies.dart';
 import 'package:thread/src/common/network/network_initialization.dart';
 import 'package:thread/src/common/routing/app_route_information_parser.dart';
 import 'package:thread/src/common/routing/app_router_delegate.dart';
-import 'package:thread/src/feature/app/controller/app_controller.dart';
 import 'package:thread/src/feature/initialization/data/local_storage.dart';
 import 'package:thread/src/feature/initialization/data/platform/platform_initialization.dart';
+import 'package:thread/src/feature/visual_debug/visual_debug_controller.dart';
 
-final l = L('initialize_dependencies');
+final _l = L('initialize_dependencies');
 
 /// Initializes the app and returns a [Dependencies] object
 Future<Dependencies> $initializeDependencies({
@@ -25,10 +25,10 @@ Future<Dependencies> $initializeDependencies({
       currentStep++;
       final percent = (currentStep * 100 ~/ totalSteps).clamp(0, 100);
       onProgress?.call(percent, step.key);
-      l.dNoStack('$currentStep/$totalSteps ($percent%) | "${step.key}"');
+      _l.dNoStack('$currentStep/$totalSteps ($percent%) | "${step.key}"');
       await step.value(dependencies);
     } on Object catch (error, stackTrace) {
-      l.e('Initialization failed at step "${step.key}": $error', error: error, stackTrace: stackTrace);
+      _l.e('Initialization failed at step "${step.key}": $error', error: error, stackTrace: stackTrace);
       Error.throwWithStackTrace('Initialization failed at step "${step.key}": $error', stackTrace);
     }
   }
@@ -52,12 +52,19 @@ final Map<String, _InitializationStep> _initializationSteps = <String, _Initiali
     // Присваиваем localStorage в зависимости
     dependencies.localStorage = localStorage;
   },
-  'Initialize AppController': (dependencies) async {
-    // Получаем AppState из LocalStorage
-    final appState = await dependencies.localStorage.getAppState();
-    final localStorage =  dependencies.localStorage;
+  'Initialize AppEnv': (dependencies) async {
+    final appEnv = await dependencies.localStorage.getAppEnv();
+    dependencies.appEnv = appEnv;
+    await Future.delayed(const Duration(seconds: 1));
+  },
+  'Initializing VisualDebugController': (dependencies) async {
+    await Future.delayed(const Duration(seconds: 1));
 
-    dependencies.appController = AppController(appState: appState, localStorage: localStorage);
+    final visualDebugController = VisualDebugController(localStorage: dependencies.localStorage);
+
+    await visualDebugController.initialize();
+
+    dependencies.visualDebugController = visualDebugController;
   },
   'Initializing analytics': (_) async {
     await Future.delayed(const Duration(seconds: 1));
@@ -69,9 +76,9 @@ final Map<String, _InitializationStep> _initializationSteps = <String, _Initiali
     await Future.delayed(const Duration(seconds: 1));
   },
   'Restore settings': (_) {
-    l.iNoStack('Application initialized info.');
-    l.dNoStack('Application initialized debug.');
-    l.e('Application initialized error.');
+    _l.iNoStack('Application initialized info.');
+    _l.dNoStack('Application initialized debug.');
+    _l.e('Application initialized error.');
   },
   'API Client and Interceptors': (dependencies) async => await initializeNetworkDependencies(dependencies),
   'Initialize localization': (_) {},

@@ -30,31 +30,36 @@ AppEnv _$AppEnvFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$AppEnv {
   String get apiBaseUrl => throw _privateConstructorUsedError;
-  int get apiConnectTimeout => throw _privateConstructorUsedError;
+  Duration get apiConnectTimeout => throw _privateConstructorUsedError;
+  Duration get apiReceiveTimeout => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            String apiBaseUrl, int apiConnectTimeout, String name)
+    required TResult Function(String apiBaseUrl, Duration apiConnectTimeout,
+            Duration apiReceiveTimeout, String name)
         prod,
-    required TResult Function(
-            String apiBaseUrl, int apiConnectTimeout, String name)
+    required TResult Function(String apiBaseUrl, Duration apiConnectTimeout,
+            Duration apiReceiveTimeout, String name)
         dev,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String apiBaseUrl, int apiConnectTimeout, String name)?
+    TResult? Function(String apiBaseUrl, Duration apiConnectTimeout,
+            Duration apiReceiveTimeout, String name)?
         prod,
-    TResult? Function(String apiBaseUrl, int apiConnectTimeout, String name)?
+    TResult? Function(String apiBaseUrl, Duration apiConnectTimeout,
+            Duration apiReceiveTimeout, String name)?
         dev,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String apiBaseUrl, int apiConnectTimeout, String name)?
+    TResult Function(String apiBaseUrl, Duration apiConnectTimeout,
+            Duration apiReceiveTimeout, String name)?
         prod,
-    TResult Function(String apiBaseUrl, int apiConnectTimeout, String name)?
+    TResult Function(String apiBaseUrl, Duration apiConnectTimeout,
+            Duration apiReceiveTimeout, String name)?
         dev,
     required TResult orElse(),
   }) =>
@@ -93,7 +98,11 @@ abstract class $AppEnvCopyWith<$Res> {
   factory $AppEnvCopyWith(AppEnv value, $Res Function(AppEnv) then) =
       _$AppEnvCopyWithImpl<$Res, AppEnv>;
   @useResult
-  $Res call({String apiBaseUrl, int apiConnectTimeout, String name});
+  $Res call(
+      {String apiBaseUrl,
+      Duration apiConnectTimeout,
+      Duration apiReceiveTimeout,
+      String name});
 }
 
 /// @nodoc
@@ -113,6 +122,7 @@ class _$AppEnvCopyWithImpl<$Res, $Val extends AppEnv>
   $Res call({
     Object? apiBaseUrl = null,
     Object? apiConnectTimeout = null,
+    Object? apiReceiveTimeout = null,
     Object? name = null,
   }) {
     return _then(_value.copyWith(
@@ -123,7 +133,11 @@ class _$AppEnvCopyWithImpl<$Res, $Val extends AppEnv>
       apiConnectTimeout: null == apiConnectTimeout
           ? _value.apiConnectTimeout
           : apiConnectTimeout // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Duration,
+      apiReceiveTimeout: null == apiReceiveTimeout
+          ? _value.apiReceiveTimeout
+          : apiReceiveTimeout // ignore: cast_nullable_to_non_nullable
+              as Duration,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -140,7 +154,11 @@ abstract class _$$AppEnvProdImplCopyWith<$Res>
       __$$AppEnvProdImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String apiBaseUrl, int apiConnectTimeout, String name});
+  $Res call(
+      {String apiBaseUrl,
+      Duration apiConnectTimeout,
+      Duration apiReceiveTimeout,
+      String name});
 }
 
 /// @nodoc
@@ -158,6 +176,7 @@ class __$$AppEnvProdImplCopyWithImpl<$Res>
   $Res call({
     Object? apiBaseUrl = null,
     Object? apiConnectTimeout = null,
+    Object? apiReceiveTimeout = null,
     Object? name = null,
   }) {
     return _then(_$AppEnvProdImpl(
@@ -168,7 +187,11 @@ class __$$AppEnvProdImplCopyWithImpl<$Res>
       apiConnectTimeout: null == apiConnectTimeout
           ? _value.apiConnectTimeout
           : apiConnectTimeout // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Duration,
+      apiReceiveTimeout: null == apiReceiveTimeout
+          ? _value.apiReceiveTimeout
+          : apiReceiveTimeout // ignore: cast_nullable_to_non_nullable
+              as Duration,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -182,7 +205,8 @@ class __$$AppEnvProdImplCopyWithImpl<$Res>
 class _$AppEnvProdImpl implements AppEnvProd {
   const _$AppEnvProdImpl(
       {this.apiBaseUrl = Config.apiBaseUrlProd,
-      this.apiConnectTimeout = 15000,
+      this.apiConnectTimeout = const Duration(seconds: 15),
+      this.apiReceiveTimeout = const Duration(seconds: 15),
       this.name = 'prod',
       final String? $type})
       : $type = $type ?? 'prod';
@@ -195,7 +219,10 @@ class _$AppEnvProdImpl implements AppEnvProd {
   final String apiBaseUrl;
   @override
   @JsonKey()
-  final int apiConnectTimeout;
+  final Duration apiConnectTimeout;
+  @override
+  @JsonKey()
+  final Duration apiReceiveTimeout;
   @override
   @JsonKey()
   final String name;
@@ -205,7 +232,7 @@ class _$AppEnvProdImpl implements AppEnvProd {
 
   @override
   String toString() {
-    return 'AppEnv.prod(apiBaseUrl: $apiBaseUrl, apiConnectTimeout: $apiConnectTimeout, name: $name)';
+    return 'AppEnv.prod(apiBaseUrl: $apiBaseUrl, apiConnectTimeout: $apiConnectTimeout, apiReceiveTimeout: $apiReceiveTimeout, name: $name)';
   }
 
   @override
@@ -217,13 +244,15 @@ class _$AppEnvProdImpl implements AppEnvProd {
                 other.apiBaseUrl == apiBaseUrl) &&
             (identical(other.apiConnectTimeout, apiConnectTimeout) ||
                 other.apiConnectTimeout == apiConnectTimeout) &&
+            (identical(other.apiReceiveTimeout, apiReceiveTimeout) ||
+                other.apiReceiveTimeout == apiReceiveTimeout) &&
             (identical(other.name, name) || other.name == name));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, apiBaseUrl, apiConnectTimeout, name);
+  int get hashCode => Object.hash(
+      runtimeType, apiBaseUrl, apiConnectTimeout, apiReceiveTimeout, name);
 
   /// Create a copy of AppEnv
   /// with the given fields replaced by the non-null parameter values.
@@ -236,38 +265,42 @@ class _$AppEnvProdImpl implements AppEnvProd {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            String apiBaseUrl, int apiConnectTimeout, String name)
+    required TResult Function(String apiBaseUrl, Duration apiConnectTimeout,
+            Duration apiReceiveTimeout, String name)
         prod,
-    required TResult Function(
-            String apiBaseUrl, int apiConnectTimeout, String name)
+    required TResult Function(String apiBaseUrl, Duration apiConnectTimeout,
+            Duration apiReceiveTimeout, String name)
         dev,
   }) {
-    return prod(apiBaseUrl, apiConnectTimeout, name);
+    return prod(apiBaseUrl, apiConnectTimeout, apiReceiveTimeout, name);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String apiBaseUrl, int apiConnectTimeout, String name)?
+    TResult? Function(String apiBaseUrl, Duration apiConnectTimeout,
+            Duration apiReceiveTimeout, String name)?
         prod,
-    TResult? Function(String apiBaseUrl, int apiConnectTimeout, String name)?
+    TResult? Function(String apiBaseUrl, Duration apiConnectTimeout,
+            Duration apiReceiveTimeout, String name)?
         dev,
   }) {
-    return prod?.call(apiBaseUrl, apiConnectTimeout, name);
+    return prod?.call(apiBaseUrl, apiConnectTimeout, apiReceiveTimeout, name);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String apiBaseUrl, int apiConnectTimeout, String name)?
+    TResult Function(String apiBaseUrl, Duration apiConnectTimeout,
+            Duration apiReceiveTimeout, String name)?
         prod,
-    TResult Function(String apiBaseUrl, int apiConnectTimeout, String name)?
+    TResult Function(String apiBaseUrl, Duration apiConnectTimeout,
+            Duration apiReceiveTimeout, String name)?
         dev,
     required TResult orElse(),
   }) {
     if (prod != null) {
-      return prod(apiBaseUrl, apiConnectTimeout, name);
+      return prod(apiBaseUrl, apiConnectTimeout, apiReceiveTimeout, name);
     }
     return orElse();
   }
@@ -314,7 +347,8 @@ class _$AppEnvProdImpl implements AppEnvProd {
 abstract class AppEnvProd implements AppEnv {
   const factory AppEnvProd(
       {final String apiBaseUrl,
-      final int apiConnectTimeout,
+      final Duration apiConnectTimeout,
+      final Duration apiReceiveTimeout,
       final String name}) = _$AppEnvProdImpl;
 
   factory AppEnvProd.fromJson(Map<String, dynamic> json) =
@@ -323,7 +357,9 @@ abstract class AppEnvProd implements AppEnv {
   @override
   String get apiBaseUrl;
   @override
-  int get apiConnectTimeout;
+  Duration get apiConnectTimeout;
+  @override
+  Duration get apiReceiveTimeout;
   @override
   String get name;
 
@@ -342,7 +378,11 @@ abstract class _$$AppEnvDevImplCopyWith<$Res> implements $AppEnvCopyWith<$Res> {
       __$$AppEnvDevImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String apiBaseUrl, int apiConnectTimeout, String name});
+  $Res call(
+      {String apiBaseUrl,
+      Duration apiConnectTimeout,
+      Duration apiReceiveTimeout,
+      String name});
 }
 
 /// @nodoc
@@ -360,6 +400,7 @@ class __$$AppEnvDevImplCopyWithImpl<$Res>
   $Res call({
     Object? apiBaseUrl = null,
     Object? apiConnectTimeout = null,
+    Object? apiReceiveTimeout = null,
     Object? name = null,
   }) {
     return _then(_$AppEnvDevImpl(
@@ -370,7 +411,11 @@ class __$$AppEnvDevImplCopyWithImpl<$Res>
       apiConnectTimeout: null == apiConnectTimeout
           ? _value.apiConnectTimeout
           : apiConnectTimeout // ignore: cast_nullable_to_non_nullable
-              as int,
+              as Duration,
+      apiReceiveTimeout: null == apiReceiveTimeout
+          ? _value.apiReceiveTimeout
+          : apiReceiveTimeout // ignore: cast_nullable_to_non_nullable
+              as Duration,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -384,7 +429,8 @@ class __$$AppEnvDevImplCopyWithImpl<$Res>
 class _$AppEnvDevImpl implements AppEnvDev {
   const _$AppEnvDevImpl(
       {this.apiBaseUrl = Config.apiBaseUrlDev,
-      this.apiConnectTimeout = 50000,
+      this.apiConnectTimeout = const Duration(seconds: 50),
+      this.apiReceiveTimeout = const Duration(seconds: 50),
       this.name = 'dev',
       final String? $type})
       : $type = $type ?? 'dev';
@@ -397,7 +443,10 @@ class _$AppEnvDevImpl implements AppEnvDev {
   final String apiBaseUrl;
   @override
   @JsonKey()
-  final int apiConnectTimeout;
+  final Duration apiConnectTimeout;
+  @override
+  @JsonKey()
+  final Duration apiReceiveTimeout;
   @override
   @JsonKey()
   final String name;
@@ -407,7 +456,7 @@ class _$AppEnvDevImpl implements AppEnvDev {
 
   @override
   String toString() {
-    return 'AppEnv.dev(apiBaseUrl: $apiBaseUrl, apiConnectTimeout: $apiConnectTimeout, name: $name)';
+    return 'AppEnv.dev(apiBaseUrl: $apiBaseUrl, apiConnectTimeout: $apiConnectTimeout, apiReceiveTimeout: $apiReceiveTimeout, name: $name)';
   }
 
   @override
@@ -419,13 +468,15 @@ class _$AppEnvDevImpl implements AppEnvDev {
                 other.apiBaseUrl == apiBaseUrl) &&
             (identical(other.apiConnectTimeout, apiConnectTimeout) ||
                 other.apiConnectTimeout == apiConnectTimeout) &&
+            (identical(other.apiReceiveTimeout, apiReceiveTimeout) ||
+                other.apiReceiveTimeout == apiReceiveTimeout) &&
             (identical(other.name, name) || other.name == name));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, apiBaseUrl, apiConnectTimeout, name);
+  int get hashCode => Object.hash(
+      runtimeType, apiBaseUrl, apiConnectTimeout, apiReceiveTimeout, name);
 
   /// Create a copy of AppEnv
   /// with the given fields replaced by the non-null parameter values.
@@ -438,38 +489,42 @@ class _$AppEnvDevImpl implements AppEnvDev {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            String apiBaseUrl, int apiConnectTimeout, String name)
+    required TResult Function(String apiBaseUrl, Duration apiConnectTimeout,
+            Duration apiReceiveTimeout, String name)
         prod,
-    required TResult Function(
-            String apiBaseUrl, int apiConnectTimeout, String name)
+    required TResult Function(String apiBaseUrl, Duration apiConnectTimeout,
+            Duration apiReceiveTimeout, String name)
         dev,
   }) {
-    return dev(apiBaseUrl, apiConnectTimeout, name);
+    return dev(apiBaseUrl, apiConnectTimeout, apiReceiveTimeout, name);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String apiBaseUrl, int apiConnectTimeout, String name)?
+    TResult? Function(String apiBaseUrl, Duration apiConnectTimeout,
+            Duration apiReceiveTimeout, String name)?
         prod,
-    TResult? Function(String apiBaseUrl, int apiConnectTimeout, String name)?
+    TResult? Function(String apiBaseUrl, Duration apiConnectTimeout,
+            Duration apiReceiveTimeout, String name)?
         dev,
   }) {
-    return dev?.call(apiBaseUrl, apiConnectTimeout, name);
+    return dev?.call(apiBaseUrl, apiConnectTimeout, apiReceiveTimeout, name);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String apiBaseUrl, int apiConnectTimeout, String name)?
+    TResult Function(String apiBaseUrl, Duration apiConnectTimeout,
+            Duration apiReceiveTimeout, String name)?
         prod,
-    TResult Function(String apiBaseUrl, int apiConnectTimeout, String name)?
+    TResult Function(String apiBaseUrl, Duration apiConnectTimeout,
+            Duration apiReceiveTimeout, String name)?
         dev,
     required TResult orElse(),
   }) {
     if (dev != null) {
-      return dev(apiBaseUrl, apiConnectTimeout, name);
+      return dev(apiBaseUrl, apiConnectTimeout, apiReceiveTimeout, name);
     }
     return orElse();
   }
@@ -516,7 +571,8 @@ class _$AppEnvDevImpl implements AppEnvDev {
 abstract class AppEnvDev implements AppEnv {
   const factory AppEnvDev(
       {final String apiBaseUrl,
-      final int apiConnectTimeout,
+      final Duration apiConnectTimeout,
+      final Duration apiReceiveTimeout,
       final String name}) = _$AppEnvDevImpl;
 
   factory AppEnvDev.fromJson(Map<String, dynamic> json) =
@@ -525,7 +581,9 @@ abstract class AppEnvDev implements AppEnv {
   @override
   String get apiBaseUrl;
   @override
-  int get apiConnectTimeout;
+  Duration get apiConnectTimeout;
+  @override
+  Duration get apiReceiveTimeout;
   @override
   String get name;
 

@@ -1,164 +1,55 @@
 import 'package:flutter/material.dart';
-import 'package:thread/src/common/log/l_setup.dart';
+import 'package:thread/src/feature/settings/widget/inherited_settings_scope.dart';
+import 'package:thread/src/feature/settings/widget/theme_manager.dart';
 
-final l = L('settings_scope');
-
-/// {@template settings_scope}
-/// SettingsScope widget.
-/// {@endtemplate}
 class SettingsScope extends StatefulWidget {
-  /// {@macro settings_scope}
-  const SettingsScope({
+  const SettingsScope(visualDebugProvider, {
     required this.child,
-    super.key, // ignore: unused_element
+    super.key,
   });
 
+  final Widget child;
+
   static ThemeData themeOf(BuildContext context, {bool listen = true}) =>
-      _InheritedSettingsScope.of(context, listen: listen).scope._theme;
+      InheritedSettingsScope.of(context, listen: listen).scope.theme;
 
   static SettingsScopeState of(BuildContext context, {bool listen = true}) =>
-      _InheritedSettingsScope.of(context, listen: listen).scope;
-
-  /// The widget below this widget in the tree.
-  final Widget child;
+      InheritedSettingsScope.of(context, listen: listen).scope;
 
   @override
   State<SettingsScope> createState() => SettingsScopeState();
-
-  static void debug(BuildContext context) {
-    final theme = themeOf(context, listen: false);
-    debugPrint('SettingsScope holds theme: ${theme.brightness}');
-  }
 }
 
-/// State for widget SettingsScope.
 class SettingsScopeState extends State<SettingsScope> {
-  ThemeData _theme = _$buildTheme(ThemeData.light());
+  ThemeData _theme = ThemeManager.buildTheme(ThemeData.light());
 
-  /* #region Lifecycle */
-  @override
-  void initState() {
-    super.initState();
-  }
+  ThemeData get theme => _theme;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final brightness = View.maybeOf(context)?.platformDispatcher.platformBrightness;
+    final brightness = MediaQuery.of(context).platformBrightness;
     if (brightness != _theme.brightness) {
-      _theme = _$buildTheme(brightness == Brightness.dark ? ThemeData.dark() : ThemeData.light());
+      _theme = ThemeManager.buildTheme(
+        brightness == Brightness.dark ? ThemeData.dark() : ThemeData.light(),
+      );
     }
   }
 
-  @override
-  void dispose() {
-    // Permanent removal of a tree stent
-    super.dispose();
-  }
-  /* #endregion */
-
   void toggleTheme() {
-    l.dNoStack('SettingsScopeState: toggleTheme called');
     setState(() {
-      _theme = _theme.brightness == Brightness.dark ? _$buildTheme(ThemeData.light()) : _$buildTheme(ThemeData.dark());
+      _theme = _theme.brightness == Brightness.dark
+          ? ThemeManager.buildTheme(ThemeData.light())
+          : ThemeManager.buildTheme(ThemeData.dark());
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    l.dNoStack('SettingsScope build called');
-    return _InheritedSettingsScope(
+    return InheritedSettingsScope(
       scope: this,
       theme: _theme,
       child: widget.child,
     );
   }
-}
-
-/// Inherited widget for quick access in the element tree.
-class _InheritedSettingsScope extends InheritedWidget {
-  const _InheritedSettingsScope({
-    required this.scope,
-    required this.theme,
-    required super.child,
-  });
-
-  final SettingsScopeState scope;
-  final ThemeData theme;
-
-  /// The state from the closest instance of this class
-  /// that encloses the given context, if any.
-  /// For example: `SettingsScope.maybeOf(context)`.
-  static _InheritedSettingsScope? maybeOf(BuildContext context, {bool listen = true}) => listen
-      ? context.dependOnInheritedWidgetOfExactType<_InheritedSettingsScope>()
-      : context.getInheritedWidgetOfExactType<_InheritedSettingsScope>();
-
-  static Never _notFoundInheritedWidgetOfExactType() => throw ArgumentError(
-        'Out of scope, not found inherited widget '
-            'a _InheritedSettingsScope of the exact type',
-        'out_of_scope',
-      );
-
-  /// The state from the closest instance of this class
-  /// that encloses the given context.
-  /// For example: `SettingsScope.of(context)`.
-  static _InheritedSettingsScope of(BuildContext context, {bool listen = true}) =>
-      maybeOf(context, listen: listen) ?? _notFoundInheritedWidgetOfExactType();
-
-  @override
-  bool updateShouldNotify(covariant _InheritedSettingsScope oldWidget) => !identical(oldWidget.theme, theme);
-}
-
-ThemeData _$buildTheme(ThemeData theme) {
-  const borderSide = BorderSide(
-    width: 1,
-    color: Color.fromRGBO(0, 0, 0, 0.6), // Color.fromRGBO(43, 45, 39, 0.24)
-    strokeAlign: BorderSide.strokeAlignInside,
-  );
-  const radius = BorderRadius.all(Radius.circular(8));
-  return theme.copyWith(
-    inputDecorationTheme: theme.inputDecorationTheme.copyWith(
-      isCollapsed: false,
-      isDense: false,
-      filled: true,
-      floatingLabelAlignment: FloatingLabelAlignment.start,
-      floatingLabelBehavior: FloatingLabelBehavior.always,
-      contentPadding: const EdgeInsets.fromLTRB(16, 8, 4, 8),
-      border: const OutlineInputBorder(
-        borderRadius: radius,
-        borderSide: borderSide,
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: radius,
-        borderSide: borderSide.copyWith(
-          color: theme.colorScheme.primary,
-        ),
-      ),
-      errorBorder: OutlineInputBorder(
-        borderRadius: radius,
-        borderSide: borderSide.copyWith(
-          color: theme.colorScheme.error,
-        ),
-      ),
-      focusedErrorBorder: OutlineInputBorder(
-        borderRadius: radius,
-        borderSide: borderSide.copyWith(
-          color: theme.colorScheme.error,
-        ),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: radius,
-        borderSide: borderSide.copyWith(
-          color: const Color.fromRGBO(0, 0, 0, 0.24),
-        ),
-      ),
-      disabledBorder: OutlineInputBorder(
-        borderRadius: radius,
-        borderSide: borderSide.copyWith(
-          color: const Color.fromRGBO(0, 0, 0, 0.24),
-        ),
-      ),
-      outlineBorder: borderSide,
-    ),
-  );
 }

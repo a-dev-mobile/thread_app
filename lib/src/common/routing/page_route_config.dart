@@ -6,7 +6,7 @@ import 'package:thread/src/feature/metric_thread_type/metric_thread_type_screen.
 import 'package:thread/src/feature/no_found_screen/not_found_screen.dart';
 import 'package:thread/src/feature/user/user_profile_screen.dart';
 
-final l = L('page_route_config');
+final _l = L('page_route_config');
 
 /// Перечисление всех типов страниц в приложении
 enum PageType {

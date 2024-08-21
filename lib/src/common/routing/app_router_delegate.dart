@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/routing/page_route_config.dart';
 
-final l = L('app_router_delegate');
+final _l = L('app_router_delegate');
 
 class AppRouterDelegate extends RouterDelegate<AppPageRouteConfig>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppPageRouteConfig> {
@@ -12,20 +12,20 @@ class AppRouterDelegate extends RouterDelegate<AppPageRouteConfig>
   @override
   // Метод build создает виджет Navigator, который управляет стеком страниц
   Widget build(BuildContext context) {
-    l.dNoStack('-- build start');
+    _l.dNoStack('-- build start');
     return Navigator(
       key: navigatorKey,
       pages: List.of(_pages), // Список страниц, используемых навигатором
       onPopPage: (route, result) {
-        l.dNoStack('-- build Navigator onPopPage start');
+        _l.dNoStack('-- build Navigator onPopPage start');
 
         // Проверка типа маршрута и вывод информации о нём
         if (route is MaterialPageRoute) {
-          l.dNoStack('-- build Navigator onPopPageMaterialPageRoute: ${route.settings.toString()}');
+          _l.dNoStack('-- build Navigator onPopPageMaterialPageRoute: ${route.settings.toString()}');
         } else if (route is PageRoute) {
-          l.dNoStack('-- build Navigator onPopPagePageRoute: ${route.settings.name}');
+          _l.dNoStack('-- build Navigator onPopPagePageRoute: ${route.settings.name}');
         } else {
-          l.dNoStack('-- build Navigator onPopPageOther Route: ${route.settings.name}');
+          _l.dNoStack('-- build Navigator onPopPageOther Route: ${route.settings.name}');
         }
 
         if (!route.didPop(result)) {
@@ -81,7 +81,7 @@ class AppRouterDelegate extends RouterDelegate<AppPageRouteConfig>
   @override
   // Установка начального пути маршрута
   Future<void> setInitialRoutePath(AppPageRouteConfig configuration) async {
-    l.dNoStack('-- setInitialRoutePath start --');
+    _l.dNoStack('-- setInitialRoutePath start --');
     // Инициализация начальной страницы
     _pages = [
       MaterialPage(
@@ -97,14 +97,14 @@ class AppRouterDelegate extends RouterDelegate<AppPageRouteConfig>
   @override
   // Восстановление пути маршрута после восстановления состояния
   Future<void> setRestoredRoutePath(AppPageRouteConfig configuration) {
-    l.dNoStack('-- setRestoredRoutePath start --');
+    _l.dNoStack('-- setRestoredRoutePath start --');
     return setNewRoutePath(configuration);
   }
 
   @override
   // Установка нового пути маршрута
   Future<void> setNewRoutePath(AppPageRouteConfig configuration) async {
-    l.dNoStack('-- setNewRoutePath start');
+    _l.dNoStack('-- setNewRoutePath start');
 
     _pages = [
       MaterialPage(
@@ -119,7 +119,7 @@ class AppRouterDelegate extends RouterDelegate<AppPageRouteConfig>
   @override
   // Метод popRoute обрабатывает нажатие кнопки "назад"
   Future<bool> popRoute() {
-    l.dNoStack('-- popRoute start --');
+    _l.dNoStack('-- popRoute start --');
     if (_pages.length > 1) {
       _pages.removeLast();
       if (_pages.isNotEmpty) {
@@ -137,9 +137,8 @@ class AppRouterDelegate extends RouterDelegate<AppPageRouteConfig>
   @override
   // Получение текущей конфигурации маршрута
   AppPageRouteConfig? get currentConfiguration {
-    l.dNoStack('-- currentConfiguration start --${_currentConfiguration?.pageType.name}');
+    _l.dNoStack('-- currentConfiguration start --${_currentConfiguration?.pageType.name}');
 
     return _currentConfiguration;
-
   }
 }

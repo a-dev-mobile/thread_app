@@ -6,7 +6,7 @@ import 'package:thread/src/common/model/dependencies.dart';
 import 'package:thread/src/feature/metric_thread_diameter/controller/diameter_controller.dart';
 import 'package:thread/src/feature/metric_thread_diameter/data/diameter_repository_impl.dart';
 
-final l = L('metric_thread_diameter_screen');
+final _l = L('metric_thread_diameter_screen');
 
 class MetricDiameterScreen extends StatefulWidget {
   const MetricDiameterScreen({
@@ -44,7 +44,7 @@ class _MetricDiameterScreenState extends State<MetricDiameterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    l.dNoStack('-- build start');
+    _l.dNoStack('-- build start');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Выберите Диаметер резьбы'),

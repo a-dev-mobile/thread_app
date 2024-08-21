@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thread/src/common/log/l_setup.dart';
 
-final l = L('app_back_button_dispatcher');
+final _l = L('app_back_button_dispatcher');
 
 /// AppBackButtonDispatcher обрабатывает нажатие кнопки "назад".
 class AppBackButtonDispatcher extends RootBackButtonDispatcher {
@@ -12,7 +12,7 @@ class AppBackButtonDispatcher extends RootBackButtonDispatcher {
 
   @override
   Future<bool> didPopRoute() {
-    l.dNoStack('-- didPopRoute start');
+    _l.dNoStack('-- didPopRoute start');
     // Метод вызывается, когда нажимается кнопка "назад".
     // Он вызывает метод popRoute у делегата маршрутизатора.
     return _routerDelegate.popRoute();
@@ -20,7 +20,7 @@ class AppBackButtonDispatcher extends RootBackButtonDispatcher {
 
   @override
   void addCallback(ValueGetter<Future<bool>> callback) {
-    l.dNoStack('-- addCallback start');
+    _l.dNoStack('-- addCallback start');
     // Добавляет callback для обработки нажатия кнопки "назад".
     // Если это первый callback, добавляет наблюдателя.
     if (!hasCallbacks) {
@@ -31,7 +31,7 @@ class AppBackButtonDispatcher extends RootBackButtonDispatcher {
 
   @override
   void removeCallback(ValueGetter<Future<bool>> callback) {
-    l.dNoStack('-- removeCallback start');
+    _l.dNoStack('-- removeCallback start');
     // Удаляет callback для обработки нажатия кнопки "назад".
     // Если больше нет callback, удаляет наблюдателя.
     super.removeCallback(callback);

@@ -5,7 +5,7 @@ import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/model/dependencies.dart';
 import 'package:thread/src/common/routing/page_route_config.dart';
 
-final l = L('metric_thread_type_screen');
+final _l = L('metric_thread_type_screen');
 
 class MetricTypeScreen extends StatefulWidget {
   const MetricTypeScreen({
@@ -20,7 +20,7 @@ class _MetricTypeScreenState extends State<MetricTypeScreen> {
   @override
   // 13. Построение пользовательского интерфейса для домашней страницы
   Widget build(BuildContext context) {
-    l.dNoStack('-- build start');
+    _l.dNoStack('-- build start');
 
     final appRouterDelegate = Dependencies.of(context).routerDelegate;
 

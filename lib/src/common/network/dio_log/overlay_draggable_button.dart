@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/network/dio_log/dio_log.dart';
-
+final _l = L('overlay_draggable_button');
 OverlayEntry? itemEntry;
 
 ///Показать кнопку http log

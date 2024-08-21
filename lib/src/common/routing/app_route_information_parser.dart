@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/routing/page_route_config.dart';
 
-final l = L('app_route_information_parser');
+final _l = L('app_route_information_parser');
 
 class AppRouteInformationParser extends RouteInformationParser<AppPageRouteConfig> {
   @override
@@ -16,7 +16,7 @@ class AppRouteInformationParser extends RouteInformationParser<AppPageRouteConfi
     //   path = '/$path';
     // }
 
-    l.dNoStack('-- parseRouteInformation start path = $path');
+    _l.dNoStack('-- parseRouteInformation start path = $path');
 
     return SynchronousFuture(AppPageProvider.getPageConfig(path));
   }
@@ -24,7 +24,7 @@ class AppRouteInformationParser extends RouteInformationParser<AppPageRouteConfi
   @override
   // 11. Восстановление информации о маршруте из конфигурации
   RouteInformation restoreRouteInformation(AppPageRouteConfig configuration) {
-    l.dNoStack('-- restoreRouteInformation start');
+    _l.dNoStack('-- restoreRouteInformation start');
     return AppPageProvider.restoreRouteInformation(configuration);
   }
 
@@ -32,7 +32,7 @@ class AppRouteInformationParser extends RouteInformationParser<AppPageRouteConfi
   Future<AppPageRouteConfig> parseRouteInformationWithDependencies(
       RouteInformation routeInformation, BuildContext context) {
     // при загрузке один из первых
-    l.dNoStack('-- parseRouteInformationWithDependencies start --');
+    _l.dNoStack('-- parseRouteInformationWithDependencies start --');
     return parseRouteInformation(routeInformation); // Переиспользуем базовый парсер
   }
 }
