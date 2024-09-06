@@ -14,7 +14,7 @@ class DiameterRepositoryImpl implements IDiameterRepository {
 
   @override
   Future<List<DiameterModel>> fetchDiameters() async {
-    final response = await _dio.get('/api/metric/diameters/');
+    final response = await _dio.get('/api/v1/metric/diameters/');
     final List<dynamic> data = response.data;
     final diameters = data.map((json) => DiameterModel.fromJson(json)).toList();
     _diameters = diameters;

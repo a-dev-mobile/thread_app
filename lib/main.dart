@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:thread/src/common/log/l_setup.dart';
-import 'package:thread/src/common/model/dependencies.dart';
-import 'package:thread/src/common/routing/app_route_information_parser.dart';
 import 'package:thread/src/common/util/error_util.dart';
 import 'package:thread/src/common/widget/app.dart';
 import 'package:thread/src/common/widget/app_error.dart';
@@ -13,7 +11,6 @@ import 'package:thread/src/common/widget/no_animation_scope.dart';
 import 'package:thread/src/feature/initialization/data/initialization.dart';
 import 'package:thread/src/feature/initialization/widget/inherited_dependencies.dart';
 import 'package:thread/src/feature/initialization/widget/initialization_splash_screen.dart';
-import 'package:thread/src/feature/settings/widget/settings_scope.dart';
 import 'package:thread/src/feature/visual_debug/visual_debug_controller.dart';
 import 'package:thread/src/feature/visual_debug/visual_debug_provider.dart';
 

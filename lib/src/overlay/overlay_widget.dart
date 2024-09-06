@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:thread/src/common/model/dependencies.dart';
 import 'package:thread/src/common/network/dio_log/dio_log.dart';
 
 class OverlayWidget extends StatefulWidget {
@@ -43,7 +42,7 @@ class _OverlayWidgetState extends State<OverlayWidget> {
          Positioned(
           bottom: 0,
           left: 0,
-          child: GestureDetector(child: _BtnActivateDebug(),onTap: ()
+          child: GestureDetector(child: const _BtnActivateDebug(),onTap: ()
           {
 
               showHttpLogBtn(context);

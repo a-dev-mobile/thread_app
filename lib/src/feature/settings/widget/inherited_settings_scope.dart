@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'settings_scope.dart';
 
 class InheritedSettingsScope extends InheritedWidget {
-  const InheritedSettingsScope({
+  const InheritedSettingsScope({super.key, 
     required this.scope,
     required this.theme,
     required super.child,

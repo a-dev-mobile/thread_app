@@ -1,13 +1,11 @@
 // lib\src\common\widget\profile\home_screen.dart
 
 import 'package:flutter/material.dart';
-import 'package:thread/src/common/constant/config.dart';
 import 'package:thread/src/common/constant/pubspec.yaml.g.dart';
 import 'package:thread/src/common/log/l_setup.dart';
 import 'package:thread/src/common/model/dependencies.dart';
 import 'package:thread/src/common/network/dio_log/dio_log.dart';
 import 'package:thread/src/common/routing/page_route_config.dart';
-import 'package:thread/src/feature/app/model/app_env.dart';
 
 final _l = L('home_screen');
 

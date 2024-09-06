@@ -21,5 +21,4 @@ class VisualDebugProvider extends InheritedWidget {
     // Уведомляем дочерние виджеты только если значение изменилось
     return false;
   }
-
 }

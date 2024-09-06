@@ -50,3 +50,4 @@ config/dev*.json
 **/*.freezed.dart
 **/*.g.dart
 
+config.json
