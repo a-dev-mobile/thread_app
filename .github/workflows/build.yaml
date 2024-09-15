@@ -13,6 +13,11 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v4
 
+      - name: Check SSH Connection
+        run: |
+          sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no -P 22 ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_SERVER }} exit
+        continue-on-error: false
+
       - name: Set up FVM
         run: |
           curl -fsSL https://fvm.app/install.sh | bash
@@ -27,7 +32,7 @@ jobs:
       - name: Generate code
         run: fvm dart run build_runner build --delete-conflicting-outputs
 
-      - name: Create production.json file
+      - name: Create config.json file
         run: echo '${{ secrets.CONFIG_FILE }}' > config.json
 
       - name: Validate JSON file
@@ -53,14 +58,15 @@ jobs:
 
       - name: Upload APK to Server via SFTP
         run: |
-          sshpass -p ${{ secrets.SSH_PASSWORD }} sftp -o StrictHostKeyChecking=no -P 22 ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_SERVER }} <<EOF
+          sshpass -p ${{ secrets.SSH_PASSWORD }} sftp -o StrictHostKeyChecking=no -P 22 ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_SERVER }} << 'EOF'
           cd ${{ secrets.DEPLOY_PATH_APP }}
           put build/app/outputs/flutter-apk/app-release.apk
           bye
-          EOF 
+          EOF
+
       - name: Upload web build to Server via SFTP
         run: |
-          sshpass -p ${{ secrets.SSH_PASSWORD }} sftp -o StrictHostKeyChecking=no -P 22 ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_SERVER }} <<EOF
+          sshpass -p ${{ secrets.SSH_PASSWORD }} sftp -o StrictHostKeyChecking=no -P 22 ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_SERVER }} << 'EOF'
           cd ${{ secrets.DEPLOY_PATH_WEB }}
           put -r build/web/*
           bye
