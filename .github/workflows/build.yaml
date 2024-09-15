@@ -22,6 +22,49 @@ jobs:
         run: ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_SERVER }} exit
         continue-on-error: false
 
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
+
+      # Проверка SFTP и загрузка тестового файла в DEPLOY_PATH_APP
+      - name: Test SFTP Upload to DEPLOY_PATH_APP
+        run: |
+          echo "Test file content" > test.txt
+          sshpass -p ${{ secrets.SSH_PASSWORD }} sftp -o StrictHostKeyChecking=no -P 22 ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_SERVER }} << 'EOF'
+          cd ${{ secrets.DEPLOY_PATH_APP }}
+          put test.txt
+          bye
+          EOF
+        continue-on-error: false
+
+      - name: Remove test file from DEPLOY_PATH_APP
+        run: |
+          sshpass -p ${{ secrets.SSH_PASSWORD }} sftp -o StrictHostKeyChecking=no -P 22 ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_SERVER }} << 'EOF'
+          cd ${{ secrets.DEPLOY_PATH_APP }}
+          rm test.txt
+          bye
+          EOF
+
+      # Проверка SFTP и загрузка тестового файла в DEPLOY_PATH_WEB
+      - name: Test SFTP Upload to DEPLOY_PATH_WEB
+        run: |
+          echo "Test file content" > test.txt
+          sshpass -p ${{ secrets.SSH_PASSWORD }} sftp -o StrictHostKeyChecking=no -P 22 ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_SERVER }} << 'EOF'
+          cd ${{ secrets.DEPLOY_PATH_WEB }}
+          put test.txt
+          bye
+          EOF
+        continue-on-error: false
+
+      - name: Remove test file from DEPLOY_PATH_WEB
+        run: |
+          sshpass -p ${{ secrets.SSH_PASSWORD }} sftp -o StrictHostKeyChecking=no -P 22 ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_SERVER }} << 'EOF'
+          cd ${{ secrets.DEPLOY_PATH_WEB }}
+          rm test.txt
+          bye
+          EOF
+
+      # Проверки завершены, переходим к сборке и загрузке
+
       - name: Set up FVM
         run: |
           curl -fsSL https://fvm.app/install.sh | bash
@@ -56,9 +99,6 @@ jobs:
 
       - name: Build Flutter web
         run: fvm flutter build web --release --dart-define-from-file=config.json
-
-      - name: Install sshpass
-        run: sudo apt-get install -y sshpass
 
       - name: Upload APK to Server via SFTP
         run: |
