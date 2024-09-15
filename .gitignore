@@ -51,3 +51,4 @@ config/dev*.json
 **/*.g.dart
 
 config.json
+.env

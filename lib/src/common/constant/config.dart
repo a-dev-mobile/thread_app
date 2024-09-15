@@ -5,6 +5,8 @@ abstract final class Config {
   // --- API --- //
   static const String apiBaseUrlDev = String.fromEnvironment('API_BASE_URL_DEV', defaultValue: '');
   static const String apiBaseUrlProd = String.fromEnvironment('API_BASE_URL_PROD', defaultValue: '');
+  static const String apiBaseUrlProd2 = String.fromEnvironment('API_BASE_URL_PROD', defaultValue: '');
+  static const String apiBaseUrlProd3 = String.fromEnvironment('API_BASE_URL_PROD', defaultValue: '');
 
   // /// Proxy for api.
   // /// e.g. http://10.0.2.2:8080

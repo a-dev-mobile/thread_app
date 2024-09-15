@@ -59,8 +59,10 @@ get-all: clean get
 
 
 build-web:
-	$(FLUTTER) build web --release --dart-define-from-file=config/production.json
+	$(FLUTTER) build web --release --dart-define-from-file=config.json
 
+build-android:
+	$(FLUTTER) build apk --release --dart-define-from-file=config.json
 
 SCRIPT_PATH := ".vscode/scripts/generate-directory-tree.sh"
 

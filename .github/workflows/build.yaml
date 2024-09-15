@@ -13,29 +13,27 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v4
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-          flutter-version-file: pubspec.yaml
-      - run: flutter --version
+      - name: Set up FVM
+        run: |
+          curl -sL https://raw.githubusercontent.com/leoafarias/fvm/master/setup.sh | bash
+          fvm install
+
+      - name: Install Flutter using FVM
+        run: fvm flutter --version
 
       - name: Install dependencies
-        run: flutter pub get
+        run: fvm flutter pub get
 
       - name: Generate code
-        run: dart run build_runner build --delete-conflicting-outputs
-
-      - name: Create config directory
-        run: mkdir -p config
+        run: fvm dart run build_runner build --delete-conflicting-outputs
 
       - name: Create production.json file
-        run: echo '${{ secrets.CONFIG_PROD_FILE }}' > config/production.json
+        run: echo '${{ secrets.CONFIG_FILE }}' > config.json
 
       - name: Validate JSON file
         run: |
-          if ! jq . config/production.json > /dev/null 2>&1; then
-            echo "Invalid JSON format in config/production.json"
+          if ! jq . config.json > /dev/null 2>&1; then
+            echo "Invalid JSON format in config.json"
             exit 1
           fi
 
@@ -45,10 +43,10 @@ jobs:
           RELEASE_KEY_PASSWORD: ${{ secrets.RELEASE_KEY_PASSWORD }}
           RELEASE_STORE_FILE: ${{ secrets.RELEASE_STORE_FILE }}
           RELEASE_STORE_PASSWORD: ${{ secrets.RELEASE_STORE_PASSWORD }}
-        run: flutter build apk --release --dart-define-from-file=config/production.json
+        run: fvm flutter build apk --release --dart-define-from-file=config.json
 
       - name: Build Flutter web
-        run: flutter build web --release --dart-define-from-file=config/production.json
+        run: fvm flutter build web --release --dart-define-from-file=config.json
 
       - name: Install sshpass
         run: sudo apt-get install -y sshpass
@@ -56,15 +54,14 @@ jobs:
       - name: Upload APK to Server via SFTP
         run: |
           sshpass -p ${{ secrets.SSH_PASSWORD }} sftp -o StrictHostKeyChecking=no -P 22 ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_SERVER }} <<EOF
-          cd ${{ secrets.DEPLOY_PATH }}
+          cd ${{ secrets.DEPLOY_PATH_APP }}
           put build/app/outputs/flutter-apk/app-release.apk
           bye
-          EOF
-
+          EOF 
       - name: Upload web build to Server via SFTP
         run: |
           sshpass -p ${{ secrets.SSH_PASSWORD }} sftp -o StrictHostKeyChecking=no -P 22 ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_SERVER }} <<EOF
-          cd ${{ secrets.WEB_DEPLOY_PATH }}
+          cd ${{ secrets.DEPLOY_PATH_WEB }}
           put -r build/web/*
           bye
           EOF
