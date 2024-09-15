@@ -36,6 +36,14 @@ jobs:
           EOF
         continue-on-error: false
 
+      - name: Remove test file from DEPLOY_PATH_APP
+        run: |
+          sshpass -p ${{ secrets.SSH_PASSWORD }} sftp -o StrictHostKeyChecking=no -P 22 ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_SERVER }} << 'EOF'
+          cd ${{ secrets.DEPLOY_PATH_APP }}
+          rm test.txt
+          bye
+          EOF
+
       # Проверка SFTP и загрузка тестового файла в DEPLOY_PATH_WEB
       - name: Test SFTP Upload to DEPLOY_PATH_WEB
         run: |
@@ -47,7 +55,13 @@ jobs:
           EOF
         continue-on-error: false
 
-
+      - name: Remove test file from DEPLOY_PATH_WEB
+        run: |
+          sshpass -p ${{ secrets.SSH_PASSWORD }} sftp -o StrictHostKeyChecking=no -P 22 ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_SERVER }} << 'EOF'
+          cd ${{ secrets.DEPLOY_PATH_WEB }}
+          rm test.txt
+          bye
+          EOF
 
       # Проверки завершены, переходим к сборке и загрузке
 
