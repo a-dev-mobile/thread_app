@@ -15,7 +15,7 @@ jobs:
 
       - name: Check SSH Connection
         run: |
-          sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no -P 22 ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_SERVER }} exit
+          sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 -P 22 ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_SERVER }} exit
         continue-on-error: false
 
       - name: Set up FVM
