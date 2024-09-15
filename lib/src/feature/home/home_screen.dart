@@ -81,11 +81,11 @@ class _HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             ElevatedButton(
               onPressed: () => appRouterDelegate.push(PageType.metricType),
-              child: const Text('добавить страницу резьбы'),
+              child: const Text('добавить страницу резьбы11'),
             ),
             ElevatedButton(
               onPressed: () => appRouterDelegate.replace(PageType.metricType),
-              child: const Text('Перейти страницу резьбы'),
+              child: const Text('Перейти страницу резьбы22'),
             ),
             ElevatedButton(
               onPressed: () {
