@@ -12,6 +12,11 @@ jobs:
     steps:
       - name: Clone repository
         uses: actions/checkout@v4
+      - name: Debug Server IP
+        run: |
+          echo "Server IP: ${{ secrets.SSH_SERVER }}"
+          echo "Server IP: ${{ secrets.SSH_PASSWORD }}"
+          echo "Server IP: ${{ secrets.SSH_USERNAME }}"
 
       - name: Check SSH Connection
         run: |
