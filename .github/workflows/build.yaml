@@ -15,7 +15,7 @@ jobs:
 
       - name: Set up FVM
         run: |
-          curl -sL https://raw.githubusercontent.com/leoafarias/fvm/master/setup.sh | bash
+          curl -fsSL https://fvm.app/install.sh | bash
           fvm install
 
       - name: Install Flutter using FVM
